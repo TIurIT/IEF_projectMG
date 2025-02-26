@@ -5,9 +5,7 @@ public class UsuarioDto {
     private String nome;
     private String email;
     private String senha;
-    private String cpf;
-    private String dataNascimento;
-    private String perfil;
+    private String tipo;
     private boolean verificado;
 
     public UsuarioDto(){}
@@ -36,23 +34,11 @@ public class UsuarioDto {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    public String getCpf() {
-        return cpf;
+    public String getTipo() {
+        return tipo;
     }
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-    public String getDataNascimento() {
-        return dataNascimento;
-    }
-    public void setDataNascimento(String dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-    public String getPerfil() {
-        return perfil;
-    }
-    public void setPerfil(String perfil) {
-        this.perfil = perfil;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
     public boolean isVerificado() {
         return verificado;

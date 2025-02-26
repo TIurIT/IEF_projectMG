@@ -1,6 +1,6 @@
 package Repositories;
 
-import Models.Estamparia;
+import Models.Estoque;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,8 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface EstampariaRepository extends JpaRepository <Estamparia, UUID> {
+public interface EstoqueRepository extends JpaRepository<Estoque, UUID> {
 
-    Optional<Estamparia> findById(UUID id);
-
+    Optional<Estoque> findById(UUID id);
 }
