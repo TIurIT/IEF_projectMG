@@ -8,4 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface EstampariaRepository extends JpaRepository <Estamparia, UUID> {
+
+    Estamparia findById(Long id);
 }
