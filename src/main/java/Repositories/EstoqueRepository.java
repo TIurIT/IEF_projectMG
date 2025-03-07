@@ -10,5 +10,7 @@ import java.util.UUID;
 @Repository
 public interface EstoqueRepository extends JpaRepository<Estoque, UUID> {
 
-    Optional<Estoque> findById(UUID id);
+    Estoque findByNome(String nome);
+    Estoque findByTipo(String tipo);
+    Estoque findByMarca(String marca);
 }

@@ -1,5 +1,6 @@
 package DTO;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class EstoqueDto {
@@ -8,7 +9,7 @@ public class EstoqueDto {
     private String nome;
     private Integer quantidade;
     private String marca;
-    private String dataDeCriacao;
+    private Date dataDeCriacao;
 
     public EstoqueDto(){}
 
@@ -42,10 +43,10 @@ public class EstoqueDto {
     public void setMarca(String marca) {
         this.marca = marca;
     }
-    public String getDataDeCriacao() {
+    public Date getDataDeCriacao() {
         return dataDeCriacao;
     }
-    public void setDataDeCriacao(String dataDeCriacao) {
+    public void setDataDeCriacao(Date dataDeCriacao) {
         this.dataDeCriacao = dataDeCriacao;
     }
 }
