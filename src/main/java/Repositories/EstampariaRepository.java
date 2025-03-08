@@ -10,6 +10,6 @@ import java.util.UUID;
 @Repository
 public interface EstampariaRepository extends JpaRepository <Estamparia, UUID> {
 
-    Optional<Estamparia> findById(UUID id);
+    Estamparia findByBairro(String bairro);
 
 }

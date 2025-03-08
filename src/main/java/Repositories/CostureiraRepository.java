@@ -8,4 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface CostureiraRepository extends JpaRepository <Costureira, UUID> {
+
+    Costureira findByBairro(String bairro);
 }

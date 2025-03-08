@@ -8,4 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface SublimacaoRepository extends JpaRepository <Sublimacao, UUID> {
+
+    Sublimacao findByBairro(String bairro);
 }

@@ -50,4 +50,14 @@ public class EstampariaService {
         estampariaRepository.save(estamparia);
         return  converterEstampariaParaEstampariaDto(estamparia);
     }
+
+    public EstampariaDto buscarEstampariaPorId(UUID id){
+        Estamparia estamparia = estampariaRepository.findById(id).orElseThrow(() -> new BusinessException(MSG_ESTAMPARIA));
+        return converterEstampariaParaEstampariaDto(estamparia);
+    }
+
+    public EstampariaDto buscarEstampariaPorBairro(String bairro){
+        Estamparia estamparia = estampariaRepository.findByBairro(bairro);
+        return converterEstampariaParaEstampariaDto(estamparia);
+    }
 }

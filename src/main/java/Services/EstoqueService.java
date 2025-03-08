@@ -76,4 +76,6 @@ public class EstoqueService {
         Estoque estoque = estoqueRepository.findByMarca(marca);
         return converterEstoqueParaEstoqueDto(estoque);
     }
+
+
 }

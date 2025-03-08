@@ -1,7 +1,9 @@
 package DTO;
 
+import java.util.UUID;
+
 public class UsuarioDto {
-    private Long id;
+        private UUID id;
     private String nome;
     private String email;
     private String senha;
@@ -10,10 +12,10 @@ public class UsuarioDto {
 
     public UsuarioDto(){}
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
     public String getNome() {
