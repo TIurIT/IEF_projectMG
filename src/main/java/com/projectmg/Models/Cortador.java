@@ -8,14 +8,13 @@ import lombok.Setter;
 
 import java.util.Objects;
 
-
-@Table(name = "estamparia")
+@Table(name = "cortador")
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Estamparia {
+public class Cortador {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,8 +32,8 @@ public class Estamparia {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Estamparia estamparia = (Estamparia) o;
-        return Objects.equals(id, estamparia.id);
+        Cortador cortador = (Cortador) o;
+        return Objects.equals(id, cortador.id);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.projectmg.Resources;
 
-import com.projectmg.DTO.CostureiraDto;
+import com.projectmg.Dto.CostureiraDto;
 import com.projectmg.Models.Costureira;
 import com.projectmg.Services.CostureiraService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/mg/costureiras")

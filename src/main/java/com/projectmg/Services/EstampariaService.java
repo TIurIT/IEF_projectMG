@@ -1,6 +1,6 @@
 package com.projectmg.Services;
 
-import com.projectmg.DTO.EstampariaDto;
+import com.projectmg.Dto.EstampariaDto;
 import com.projectmg.Models.Estamparia;
 import com.projectmg.Repositories.EstampariaRepository;
 import com.projectmg.exceptions.BusinessException;

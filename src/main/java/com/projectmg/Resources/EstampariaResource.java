@@ -1,6 +1,6 @@
 package com.projectmg.Resources;
 
-import com.projectmg.DTO.EstampariaDto;
+import com.projectmg.Dto.EstampariaDto;
 import com.projectmg.Models.Estamparia;
 import com.projectmg.Services.EstampariaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
-@RequestMapping("/mg/estamparias")
+@RequestMapping("/mg/estamparia")
 public class EstampariaResource {
 
     @Autowired

@@ -1,6 +1,6 @@
 package com.projectmg.Services;
 
-import com.projectmg.DTO.UsuarioDto;
+import com.projectmg.Dto.UsuarioDto;
 import com.projectmg.Models.Usuario;
 import com.projectmg.Repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,14 +1,13 @@
-package com.projectmg.DTO;
+package com.projectmg.Dto;
 
-import java.util.UUID;
 
-public class SublimacaoDto {
+public class CostureiraDto {
     private Long id;
     private String nome;
     private String bairro;
     private String telefone;
 
-    public SublimacaoDto(){}
+    public CostureiraDto(){}
 
     public Long getId() {
         return id;

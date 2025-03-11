@@ -1,6 +1,6 @@
 package com.projectmg.Services;
 
-import com.projectmg.DTO.CostureiraDto;
+import com.projectmg.Dto.CostureiraDto;
 import com.projectmg.Models.Costureira;
 import com.projectmg.Repositories.CostureiraRepository;
 import org.springframework.beans.factory.annotation.Autowired;

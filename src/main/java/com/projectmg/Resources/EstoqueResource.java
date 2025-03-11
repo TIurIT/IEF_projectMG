@@ -1,6 +1,6 @@
 package com.projectmg.Resources;
 
-import com.projectmg.DTO.EstoqueDto;
+import com.projectmg.Dto.EstoqueDto;
 import com.projectmg.Models.Estoque;
 import com.projectmg.Services.EstoqueService;
 import org.springframework.beans.factory.annotation.Autowired;

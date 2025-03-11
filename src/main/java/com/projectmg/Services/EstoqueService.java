@@ -1,6 +1,6 @@
 package com.projectmg.Services;
 
-import com.projectmg.DTO.EstoqueDto;
+import com.projectmg.Dto.EstoqueDto;
 import com.projectmg.Models.Estoque;
 import com.projectmg.Repositories.EstoqueRepository;
 import com.projectmg.exceptions.BusinessException;

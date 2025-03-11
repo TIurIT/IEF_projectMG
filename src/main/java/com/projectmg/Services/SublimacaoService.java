@@ -1,6 +1,6 @@
 package com.projectmg.Services;
 
-import com.projectmg.DTO.SublimacaoDto;
+import com.projectmg.Dto.SublimacaoDto;
 import com.projectmg.Models.Sublimacao;
 import com.projectmg.Repositories.SublimacaoRepository;
 import com.projectmg.exceptions.BusinessException;

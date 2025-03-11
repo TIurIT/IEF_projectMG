@@ -28,7 +28,7 @@ public class Costureira {
     @Column(name = "bairro")
     private String bairro;
 
-    @Column(name = "telefone")
+    @Column(name = "telefone", nullable = false)
     private String telefone;
 
     @Override

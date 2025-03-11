@@ -1,14 +1,12 @@
-package com.projectmg.DTO;
+package com.projectmg.Dto;
 
-
-
-public class EstampariaDto {
+public class CortadorDto {
     private Long id;
     private String nome;
     private String bairro;
     private String telefone;
 
-    public EstampariaDto(){}
+    public CortadorDto(){}
 
     public Long getId() {
         return id;
@@ -34,5 +32,4 @@ public class EstampariaDto {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-
 }

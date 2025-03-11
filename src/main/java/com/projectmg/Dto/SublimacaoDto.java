@@ -1,13 +1,12 @@
-package com.projectmg.DTO;
+package com.projectmg.Dto;
 
-
-public class CostureiraDto {
+public class SublimacaoDto {
     private Long id;
     private String nome;
     private String bairro;
     private String telefone;
 
-    public CostureiraDto(){}
+    public SublimacaoDto(){}
 
     public Long getId() {
         return id;

@@ -1,12 +1,10 @@
 package com.projectmg.Resources;
 
-import com.projectmg.DTO.UsuarioDto;
+import com.projectmg.Dto.UsuarioDto;
 import com.projectmg.Services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/mg/usuarios")

@@ -1,4 +1,4 @@
-package com.projectmg.DTO;
+package com.projectmg.Dto;
 
 import java.util.Date;
 
