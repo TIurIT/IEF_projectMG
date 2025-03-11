@@ -11,19 +11,17 @@ import java.util.List;
 public interface EstoqueRepository extends JpaRepository<Estoque, Long> {
 
     @Query("select e from Estoque e where e.nome like %:nome%")
-    List<Estoque> findAllByNome(String nome);
+    List<Estoque> findByNome(String nome);
 
     @Query("select e from Estoque e where e.tipo like %:tipo%")
-    List<Estoque> findAllByTipo(String tipo);
+    List<Estoque> findByTipo(String tipo);
 
     @Query("select e from Estoque e where e.marca like %:marca%")
-    List<Estoque> findAllByMarca(String marca);
+    List<Estoque> findByMarca(String marca);
 
 
 
-    Estoque findByNome(String nome);
-    Estoque findByTipo(String tipo);
-    Estoque findByMarca(String marca);
+
 
 
 }

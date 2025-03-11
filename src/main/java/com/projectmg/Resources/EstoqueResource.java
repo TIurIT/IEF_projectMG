@@ -39,33 +39,19 @@ public class EstoqueResource {
         return ResponseEntity.ok(estoqueService.atualizarEstoque(EstoqueDto));
     }
 
-    @GetMapping("/buscar/tipo/{tipo}")
-    public ResponseEntity<EstoqueDto> buscarEstoquePorTipo(@PathVariable String tipo){
-        return ResponseEntity.ok(estoqueService.buscarEstoquePorTipo(tipo));
-    }
 
     @GetMapping("/buscar/nome/{nome}")
-    public ResponseEntity<EstoqueDto> buscarEstoquePorNome(@PathVariable String nome){
-        return ResponseEntity.ok(estoqueService.buscarEstoquePorNome(nome));
+    public ResponseEntity<List<Estoque>> buscarPorNome(@PathVariable String nome){
+        return ResponseEntity.ok(estoqueService.buscarPorNome(nome));
+    }
+
+    @GetMapping("/buscar/tipo/{tipo}")
+    public ResponseEntity<List<Estoque>> buscarPorTipo(@PathVariable String tipo){
+        return ResponseEntity.ok(estoqueService.buscarPorTipo(tipo));
     }
 
     @GetMapping("/buscar/marca/{marca}")
-    public ResponseEntity<EstoqueDto> buscarEstoquePorMarca(@PathVariable String marca){
-        return ResponseEntity.ok(estoqueService.buscarEstoquePorMarca(marca));
-    }
-
-    @GetMapping("/buscar/nomeAll/{nome}")
-    public ResponseEntity<List<Estoque>> findAllByNome(@PathVariable String nome){
-        return ResponseEntity.ok(estoqueService.findAllByNome(nome));
-    }
-
-    @GetMapping("/buscar/tipoAll/{tipo}")
-    public ResponseEntity<List<Estoque>> findAllByTipo(@PathVariable String tipo){
-        return ResponseEntity.ok(estoqueService.findAllByTipo(tipo));
-    }
-
-    @GetMapping("/buscar/marcaAll/{marca}")
-    public ResponseEntity<List<Estoque>> findAllByMarca(@PathVariable String marca){
-        return ResponseEntity.ok(estoqueService.findAllByMarca(marca));
+    public ResponseEntity<List<Estoque>> buscarPorMarca(@PathVariable String marca){
+        return ResponseEntity.ok(estoqueService.buscarPorMarca(marca));
     }
 }

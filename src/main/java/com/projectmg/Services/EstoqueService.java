@@ -63,31 +63,16 @@ public class EstoqueService {
        return converterEstoqueParaEstoqueDto(estoque);
     }
 
-    public EstoqueDto buscarEstoquePorNome(String nome) {
-        Estoque estoque = estoqueRepository.findByNome(nome);
-        return converterEstoqueParaEstoqueDto(estoque);
+    public List<Estoque> buscarPorNome(String nome) {
+        return estoqueRepository.findByNome(nome);
     }
 
-    public EstoqueDto buscarEstoquePorTipo(String tipo) {
-        Estoque estoque = estoqueRepository.findByTipo(tipo);
-        return converterEstoqueParaEstoqueDto(estoque);
+    public List<Estoque> buscarPorTipo(String tipo) {
+        return estoqueRepository.findByTipo(tipo);
     }
 
-    public EstoqueDto buscarEstoquePorMarca(String marca) {
-        Estoque estoque = estoqueRepository.findByMarca(marca);
-        return converterEstoqueParaEstoqueDto(estoque);
-    }
-
-    public List<Estoque> findAllByNome(String nome) {
-        return estoqueRepository.findAllByNome(nome);
-    }
-
-    public List<Estoque> findAllByTipo(String tipo) {
-        return estoqueRepository.findAllByTipo(tipo);
-    }
-
-    public List<Estoque> findAllByMarca(String marca) {
-        return estoqueRepository.findAllByMarca(marca);
+    public List<Estoque> buscarPorMarca(String marca) {
+        return estoqueRepository.findByMarca(marca);
     }
 
 }
