@@ -6,6 +6,8 @@ import com.projectmg.Repositories.CostureiraRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class CostureiraService {
@@ -56,8 +58,7 @@ public class CostureiraService {
         return converterCostureiraParaCostureiraDto(costureira);
     }
 
-    public CostureiraDto buscarCostureiraPorBairro(String bairro){
-        Costureira costureira = costureiraRepository.findByBairro(bairro);
-        return converterCostureiraParaCostureiraDto(costureira);
+    public List<Costureira> buscarCostureiraPorBairro(String bairro){
+        return costureiraRepository.findByBairro(bairro);
     }
 }

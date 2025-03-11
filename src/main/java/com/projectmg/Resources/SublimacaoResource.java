@@ -1,11 +1,13 @@
 package com.projectmg.Resources;
 
 import com.projectmg.DTO.SublimacaoDto;
+import com.projectmg.Models.Sublimacao;
 import com.projectmg.Services.SublimacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -37,7 +39,7 @@ public class SublimacaoResource {
     }
 
     @GetMapping("/buscar/bairro/{bairro}")
-    public ResponseEntity<SublimacaoDto> buscarSublimacaoPorBairro(@PathVariable String bairro){
+    public ResponseEntity<List<Sublimacao>> buscarSublimacaoPorBairro(@PathVariable String bairro){
         return ResponseEntity.ok(sublimacaoService.buscarSublimacaoPorBairro(bairro));
     }
 }

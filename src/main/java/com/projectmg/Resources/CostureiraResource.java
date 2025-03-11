@@ -1,11 +1,13 @@
 package com.projectmg.Resources;
 
 import com.projectmg.DTO.CostureiraDto;
+import com.projectmg.Models.Costureira;
 import com.projectmg.Services.CostureiraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -37,7 +39,7 @@ public class CostureiraResource {
     }
 
     @GetMapping("/buscar/bairro/{bairro}")
-    public ResponseEntity<CostureiraDto> buscarCostureiraPorBairro(@PathVariable String bairro){
+    public ResponseEntity<List<Costureira>> buscarCostureiraPorBairro(@PathVariable String bairro){
         return ResponseEntity.ok(costureiraService.buscarCostureiraPorBairro(bairro));
     }
 }

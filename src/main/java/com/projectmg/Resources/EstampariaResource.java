@@ -1,11 +1,13 @@
 package com.projectmg.Resources;
 
 import com.projectmg.DTO.EstampariaDto;
+import com.projectmg.Models.Estamparia;
 import com.projectmg.Services.EstampariaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -37,7 +39,7 @@ public class EstampariaResource {
     }
 
     @GetMapping("/buscar/bairro/{bairro}")
-    public ResponseEntity<EstampariaDto> buscarEstampariaPorBairro(@PathVariable String bairro){
+    public ResponseEntity<List<Estamparia>> buscarEstampariaPorBairro(@PathVariable String bairro){
         return ResponseEntity.ok(estampariaService.buscarEstampariaPorBairro(bairro));
     }
 }

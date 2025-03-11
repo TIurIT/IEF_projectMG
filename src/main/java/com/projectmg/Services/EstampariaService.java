@@ -7,6 +7,8 @@ import com.projectmg.exceptions.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class EstampariaService {
@@ -55,8 +57,7 @@ public class EstampariaService {
         return converterEstampariaParaEstampariaDto(estamparia);
     }
 
-    public EstampariaDto buscarEstampariaPorBairro(String bairro){
-        Estamparia estamparia = estampariaRepository.findByBairro(bairro);
-        return converterEstampariaParaEstampariaDto(estamparia);
+    public List<Estamparia> buscarEstampariaPorBairro(String bairro){
+        return estampariaRepository.findByBairro(bairro);
     }
 }
