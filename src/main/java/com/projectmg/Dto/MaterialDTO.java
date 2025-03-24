@@ -2,7 +2,7 @@ package com.projectmg.Dto;
 
 import java.util.Date;
 
-public class EstoqueDto {
+public class MaterialDTO {
     private Long id;
     private String tipo;
     private String nome;
@@ -10,7 +10,7 @@ public class EstoqueDto {
     private Integer quantidade;
     private Date dataDeCriacao;
 
-    public EstoqueDto(){}
+    public MaterialDTO(){}
 
     public Long getId() {
         return id;

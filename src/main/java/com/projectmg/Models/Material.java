@@ -15,7 +15,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Estoque {
+public class Material {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,12 +39,12 @@ public class Estoque {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Estoque estoque = (Estoque) o;
-        return Objects.equals(id, estoque.id);
+        Material material = (Material) o;
+        return Objects.equals(id, material.id) && Objects.equals(tipo, material.tipo) && Objects.equals(nome, material.nome) && Objects.equals(marca, material.marca) && Objects.equals(quantidade, material.quantidade) && Objects.equals(dataDeCriacao, material.dataDeCriacao);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hash(id, tipo, nome, marca, quantidade, dataDeCriacao);
     }
 }

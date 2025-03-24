@@ -32,27 +32,15 @@ public class Usuario {
     @Column(name = "tipo")
     private int tipo;
 
-    @ManyToOne
-    @JoinColumn(name = "costureira_id")
-    private Costureira costureira;
-
-    @ManyToOne
-    @JoinColumn(name = "estamparia_id")
-    private Estamparia estamparia;
-
-    @ManyToOne
-    @JoinColumn(name = "sublimacao_id")
-    private Sublimacao sublimacao;
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
-        return Objects.equals(id, usuario.id);
+        return tipo == usuario.tipo && Objects.equals(id, usuario.id) && Objects.equals(nome, usuario.nome) && Objects.equals(email, usuario.email) && Objects.equals(senha, usuario.senha);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hash(id, nome, email, senha, tipo);
     }
 }

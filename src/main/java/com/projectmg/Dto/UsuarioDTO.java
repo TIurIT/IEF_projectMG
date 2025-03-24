@@ -1,7 +1,7 @@
 package com.projectmg.Dto;
 
 
-public class UsuarioDto {
+public class UsuarioDTO {
         private Long id;
     private String nome;
     private String email;
@@ -9,7 +9,7 @@ public class UsuarioDto {
     private String tipo;
     private boolean verificado;
 
-    public UsuarioDto(){}
+    public UsuarioDTO(){}
 
     public Long getId() {
         return id;

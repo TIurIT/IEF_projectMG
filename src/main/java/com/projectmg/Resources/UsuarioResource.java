@@ -1,6 +1,6 @@
 package com.projectmg.Resources;
 
-import com.projectmg.Dto.UsuarioDto;
+import com.projectmg.Dto.UsuarioDTO;
 import com.projectmg.Services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +14,12 @@ public class UsuarioResource {
     private UsuarioService usuarioService;
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<UsuarioDto> buscarUsuarioPorId(@PathVariable Long id){
+    public ResponseEntity<UsuarioDTO> buscarUsuarioPorId(@PathVariable Long id){
         return ResponseEntity.ok(usuarioService.buscarUsuarioPorId(id));
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<UsuarioDto> cadastrarUsuario(@RequestBody UsuarioDto usuarioDto){
+    public ResponseEntity<UsuarioDTO> cadastrarUsuario(@RequestBody UsuarioDTO usuarioDto){
         return ResponseEntity.ok(usuarioService.cadastrarUsuario(usuarioDto));
     }
 
@@ -30,12 +30,12 @@ public class UsuarioResource {
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<UsuarioDto> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDto usuarioDto){
+    public ResponseEntity<UsuarioDTO> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDto){
         return ResponseEntity.ok(usuarioService.atualizarUsuario(usuarioDto));
     }
 
-    @GetMapping("/buscar/email/{email}")
-    public ResponseEntity<UsuarioDto> buscarUsuarioPorEmail(@PathVariable String email){
+    @GetMapping("/b/email/{email}")
+    public ResponseEntity<UsuarioDTO> buscarUsuarioPorEmail(@PathVariable String email){
         return ResponseEntity.ok(usuarioService.buscarUsuarioPorEmail(email));
     }
 }

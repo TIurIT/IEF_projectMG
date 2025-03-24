@@ -1,12 +1,15 @@
 package com.projectmg.Dto;
 
-public class SublimacaoDto {
+import com.projectmg.Enum.Servico;
+
+public class TerceirosDTO {
     private Long id;
     private String nome;
     private String bairro;
     private String telefone;
+    private Servico servico;
 
-    public SublimacaoDto(){}
+    public TerceirosDTO(){}
 
     public Long getId() {
         return id;
@@ -31,5 +34,11 @@ public class SublimacaoDto {
     }
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+    public Servico getServico() {
+        return servico;
+    }
+    public void setServico(Servico servico) {
+        this.servico = servico;
     }
 }

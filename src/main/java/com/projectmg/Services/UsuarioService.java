@@ -1,6 +1,6 @@
 package com.projectmg.Services;
 
-import com.projectmg.Dto.UsuarioDto;
+import com.projectmg.Dto.UsuarioDTO;
 import com.projectmg.Models.Usuario;
 import com.projectmg.Repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +15,8 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public UsuarioDto converterUsuarioParaUsuarioDto(Usuario usuario){
-        UsuarioDto usuarioDto = new UsuarioDto();
+    public UsuarioDTO converterUsuarioParaUsuarioDto(Usuario usuario){
+        UsuarioDTO usuarioDto = new UsuarioDTO();
         usuarioDto.setId(usuario.getId());
         usuarioDto.setNome(usuario.getNome());
         usuarioDto.setEmail(usuario.getEmail());
@@ -24,7 +24,7 @@ public class UsuarioService {
         return usuarioDto;
     }
 
-    public Usuario converterUsuarioDtoParaUsuario(UsuarioDto usuarioDto){
+    public Usuario converterUsuarioDtoParaUsuario(UsuarioDTO usuarioDto){
         Usuario usuario = new Usuario();
         usuario.setId(usuarioDto.getId());
         usuario.setNome(usuarioDto.getNome());
@@ -33,7 +33,7 @@ public class UsuarioService {
         return usuario;
     }
 
-    public UsuarioDto cadastrarUsuario(UsuarioDto usuarioDto){
+    public UsuarioDTO cadastrarUsuario(UsuarioDTO usuarioDto){
         Usuario usuario = converterUsuarioDtoParaUsuario(usuarioDto);
         usuario = usuarioRepository.save(usuario);
         return converterUsuarioParaUsuarioDto(usuario);
@@ -43,7 +43,7 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-    public UsuarioDto atualizarUsuario(UsuarioDto usuarioDto){
+    public UsuarioDTO atualizarUsuario(UsuarioDTO usuarioDto){
         Usuario usuario = usuarioRepository.findById(usuarioDto.getId())
                 .orElseThrow(() -> new RuntimeException("MSG_USUARIO"));
         usuario = converterUsuarioDtoParaUsuario(usuarioDto);
@@ -51,12 +51,12 @@ public class UsuarioService {
         return  converterUsuarioParaUsuarioDto(usuario);
     }
 
-    public UsuarioDto buscarUsuarioPorId(Long id){
+    public UsuarioDTO buscarUsuarioPorId(Long id){
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("MSG_USUARIO"));
         return converterUsuarioParaUsuarioDto(usuario);
     }
 
-    public UsuarioDto buscarUsuarioPorEmail(String email){
+    public UsuarioDTO buscarUsuarioPorEmail(String email){
         Usuario usuario = usuarioRepository.findByEmail(email);
         return converterUsuarioParaUsuarioDto(usuario);
     }
