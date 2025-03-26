@@ -1,4 +1,5 @@
 package com.projectmg.Specs;
 
-public class EstoqueSpec {
+public class UsuarioSpec {
+
 }

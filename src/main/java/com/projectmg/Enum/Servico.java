@@ -3,7 +3,7 @@ package com.projectmg.Enum;
 public enum Servico {
     COSTUREIRA("Costureira"),
     CORTADOR("Cortador"),
-    SUBLIMAÇÃO("Sublimação"),
+    SUBLIMACAO("Sublimação"),
     ESTAMPARIA("Estamparia");
 
     private final String servico;

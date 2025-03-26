@@ -15,7 +15,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Terceiros {
+public class Terceiro {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,8 +36,8 @@ public class Terceiros {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Terceiros terceiros = (Terceiros) o;
-        return Objects.equals(id, terceiros.id) && Objects.equals(nome, terceiros.nome) && Objects.equals(bairro, terceiros.bairro) && Objects.equals(telefone, terceiros.telefone) && servico == terceiros.servico;
+        Terceiro terceiro = (Terceiro) o;
+        return Objects.equals(id, terceiro.id) && Objects.equals(nome, terceiro.nome) && Objects.equals(bairro, terceiro.bairro) && Objects.equals(telefone, terceiro.telefone) && servico == terceiro.servico;
     }
 
     @Override

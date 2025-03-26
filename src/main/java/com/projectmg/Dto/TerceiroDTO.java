@@ -2,14 +2,14 @@ package com.projectmg.Dto;
 
 import com.projectmg.Enum.Servico;
 
-public class TerceirosDTO {
+public class TerceiroDTO {
     private Long id;
     private String nome;
     private String bairro;
     private String telefone;
     private Servico servico;
 
-    public TerceirosDTO(){}
+    public TerceiroDTO(){}
 
     public Long getId() {
         return id;

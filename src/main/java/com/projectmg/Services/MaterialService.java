@@ -13,42 +13,42 @@ import java.util.List;
 @Service
 public class MaterialService {
 
-    private static final String MSG_ESTOQUE = "Produto não encontrado";
+    private static final String MSG_ESTOQUE = "Material não encontrado";
     @Autowired
     private MaterialRepository materialRepository;
 
-    public Material converterMaterialDtoParaMaterial(MaterialDTO MaterialDto){
+    public Material converterMaterialDtoParaMaterial(MaterialDTO materialDTO){
         Material material = new Material();
-        material.setId(MaterialDto.getId());
-        material.setTipo(MaterialDto.getTipo());
-        material.setNome(MaterialDto.getNome());
-        material.setMarca(MaterialDto.getMarca());
-        material.setQuantidade(MaterialDto.getQuantidade());
-        material.setDataDeCriacao(MaterialDto.getDataDeCriacao());
+        material.setId(materialDTO.getId());
+        material.setTipo(materialDTO.getTipo());
+        material.setNome(materialDTO.getNome());
+        material.setMarca(materialDTO.getMarca());
+        material.setQuantidade(materialDTO.getQuantidade());
+        material.setDataDeCriacao(materialDTO.getDataDeCriacao());
         return material;
     }
 
     public MaterialDTO converterMaterialParaMaterialDto(Material material){
-        MaterialDTO MaterialDto = new MaterialDTO();
-        MaterialDto.setId(material.getId());
-        MaterialDto.setTipo(material.getTipo());
-        MaterialDto.setNome(material.getNome());
-        MaterialDto.setMarca(material.getMarca());
-        MaterialDto.setQuantidade(material.getQuantidade());
-        MaterialDto.setDataDeCriacao(material.getDataDeCriacao());
-        return MaterialDto;
+        MaterialDTO materialDTO = new MaterialDTO();
+        materialDTO.setId(material.getId());
+        materialDTO.setTipo(material.getTipo());
+        materialDTO.setNome(material.getNome());
+        materialDTO.setMarca(material.getMarca());
+        materialDTO.setQuantidade(material.getQuantidade());
+        materialDTO.setDataDeCriacao(material.getDataDeCriacao());
+        return materialDTO;
     }
 
-    public MaterialDTO cadastrarMaterial(MaterialDTO MaterialDto) {
-        Material material = converterMaterialDtoParaMaterial(MaterialDto);
+    public MaterialDTO cadastrarMaterial(MaterialDTO materialDTO) {
+        Material material = converterMaterialDtoParaMaterial(materialDTO);
         material = materialRepository.save(material);
         return converterMaterialParaMaterialDto(material);
     }
 
-    public MaterialDTO atualizarMaterial(MaterialDTO MaterialDto) {
-        Material material = materialRepository.findById(MaterialDto.getId())
+    public MaterialDTO atualizarMaterial(MaterialDTO materialDTO) {
+        Material material = materialRepository.findById(materialDTO.getId())
                         .orElseThrow(() -> new BusinessException(MSG_ESTOQUE));
-        material = converterMaterialDtoParaMaterial(MaterialDto);
+        material = converterMaterialDtoParaMaterial(materialDTO);
         materialRepository.save(material);
         return  converterMaterialParaMaterialDto(material);
     }
@@ -63,16 +63,43 @@ public class MaterialService {
        return converterMaterialParaMaterialDto(material);
     }
 
-    public List<Material> buscarPorNome(String nome) {
-        return materialRepository.findByNome(nome);
+    public List<MaterialDTO> buscarPorNome(String nome) {
+        List<Material> materiais = materialRepository.findByNome(nome);
+        if (materiais.isEmpty()) {
+            throw new BusinessException(MSG_ESTOQUE);
+        }
+        List<MaterialDTO> dtos = new java.util.ArrayList<>();
+        materiais.forEach(material -> {
+            dtos.add(converterMaterialParaMaterialDto(material));
+        });
+
+        return dtos;
     }
 
-    public List<Material> buscarPorTipo(String tipo) {
-        return materialRepository.findByTipo(tipo);
+    public List<MaterialDTO> buscarPorTipo(String tipo) {
+        List<Material> materiais = materialRepository.findByTipo(tipo);
+        if (materiais.isEmpty()) {
+            throw new BusinessException(MSG_ESTOQUE);
+        }
+        List<MaterialDTO> dtos = new java.util.ArrayList<>();
+        materiais.forEach(material -> {
+            dtos.add(converterMaterialParaMaterialDto(material));
+        });
+
+        return dtos;
     }
 
-    public List<Material> buscarPorMarca(String marca) {
-        return materialRepository.findByMarca(marca);
+    public List<MaterialDTO> buscarPorMarca(String marca) {
+        List<Material> materiais = materialRepository.findByMarca(marca);
+        if (materiais.isEmpty()) {
+            throw new BusinessException(MSG_ESTOQUE);
+        }
+        List<MaterialDTO> dtos = new java.util.ArrayList<>();
+        materiais.forEach(material -> {
+            dtos.add(converterMaterialParaMaterialDto(material));
+        });
+
+        return dtos;
     }
 
 }
