@@ -1,0 +1,12 @@
+INSERT INTO produto (id, nome, referencia) VALUES (1, 'Camiseta Slim', '01');
+INSERT INTO produto (id, nome, referencia) VALUES (2, 'Camiseta Manga Longa', '01.1');
+INSERT INTO produto (id, nome, referencia) VALUES (3, 'Camiseta Manga Curta', '01.2');
+INSERT INTO produto (id, nome, referencia) VALUES (4, 'Camiseta Babylook', '02');
+INSERT INTO produto (id, nome, referencia) VALUES (5, 'Camiseta Regular', '03');
+INSERT INTO produto (id, nome, referencia) VALUES (6, 'Camiseta Gola Polo', '04');
+INSERT INTO produto (id, nome, referencia) VALUES (7, 'Camiseta de Compressão', '05');
+INSERT INTO produto (id, nome, referencia) VALUES (8, 'Camiseta Raglã', '06');
+INSERT INTO produto (id, nome, referencia) VALUES (9, 'Regata Machão', '07');
+INSERT INTO produto (id, nome, referencia) VALUES (10, 'Regata Nadador', '08');
+INSERT INTO produto (id, nome, referencia) VALUES (11, 'Regata Alça Fina', '09');
+INSERT INTO produto (id, nome, referencia) VALUES (12, 'Regata Cropped', '10');

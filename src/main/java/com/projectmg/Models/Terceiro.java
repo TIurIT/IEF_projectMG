@@ -9,7 +9,7 @@ import lombok.Setter;
 
 import java.util.Objects;
 
-@Table(name = "terceiros")
+@Table(name = "terceiro")
 @Entity
 @Getter
 @Setter

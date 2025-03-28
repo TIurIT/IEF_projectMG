@@ -1,5 +1,6 @@
 package com.projectmg.Models;
 
+import com.projectmg.Enum.TipoAcesso;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,18 +30,18 @@ public class Usuario {
     @Column(name = "senha")
     private String senha;
 
-    @Column(name = "tipo")
-    private int tipo;
+    @Column(name = "tipoAcesso")
+    private TipoAcesso tipoAcesso;
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
-        return tipo == usuario.tipo && Objects.equals(id, usuario.id) && Objects.equals(nome, usuario.nome) && Objects.equals(email, usuario.email) && Objects.equals(senha, usuario.senha);
+        return Objects.equals(id, usuario.id) && Objects.equals(nome, usuario.nome) && Objects.equals(email, usuario.email) && Objects.equals(senha, usuario.senha) && tipoAcesso == usuario.tipoAcesso;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, email, senha, tipo);
+        return Objects.hash(id, nome, email, senha, tipoAcesso);
     }
 }

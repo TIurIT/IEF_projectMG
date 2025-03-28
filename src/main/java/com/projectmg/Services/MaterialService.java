@@ -3,6 +3,7 @@ package com.projectmg.Services;
 import com.projectmg.Dto.MaterialDTO;
 import com.projectmg.Models.Material;
 import com.projectmg.Repositories.MaterialRepository;
+import com.projectmg.Specs.MaterialSpec;
 import com.projectmg.exceptions.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public class MaterialService {
     private static final String MSG_ESTOQUE = "Material não encontrado";
     @Autowired
     private MaterialRepository materialRepository;
+
+    @Autowired
+    private MaterialSpec materialSpec;
 
     public Material converterMaterialDtoParaMaterial(MaterialDTO materialDTO){
         Material material = new Material();
@@ -40,12 +44,21 @@ public class MaterialService {
     }
 
     public MaterialDTO cadastrarMaterial(MaterialDTO materialDTO) {
+        List<Material> materialNome = materialRepository.findByNome(materialDTO.getNome());
+        materialSpec.verifyMaterialNome(materialDTO.getNome());
+        materialSpec.verifyMaterialNomeExists(materialNome);
+        materialSpec.verifyMaterialTipo(materialDTO.getTipo());
+        materialSpec.verigyMaterialMarca(materialDTO.getMarca());
+
         Material material = converterMaterialDtoParaMaterial(materialDTO);
         material = materialRepository.save(material);
         return converterMaterialParaMaterialDto(material);
     }
 
     public MaterialDTO atualizarMaterial(MaterialDTO materialDTO) {
+        List<Material> materialNome = materialRepository.findByNome(materialDTO.getNome());
+        materialSpec.verifyMaterialNomeExists(materialNome);
+        materialSpec.verifyMaterialId(materialDTO.getId());
         Material material = materialRepository.findById(materialDTO.getId())
                         .orElseThrow(() -> new BusinessException(MSG_ESTOQUE));
         material = converterMaterialDtoParaMaterial(materialDTO);

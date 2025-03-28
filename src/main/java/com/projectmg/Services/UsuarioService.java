@@ -3,6 +3,7 @@ package com.projectmg.Services;
 import com.projectmg.Dto.UsuarioDTO;
 import com.projectmg.Models.Usuario;
 import com.projectmg.Repositories.UsuarioRepository;
+import com.projectmg.Specs.UsuarioSpec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,9 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private UsuarioSpec usuarioSpec;
 
     public UsuarioDTO converterUsuarioParaUsuarioDto(Usuario usuario){
         UsuarioDTO usuarioDto = new UsuarioDTO();
@@ -34,6 +38,9 @@ public class UsuarioService {
     }
 
     public UsuarioDTO cadastrarUsuario(UsuarioDTO usuarioDto){
+        Usuario usuarioEmail = usuarioRepository.findByEmail(usuarioDto.getEmail());
+        usuarioSpec.verifyEmailDup(usuarioEmail);
+
         Usuario usuario = converterUsuarioDtoParaUsuario(usuarioDto);
         usuario = usuarioRepository.save(usuario);
         return converterUsuarioParaUsuarioDto(usuario);
@@ -44,8 +51,10 @@ public class UsuarioService {
     }
 
     public UsuarioDTO atualizarUsuario(UsuarioDTO usuarioDto){
+        usuarioSpec.verifyCampoIdNulo(usuarioDto.getId());
         Usuario usuario = usuarioRepository.findById(usuarioDto.getId())
                 .orElseThrow(() -> new RuntimeException("MSG_USUARIO"));
+        usuarioSpec.verifyEmailEmUso(usuario, usuarioDto);
         usuario = converterUsuarioDtoParaUsuario(usuarioDto);
         usuarioRepository.save(usuario);
         return  converterUsuarioParaUsuarioDto(usuario);

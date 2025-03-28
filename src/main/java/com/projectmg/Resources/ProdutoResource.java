@@ -43,13 +43,13 @@ public class ProdutoResource {
         return ResponseEntity.ok(produtoService.atualizarProduto(produtoDTO));
     }
 
-    @RequestMapping("/buscar/{nome}")
+    @RequestMapping("/b/nome/{nome}")
     public ResponseEntity<List<ProdutoDTO>> buscarProdutoPorNome(@PathVariable String nome){
         produtoService.buscarProdutoPorNome(nome);
         return ResponseEntity.ok(produtoService.buscarProdutoPorNome(nome));
     }
 
-    @RequestMapping("/buscar/{referencia}")
+    @RequestMapping("/b/ref/{referencia}")
     public ResponseEntity<List<ProdutoDTO>> buscarProdutoPorReferencia(@PathVariable String referencia){
         produtoService.buscarProdutoPorReferencia(referencia);
         return ResponseEntity.ok(produtoService.buscarProdutoPorReferencia(referencia));

@@ -3,6 +3,7 @@ package com.projectmg.Services;
 import com.projectmg.Dto.ProdutoDTO;
 import com.projectmg.Models.Produto;
 import com.projectmg.Repositories.ProdutoRepository;
+import com.projectmg.Specs.ProdutoSpec;
 import com.projectmg.exceptions.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public class ProdutoService {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+
+    @Autowired
+    private ProdutoSpec produtoSpec;
 
     public ProdutoDTO converterProdutoParaProdutoDTO(Produto produto){
         ProdutoDTO produtoDTO = new ProdutoDTO();
@@ -34,6 +38,12 @@ public class ProdutoService {
     }
 
     public ProdutoDTO cadastrarProduto(ProdutoDTO produtoDTO){
+        List<Produto> produtoNome = produtoRepository.findByNome(produtoDTO.getNome());
+        produtoSpec.verifyProdutoNomeExists(produtoNome);
+        List<Produto> produtoRef = produtoRepository.findByReferencia(produtoDTO.getReferencia());
+        produtoSpec.verifyProdutoRefExists(produtoRef);
+        produtoSpec.verifyProdutoNome(produtoDTO.getNome());
+        produtoSpec.verifyProdutoRef(produtoDTO.getReferencia());
         Produto produto = converterProdutoDTOParaProduto(produtoDTO);
         produto = produtoRepository.save(produto);
         return converterProdutoParaProdutoDTO(produto);
@@ -59,9 +69,7 @@ public class ProdutoService {
 
     public List<ProdutoDTO> buscarProdutoPorNome(String nome){
         List<Produto> produtos = produtoRepository.findByNome(nome);
-        if (produtos.isEmpty()) {
-            throw new BusinessException(MSG_PRODUTO);
-        }
+        produtoSpec.verifyProdutoAllNome(produtos);
         List<ProdutoDTO> dtos = new java.util.ArrayList<>();
         produtos.forEach(produto -> {
             dtos.add(converterProdutoParaProdutoDTO(produto));
@@ -72,9 +80,7 @@ public class ProdutoService {
 
     public List<ProdutoDTO> buscarProdutoPorReferencia(String referencia){
         List<Produto> produtos = produtoRepository.findByReferencia(referencia);
-        if (produtos.isEmpty()) {
-            throw new BusinessException(MSG_PRODUTO);
-        }
+        produtoSpec.verifyProdutoAllRef(produtos);
         List<ProdutoDTO> dtos = new java.util.ArrayList<>();
         produtos.forEach(produto -> {
             dtos.add(converterProdutoParaProdutoDTO(produto));

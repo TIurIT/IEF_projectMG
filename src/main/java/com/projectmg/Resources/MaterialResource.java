@@ -24,7 +24,7 @@ public class MaterialResource {
     @PostMapping("/cadastrar")
     public ResponseEntity<MaterialDTO> cadastrarMaterial(@RequestBody MaterialDTO MaterialDto){
         MaterialDTO material = materialService.cadastrarMaterial(MaterialDto);
-        return ResponseEntity.ok(materialService.cadastrarMaterial(material));
+        return ResponseEntity.ok(material);
     }
 
     @DeleteMapping("/deletar/{id}")
