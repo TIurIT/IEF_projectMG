@@ -42,9 +42,11 @@ public class ClienteService {
     public ClienteDTO cadastrarCliente(ClienteDTO clienteDTO){
         clienteSpec.verifyClienteNome(clienteDTO.getNome());
         List<Cliente> clientesNome = clienteRepository.findByNome(clienteDTO.getNome());
+        Cliente clienteEmail = clienteRepository.findByEmail(clienteDTO.getEmail());
+        clienteSpec.verifyClienteEmailDup(clienteEmail);
         clienteSpec.verifyClienteNomeExist(clientesNome);
-        clienteSpec.verifyClienteEmail(clientesNome);
-        clienteSpec.verifyClienteTelefone(clientesNome);
+        clienteSpec.verifyClienteEmail(clienteDTO.getEmail());
+        clienteSpec.verifyClienteTelefone(clienteDTO.getTelefone());
         clienteSpec.verifyClienteCpfCnpj(clientesNome);
 
         Cliente cliente = converterClienteDTOParaCliente(clienteDTO);

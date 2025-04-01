@@ -15,8 +15,8 @@ public class ClienteResource {
     @Autowired
     private ClienteService clienteService;
 
-    @GetMapping("/buscar/id")
-    public ResponseEntity<ClienteDTO> buscarClientePorId(@RequestParam Long id) {
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<ClienteDTO> buscarClientePorId(@PathVariable Long id) {
         return ResponseEntity.ok(clienteService.buscarClientePorId(id));
     }
 

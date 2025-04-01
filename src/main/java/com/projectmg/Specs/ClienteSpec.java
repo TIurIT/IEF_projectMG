@@ -5,6 +5,7 @@ import com.projectmg.Models.Cliente;
 import com.projectmg.Repositories.ClienteRepository;
 import com.projectmg.Services.ClienteService;
 import com.projectmg.exceptions.BusinessException;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,9 +20,9 @@ public class ClienteSpec {
     @Autowired
     private ClienteRepository clienteRepository;
     
-    private static final String MSG_EMAIL = "Usuário já cadastrado com e-mail: %s.";
-    private static final String MSG_CPF = "Usuário já cadastrado com cpf/cnpj: %s.";
-    private static final String MSG_NOME_EXIST = "Usuário já cadastrado com nome: %s.";
+    private static final String MSG_EMAIL = "Email já cadastrado.";
+    private static final String MSG_CPF = "CPF/CNPJ já cadastrado.";
+    private static final String MSG_NOME_EXIST = "Usuário já cadastrado.";
     private static final String MSG_CLIENTE = "Cliente não encontrado";
     private static final String MSG_CLIENTE_NOME = "Campo nome deve ser preenchido";
     private static final String MSG_CLIENTE_EMAIL = "Campo email deve ser preenchido";
@@ -48,14 +49,20 @@ public class ClienteSpec {
         }
     }
     
-    public void verifyClienteEmail(List<Cliente> clientes) {
-        if (nonNull(clientes)) {
+    public void verifyClienteEmail(String email) {
+        if (isNull(email)) {
             throw new BusinessException(MSG_CLIENTE_EMAIL);
         }
     }
-    
-    public void verifyClienteTelefone(List<Cliente> clientes) {
-        if (clientes.isEmpty()) {
+
+    public void verifyClienteEmailDup(Cliente email) {
+        if (nonNull(email)) {
+            throw new BusinessException(MSG_EMAIL);
+        }
+    }
+
+    public void verifyClienteTelefone(String telefone) {
+        if (isNull(telefone)) {
             throw new BusinessException(MSG_CLIENTE_TELEFONE);
         }
     }

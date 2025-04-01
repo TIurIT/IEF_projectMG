@@ -20,8 +20,6 @@ public class OrdemProducao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "cliente_id")
-    private Long clienteId;
 
     @Column(name = "grade_description")
     private String gradeDescription;
@@ -36,6 +34,10 @@ public class OrdemProducao {
     @ManyToOne
     @JoinColumn(name = "material_id")
     private Material material;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente clienteId;
 
     @Override
     public boolean equals(Object o) {

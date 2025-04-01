@@ -1,20 +1,21 @@
 package com.projectmg.Dto;
 
+import com.projectmg.Models.Cliente;
 import com.projectmg.Models.Material;
 import com.projectmg.Models.Produto;
 
 public class OrdemProducaoDTO {
 
     private Long id;
-    private Long clienteId;
     private String gradeDescription;
     private Integer quantidade_total;
     private Produto produto;
     private Material material;
+    private Cliente clienteId;
 
     public OrdemProducaoDTO(){}
 
-    public OrdemProducaoDTO(Long id,Long clienteId, String gradeDescription, Integer quantidade_total,
+    public OrdemProducaoDTO(Long id,Cliente clienteId, String gradeDescription, Integer quantidade_total,
                             Produto produto, Material material) {
         this.id = id;
         this.clienteId = clienteId;
@@ -32,11 +33,11 @@ public class OrdemProducaoDTO {
         this.id = id;
     }
 
-    public Long getClienteId() {
+    public Cliente getClienteId() {
         return clienteId;
     }
 
-    public void setClienteId(Long clienteId) {
+    public void setClienteId(Cliente clienteId) {
         this.clienteId = clienteId;
     }
 
