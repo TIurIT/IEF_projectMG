@@ -15,6 +15,8 @@ public class OrdemProducaoDTO {
 
     public OrdemProducaoDTO(){}
 
+    //ALTERAR VARIAVEIS -> ERROS DE SINTAXE
+
     public OrdemProducaoDTO(Long id,Cliente clienteId, String gradeDescription, Integer quantidade_total,
                             Produto produto, Material material) {
         this.id = id;
