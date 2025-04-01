@@ -20,46 +20,59 @@ public class ClienteSpec {
     private ClienteRepository clienteRepository;
     
     private static final String MSG_EMAIL = "Usuário já cadastrado com e-mail: %s.";
+    private static final String MSG_CPF = "Usuário já cadastrado com cpf/cnpj: %s.";
+    private static final String MSG_NOME_EXIST = "Usuário já cadastrado com nome: %s.";
     private static final String MSG_CLIENTE = "Cliente não encontrado";
+    private static final String MSG_CLIENTE_NOME = "Campo nome deve ser preenchido";
+    private static final String MSG_CLIENTE_EMAIL = "Campo email deve ser preenchido";
+    private static final String MSG_CLIENTE_TELEFONE = "Campo telefone deve ser preenchido";
+    private static final String MSG_CLIENTE_CPF = "Campo cpf/cnpj deve ser preenchido";
+
     
     
-    public void verificarCliente(List<Cliente> clientes) {
+    public void verifyCliente(List<Cliente> clientes) {
         if (clientes.isEmpty()) {
-            throw new BusinessException("MSG_CLIENTE");
+            throw new BusinessException(MSG_CLIENTE);
+        }
+    }
+
+    public void verifyClienteNome(String nome) {
+        if (nome.isEmpty()) {
+            throw new BusinessException(MSG_CLIENTE_NOME);
         }
     }
     
-    public void verificarClienteNome(List<Cliente> clientes) {
+    public void verifyClienteNomeExist(List<Cliente> clientes) {
         if (clientes.size() > 0) {
-            throw new BusinessException("MSG_CLIENTE");
+            throw new BusinessException(MSG_NOME_EXIST);
         }
     }
     
-    public void verificarClienteEmail(List<Cliente> clientes) {
+    public void verifyClienteEmail(List<Cliente> clientes) {
         if (nonNull(clientes)) {
-            throw new BusinessException("MSG_CLIENTE");
+            throw new BusinessException(MSG_CLIENTE_EMAIL);
         }
     }
     
-    public void verificarClienteTelefone(List<Cliente> clientes) {
+    public void verifyClienteTelefone(List<Cliente> clientes) {
         if (clientes.isEmpty()) {
-            throw new BusinessException("MSG_CLIENTE");
+            throw new BusinessException(MSG_CLIENTE_TELEFONE);
         }
     }
     
-    public void verificarClienteCpfCnpj(List<Cliente> clientes) {
+    public void verifyClienteCpfCnpj(List<Cliente> clientes) {
         if (isNull(clientes)) {
-            throw new BusinessException("MSG_CLIENTE");
+            throw new BusinessException(MSG_CLIENTE_CPF);
         }
     }
     
-    public void verificarClienteId(Long id) {
+    public void verifyClienteId(Long id) {
         if (isNull(id)) {
-            throw new BusinessException("MSG_CLIENTE");
+            throw new BusinessException(MSG_CLIENTE);
         }
     }
     
-    public void verificarEmailClienteEmUso(Cliente cliente, ClienteDTO clienteDTO) {
+    public void verifyEmailClienteEmUso(Cliente cliente, ClienteDTO clienteDTO) {
         boolean alterouEmail = !(cliente.getEmail().equals(clienteDTO.getEmail()));
         
         if(alterouEmail) {
@@ -69,13 +82,13 @@ public class ClienteSpec {
         }
     }
     
-    public void verificarCpfCnpClienteEmUso(Cliente cliente, ClienteDTO clienteDTO) {
-        boolean alterouCpfCnpj = !(cliente.getCpf_Cnpj().equals(clienteDTO.getCpf_cnpj()));
-        
-        if(alterouCpfCnpj) {
-            boolean existeCpfCnpj = nonNull(clienteRepository.findByCpfCnpj(clienteDTO.getCpf_cnpj()));
-            if (existeCpfCnpj)
-                throw new BusinessException(String.format(MSG_EMAIL, clienteDTO.getCpf_cnpj()));
-        }
-    }
+//    public void verifyCpfCnpClienteEmUso(Cliente cliente, ClienteDTO clienteDTO) {
+//        boolean alterouCpfCnpj = !(cliente.getCpf_cnpj().equals(clienteDTO.getCpf_cnpj()));
+//
+//        if(alterouCpfCnpj) {
+//            boolean existeCpfCnpj = nonNull(clienteRepository.findByCpfCnpj(clienteDTO.getCpf_cnpj()));
+//            if (existeCpfCnpj)
+//                throw new BusinessException(String.format(MSG_CPF, clienteDTO.getCpf_cnpj()));
+//        }
+//    }
 }

@@ -6,7 +6,7 @@ public class ClienteDTO {
     private String nome;
     private String email;
     private String telefone;
-    private String Cpf_Cnpj;
+    private String cpf_cnpj;
 
     public ClienteDTO(){}
 
@@ -43,10 +43,10 @@ public class ClienteDTO {
     }
 
     public String getCpf_cnpj() {
-        return Cpf_Cnpj;
+        return cpf_cnpj;
     }
 
     public void setCpf_cnpj(String cpf_cnpj) {
-        Cpf_Cnpj = cpf_cnpj;
+        this.cpf_cnpj = cpf_cnpj;
     }
 }

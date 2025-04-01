@@ -28,5 +28,5 @@ public class Cliente {
     private String telefone;
 
     @Column(name = "cpf_cnpj", unique = true, nullable = false)
-    private String Cpf_Cnpj;
+    private String cpf_cnpj;
 }

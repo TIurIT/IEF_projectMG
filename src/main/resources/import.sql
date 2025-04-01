@@ -1,6 +1,5 @@
 INSERT INTO produto (id, nome, referencia) VALUES (1, 'Camiseta Slim', '01');
 INSERT INTO produto (id, nome, referencia) VALUES (2, 'Camiseta Manga Longa', '01.1');
-INSERT INTO produto (id, nome, referencia) VALUES (3, 'Camiseta Manga Curta', '01.2');
 INSERT INTO produto (id, nome, referencia) VALUES (4, 'Camiseta Babylook', '02');
 INSERT INTO produto (id, nome, referencia) VALUES (5, 'Camiseta Regular', '03');
 INSERT INTO produto (id, nome, referencia) VALUES (6, 'Camiseta Gola Polo', '04');
