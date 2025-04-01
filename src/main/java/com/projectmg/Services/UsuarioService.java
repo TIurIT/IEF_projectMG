@@ -3,6 +3,7 @@ package com.projectmg.Services;
 import com.projectmg.Dto.UsuarioDTO;
 import com.projectmg.Models.Usuario;
 import com.projectmg.Repositories.UsuarioRepository;
+import com.projectmg.Specs.ClienteSpec;
 import com.projectmg.Specs.UsuarioSpec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioSpec usuarioSpec;
+    @Autowired
+    private ClienteSpec clienteSpec;
 
     public UsuarioDTO converterUsuarioParaUsuarioDto(Usuario usuario){
         UsuarioDTO usuarioDTO = new UsuarioDTO();
@@ -25,6 +28,8 @@ public class UsuarioService {
         usuarioDTO.setNome(usuario.getNome());
         usuarioDTO.setEmail(usuario.getEmail());
         usuarioDTO.setSenha(usuario.getSenha());
+        usuarioDTO.setTipo(usuario.getTipoAcesso());
+        usuarioDTO.setVerificado(usuario.isVerificado());
         return usuarioDTO;
     }
 
@@ -34,6 +39,8 @@ public class UsuarioService {
         usuario.setNome(usuarioDTO.getNome());
         usuario.setEmail(usuarioDTO.getEmail());
         usuario.setSenha(usuarioDTO.getSenha());
+        usuario.setTipoAcesso(usuarioDTO.getTipoAcesso());
+        usuario.setVerificado(usuarioDTO.isVerificado());
         return usuario;
     }
 
@@ -53,7 +60,7 @@ public class UsuarioService {
     public UsuarioDTO atualizarUsuario(UsuarioDTO usuarioDTO){
         usuarioSpec.verifyCampoIdNulo(usuarioDTO.getId());
         Usuario usuario = usuarioRepository.findById(usuarioDTO.getId())
-                .orElseThrow(() -> new RuntimeException("MSG_USUARIO"));
+                .orElseThrow(() -> new RuntimeException(MSG_USUARIO));
         usuarioSpec.verifyEmailEmUso(usuario, usuarioDTO);
         usuario = converterUsuarioDtoParaUsuario(usuarioDTO);
         usuarioRepository.save(usuario);
@@ -61,7 +68,7 @@ public class UsuarioService {
     }
 
     public UsuarioDTO buscarUsuarioPorId(Long id){
-        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("MSG_USUARIO"));
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException(MSG_USUARIO));
         return converterUsuarioParaUsuarioDto(usuario);
     }
 

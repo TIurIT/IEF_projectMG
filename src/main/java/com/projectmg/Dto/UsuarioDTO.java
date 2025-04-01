@@ -1,12 +1,14 @@
 package com.projectmg.Dto;
 
 
+import com.projectmg.Enum.TipoAcesso;
+
 public class UsuarioDTO {
         private Long id;
     private String nome;
     private String email;
     private String senha;
-    private String tipo;
+    private TipoAcesso tipoAcesso;
     private boolean verificado;
 
     public UsuarioDTO(){}
@@ -35,11 +37,11 @@ public class UsuarioDTO {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    public String getTipo() {
-        return tipo;
+    public TipoAcesso getTipoAcesso() {
+        return tipoAcesso;
     }
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTipo(TipoAcesso tipoAcesso) {
+        this.tipoAcesso = tipoAcesso;
     }
     public boolean isVerificado() {
         return verificado;

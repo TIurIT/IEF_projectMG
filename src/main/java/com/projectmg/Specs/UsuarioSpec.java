@@ -17,12 +17,12 @@ public class UsuarioSpec {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    private static final String MSG_EMAIL = "Usuário já cadastrado com e-mail: %s.";
+    private static final String MSG_EMAIL = "Email já cadastrado.";
     private static final String MSG_ID = "Id não pode ser nulo";
 
     public void verifyEmailDup(Usuario usuario) {
         if (nonNull(usuario))
-            throw new BusinessException(String.format(MSG_EMAIL, usuario.getEmail()));
+            throw new BusinessException(MSG_EMAIL);
     }
 
     public void verifyCampoIdNulo(Long id) {
@@ -35,7 +35,7 @@ public class UsuarioSpec {
         if(alterouEmail) {
             boolean existeEmail = nonNull(usuarioRepository.findByEmail(usuarioDTO.getEmail()));
             if (existeEmail)
-                throw new BusinessException(String.format(MSG_EMAIL, usuarioDTO.getEmail()));
+                throw new BusinessException(MSG_EMAIL);
         }
     }
 }
