@@ -25,7 +25,7 @@ public class ClienteService {
         clienteDTO.setNome(cliente.getNome());
         clienteDTO.setEmail(cliente.getEmail());
         clienteDTO.setTelefone(cliente.getTelefone());
-        clienteDTO.setCpf_cnpj(cliente.getCpf_cnpj());
+        clienteDTO.setCpfCnpj(cliente.getCpfCnpj());
         return clienteDTO;
     }
 
@@ -35,19 +35,21 @@ public class ClienteService {
         cliente.setNome(clienteDTO.getNome());
         cliente.setEmail(clienteDTO.getEmail());
         cliente.setTelefone(clienteDTO.getTelefone());
-        cliente.setCpf_cnpj(clienteDTO.getCpf_cnpj());
+        cliente.setCpfCnpj(clienteDTO.getCpfCnpj());
         return cliente;
     }
 
     public ClienteDTO cadastrarCliente(ClienteDTO clienteDTO){
         clienteSpec.verifyClienteNome(clienteDTO.getNome());
-        List<Cliente> clientesNome = clienteRepository.findByNome(clienteDTO.getNome());
-        Cliente clienteEmail = clienteRepository.findByEmail(clienteDTO.getEmail());
-        clienteSpec.verifyClienteEmailDup(clienteEmail);
-        clienteSpec.verifyClienteNomeExist(clientesNome);
         clienteSpec.verifyClienteEmail(clienteDTO.getEmail());
         clienteSpec.verifyClienteTelefone(clienteDTO.getTelefone());
-        clienteSpec.verifyClienteCpfCnpj(clientesNome);
+        clienteSpec.verifyClienteCpfCnpj(clienteDTO.getCpfCnpj());
+        Cliente clienteNome = clienteRepository.findByNome(clienteDTO.getNome());
+        Cliente clienteEmail = clienteRepository.findByEmail(clienteDTO.getEmail());
+        Cliente clienteCpfCnpj = clienteRepository.findByCpfCnpj(clienteDTO.getCpfCnpj());
+        clienteSpec.verifyClienteCpfCnpjDup(clienteCpfCnpj);
+        clienteSpec.verifyClienteEmailDup(clienteEmail);
+        clienteSpec.verifyClienteNomeExist(clienteNome);
 
         Cliente cliente = converterClienteDTOParaCliente(clienteDTO);
         cliente = clienteRepository.save(cliente);
@@ -55,11 +57,11 @@ public class ClienteService {
     }
 
     public ClienteDTO atualizarCliente(ClienteDTO clienteDTO){
-        List<Cliente> clientesNome = clienteRepository.findByNome(clienteDTO.getNome());
-        clienteSpec.verifyClienteNomeExist(clientesNome);
+        Cliente clienteNome = clienteRepository.findByNome(clienteDTO.getNome());
+        clienteSpec.verifyClienteNomeExist(clienteNome);
         clienteSpec.verifyClienteId(clienteDTO.getId());
         Cliente cliente = converterClienteDTOParaCliente(clienteDTO);
-//        clienteSpec.verifyCpfCnpClienteEmUso(cliente, clienteDTO);
+        clienteSpec.verifyCpfCnpClienteEmUso(cliente, clienteDTO);
         clienteSpec.verifyEmailClienteEmUso(cliente, clienteDTO);
         cliente = clienteRepository.save(cliente);
         return converterClienteParaClienteDTO(cliente);
@@ -76,7 +78,7 @@ public class ClienteService {
     }
 
     public List<ClienteDTO> buscarClientePorNome(String nome){
-        List<Cliente> clientes = clienteRepository.findByNome(nome);
+        List<Cliente> clientes = clienteRepository.findByNomeAll(nome);
         clienteSpec.verifyCliente(clientes);
         List<ClienteDTO> dtos = new java.util.ArrayList<>();
         clientes.forEach(cliente -> {

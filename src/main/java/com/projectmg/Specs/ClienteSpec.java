@@ -22,7 +22,7 @@ public class ClienteSpec {
     
     private static final String MSG_EMAIL = "Email já cadastrado.";
     private static final String MSG_CPF = "CPF/CNPJ já cadastrado.";
-    private static final String MSG_NOME_EXIST = "Usuário já cadastrado.";
+    private static final String MSG_NOME_EXIST = "Cliente já cadastrado.";
     private static final String MSG_CLIENTE = "Cliente não encontrado";
     private static final String MSG_CLIENTE_NOME = "Campo nome deve ser preenchido";
     private static final String MSG_CLIENTE_EMAIL = "Campo email deve ser preenchido";
@@ -43,8 +43,8 @@ public class ClienteSpec {
         }
     }
     
-    public void verifyClienteNomeExist(List<Cliente> clientes) {
-        if (clientes.size() > 0) {
+    public void verifyClienteNomeExist(Cliente nome) {
+        if (nonNull(nome)) {
             throw new BusinessException(MSG_NOME_EXIST);
         }
     }
@@ -67,9 +67,15 @@ public class ClienteSpec {
         }
     }
     
-    public void verifyClienteCpfCnpj(List<Cliente> clientes) {
-        if (isNull(clientes)) {
+    public void verifyClienteCpfCnpj(String cpfCnpj) {
+        if (isNull(cpfCnpj)) {
             throw new BusinessException(MSG_CLIENTE_CPF);
+        }
+    }
+
+    public void verifyClienteCpfCnpjDup(Cliente cpfCnpj) {
+        if (nonNull(cpfCnpj)) {
+            throw new BusinessException(MSG_CPF);
         }
     }
     
@@ -85,17 +91,17 @@ public class ClienteSpec {
         if(alterouEmail) {
             boolean existeEmail = nonNull(clienteRepository.findByEmail(clienteDTO.getEmail()));
             if (existeEmail)
-                throw new BusinessException(String.format(MSG_EMAIL, clienteDTO.getEmail()));
+                throw new BusinessException((MSG_EMAIL));
         }
     }
     
-//    public void verifyCpfCnpClienteEmUso(Cliente cliente, ClienteDTO clienteDTO) {
-//        boolean alterouCpfCnpj = !(cliente.getCpf_cnpj().equals(clienteDTO.getCpf_cnpj()));
-//
-//        if(alterouCpfCnpj) {
-//            boolean existeCpfCnpj = nonNull(clienteRepository.findByCpfCnpj(clienteDTO.getCpf_cnpj()));
-//            if (existeCpfCnpj)
-//                throw new BusinessException(String.format(MSG_CPF, clienteDTO.getCpf_cnpj()));
-//        }
-//    }
+    public void verifyCpfCnpClienteEmUso(Cliente cliente, ClienteDTO clienteDTO) {
+        boolean alterouCpfCnpj = !(cliente.getCpfCnpj().equals(clienteDTO.getCpfCnpj()));
+
+        if(alterouCpfCnpj) {
+            boolean existeCpfCnpj = nonNull(clienteRepository.findByCpfCnpj(clienteDTO.getCpfCnpj()));
+            if (existeCpfCnpj)
+                throw new BusinessException(MSG_CPF);
+        }
+    }
 }
