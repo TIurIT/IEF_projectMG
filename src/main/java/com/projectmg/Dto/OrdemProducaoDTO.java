@@ -1,17 +1,23 @@
 package com.projectmg.Dto;
 
+import com.projectmg.Models.Material;
+import com.projectmg.Models.Produto;
+
 public class OrdemProducaoDTO {
 
     private Long id;
+    private Long clienteId;
     private String gradeDescription;
     private Integer quantidade_total;
-    private ProdutoDTO produto;
-    private MaterialDTO material;
+    private Produto produto;
+    private Material material;
 
     public OrdemProducaoDTO(){}
 
-    public OrdemProducaoDTO(Long id, String gradeDescription, Integer quantidade_total, ProdutoDTO produto, MaterialDTO material) {
+    public OrdemProducaoDTO(Long id,Long clienteId, String gradeDescription, Integer quantidade_total,
+                            Produto produto, Material material) {
         this.id = id;
+        this.clienteId = clienteId;
         this.gradeDescription = gradeDescription;
         this.quantidade_total = quantidade_total;
         this.produto = produto;
@@ -24,6 +30,14 @@ public class OrdemProducaoDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getClienteId() {
+        return clienteId;
+    }
+
+    public void setClienteId(Long clienteId) {
+        this.clienteId = clienteId;
     }
 
     public String getGradeDescription() {
@@ -42,19 +56,19 @@ public class OrdemProducaoDTO {
         this.quantidade_total = quantidade_total;
     }
 
-    public ProdutoDTO getProduto() {
+    public Produto getProduto() {
         return produto;
     }
 
-    public void setProduto(ProdutoDTO produto) {
+    public void setProduto(Produto produto) {
         this.produto = produto;
     }
 
-    public MaterialDTO getMaterial() {
+    public Material getMaterial() {
         return material;
     }
 
-    public void setMaterial(MaterialDTO material) {
+    public void setMaterial(Material material) {
         this.material = material;
     }
 }

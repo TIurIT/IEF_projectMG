@@ -37,7 +37,9 @@ public class Terceiro {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Terceiro terceiro = (Terceiro) o;
-        return Objects.equals(id, terceiro.id) && Objects.equals(nome, terceiro.nome) && Objects.equals(bairro, terceiro.bairro) && Objects.equals(telefone, terceiro.telefone) && servico == terceiro.servico;
+        return Objects.equals(id, terceiro.id) && Objects.equals(nome, terceiro.nome) &&
+                Objects.equals(bairro, terceiro.bairro) && Objects.equals(telefone, terceiro.telefone)
+                && servico == terceiro.servico;
     }
 
     @Override

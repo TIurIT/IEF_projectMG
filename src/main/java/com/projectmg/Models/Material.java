@@ -40,7 +40,10 @@ public class Material {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Material material = (Material) o;
-        return Objects.equals(id, material.id) && Objects.equals(tipo, material.tipo) && Objects.equals(nome, material.nome) && Objects.equals(marca, material.marca) && Objects.equals(quantidade, material.quantidade) && Objects.equals(dataDeCriacao, material.dataDeCriacao);
+        return Objects.equals(id, material.id) && Objects.equals(tipo, material.tipo)
+                && Objects.equals(nome, material.nome) && Objects.equals(marca, material.marca)
+                && Objects.equals(quantidade, material.quantidade)
+                && Objects.equals(dataDeCriacao, material.dataDeCriacao);
     }
 
     @Override

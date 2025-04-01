@@ -20,28 +20,28 @@ public class UsuarioService {
     private UsuarioSpec usuarioSpec;
 
     public UsuarioDTO converterUsuarioParaUsuarioDto(Usuario usuario){
-        UsuarioDTO usuarioDto = new UsuarioDTO();
-        usuarioDto.setId(usuario.getId());
-        usuarioDto.setNome(usuario.getNome());
-        usuarioDto.setEmail(usuario.getEmail());
-        usuarioDto.setSenha(usuario.getSenha());
-        return usuarioDto;
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setId(usuario.getId());
+        usuarioDTO.setNome(usuario.getNome());
+        usuarioDTO.setEmail(usuario.getEmail());
+        usuarioDTO.setSenha(usuario.getSenha());
+        return usuarioDTO;
     }
 
-    public Usuario converterUsuarioDtoParaUsuario(UsuarioDTO usuarioDto){
+    public Usuario converterUsuarioDtoParaUsuario(UsuarioDTO usuarioDTO){
         Usuario usuario = new Usuario();
-        usuario.setId(usuarioDto.getId());
-        usuario.setNome(usuarioDto.getNome());
-        usuario.setEmail(usuarioDto.getEmail());
-        usuario.setSenha(usuarioDto.getSenha());
+        usuario.setId(usuarioDTO.getId());
+        usuario.setNome(usuarioDTO.getNome());
+        usuario.setEmail(usuarioDTO.getEmail());
+        usuario.setSenha(usuarioDTO.getSenha());
         return usuario;
     }
 
-    public UsuarioDTO cadastrarUsuario(UsuarioDTO usuarioDto){
-        Usuario usuarioEmail = usuarioRepository.findByEmail(usuarioDto.getEmail());
+    public UsuarioDTO cadastrarUsuario(UsuarioDTO usuarioDTO){
+        Usuario usuarioEmail = usuarioRepository.findByEmail(usuarioDTO.getEmail());
         usuarioSpec.verifyEmailDup(usuarioEmail);
 
-        Usuario usuario = converterUsuarioDtoParaUsuario(usuarioDto);
+        Usuario usuario = converterUsuarioDtoParaUsuario(usuarioDTO);
         usuario = usuarioRepository.save(usuario);
         return converterUsuarioParaUsuarioDto(usuario);
     }
@@ -50,12 +50,12 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-    public UsuarioDTO atualizarUsuario(UsuarioDTO usuarioDto){
-        usuarioSpec.verifyCampoIdNulo(usuarioDto.getId());
-        Usuario usuario = usuarioRepository.findById(usuarioDto.getId())
+    public UsuarioDTO atualizarUsuario(UsuarioDTO usuarioDTO){
+        usuarioSpec.verifyCampoIdNulo(usuarioDTO.getId());
+        Usuario usuario = usuarioRepository.findById(usuarioDTO.getId())
                 .orElseThrow(() -> new RuntimeException("MSG_USUARIO"));
-        usuarioSpec.verifyEmailEmUso(usuario, usuarioDto);
-        usuario = converterUsuarioDtoParaUsuario(usuarioDto);
+        usuarioSpec.verifyEmailEmUso(usuario, usuarioDTO);
+        usuario = converterUsuarioDtoParaUsuario(usuarioDTO);
         usuarioRepository.save(usuario);
         return  converterUsuarioParaUsuarioDto(usuario);
     }

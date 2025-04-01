@@ -28,7 +28,7 @@ public class ProdutoResource {
     @RequestMapping("/cadastrar")
     public ResponseEntity<ProdutoDTO> cadastrarProduto(@RequestBody ProdutoDTO produtoDTO){
         produtoDTO = produtoService.cadastrarProduto(produtoDTO);
-        return ResponseEntity.ok(produtoService.cadastrarProduto(produtoDTO));
+        return ResponseEntity.ok(produtoDTO);
     }
 
     @RequestMapping("/deletar/{id}")

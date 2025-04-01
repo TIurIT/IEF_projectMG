@@ -38,18 +38,24 @@ public class ProdutoService {
     }
 
     public ProdutoDTO cadastrarProduto(ProdutoDTO produtoDTO){
-        List<Produto> produtoNome = produtoRepository.findByNome(produtoDTO.getNome());
-        produtoSpec.verifyProdutoNomeExists(produtoNome);
-        List<Produto> produtoRef = produtoRepository.findByReferencia(produtoDTO.getReferencia());
-        produtoSpec.verifyProdutoRefExists(produtoRef);
         produtoSpec.verifyProdutoNome(produtoDTO.getNome());
         produtoSpec.verifyProdutoRef(produtoDTO.getReferencia());
+        List<Produto> produtoNome = produtoRepository.findByNome(produtoDTO.getNome());
+        List<Produto> produtoRef = produtoRepository.findByReferencia(produtoDTO.getReferencia());
+        produtoSpec.verifyProdutoNomeExists(produtoNome);
+        produtoSpec.verifyProdutoRefExists(produtoRef);
+
         Produto produto = converterProdutoDTOParaProduto(produtoDTO);
         produto = produtoRepository.save(produto);
         return converterProdutoParaProdutoDTO(produto);
     }
 
     public ProdutoDTO atualizarProduto(ProdutoDTO produtoDTO){
+        List<Produto> produtoNome = produtoRepository.findByNome(produtoDTO.getNome());
+        List<Produto> produtoRef = produtoRepository.findByReferencia(produtoDTO.getReferencia());
+        produtoSpec.verifyProdutoNomeExists(produtoNome);
+        produtoSpec.verifyProdutoRefExists(produtoRef);
+        produtoSpec.verifyProdutoId(produtoDTO.getId());
         Produto produto = produtoRepository.findById(produtoDTO.getId())
                 .orElseThrow(() -> new BusinessException(MSG_PRODUTO));
         produto = converterProdutoDTOParaProduto(produtoDTO);
@@ -69,7 +75,7 @@ public class ProdutoService {
 
     public List<ProdutoDTO> buscarProdutoPorNome(String nome){
         List<Produto> produtos = produtoRepository.findByNome(nome);
-        produtoSpec.verifyProdutoAllNome(produtos);
+        produtoSpec.verifyProduto(produtos);
         List<ProdutoDTO> dtos = new java.util.ArrayList<>();
         produtos.forEach(produto -> {
             dtos.add(converterProdutoParaProdutoDTO(produto));
@@ -80,7 +86,7 @@ public class ProdutoService {
 
     public List<ProdutoDTO> buscarProdutoPorReferencia(String referencia){
         List<Produto> produtos = produtoRepository.findByReferencia(referencia);
-        produtoSpec.verifyProdutoAllRef(produtos);
+        produtoSpec.verifyProduto(produtos);
         List<ProdutoDTO> dtos = new java.util.ArrayList<>();
         produtos.forEach(produto -> {
             dtos.add(converterProdutoParaProdutoDTO(produto));

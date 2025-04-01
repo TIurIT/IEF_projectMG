@@ -20,8 +20,6 @@ public class MaterialSpec {
     private static final String MSG_MATERIAL_MARCA = "Marca do material não pode ser vazia";
     private static final String MSG_MATERIAL_TIPO = "Tipo do material não pode ser vazio";
 
-    @Autowired
-    MaterialRepository materialRepository;
 
     public void verifyMaterialNomeExists(List<Material> materiais) {
         if (materiais.size() > 0) {
@@ -49,6 +47,12 @@ public class MaterialSpec {
 
     public void verifyMaterialId(Long id) {
         if (isNull(id)) {
+            throw new BusinessException(MSG_MATERIAL);
+        }
+    }
+
+    public void verifyMaterial(List<Material> materiais) {
+        if (materiais.isEmpty()) {
             throw new BusinessException(MSG_MATERIAL);
         }
     }

@@ -22,20 +22,20 @@ public class MaterialResource {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<MaterialDTO> cadastrarMaterial(@RequestBody MaterialDTO MaterialDto){
-        MaterialDTO material = materialService.cadastrarMaterial(MaterialDto);
+    public ResponseEntity<MaterialDTO> cadastrarMaterial(@RequestBody MaterialDTO materialDTO){
+        MaterialDTO material = materialService.cadastrarMaterial(materialDTO);
         return ResponseEntity.ok(material);
     }
 
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> deletarMaterial(@PathVariable Long id) {
-        materialService.excluirMaterial(id);
+        materialService.deletarMaterial(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<MaterialDTO> atualizarMaterial(@PathVariable Long id, @RequestBody MaterialDTO MaterialDto){
-        return ResponseEntity.ok(materialService.atualizarMaterial(MaterialDto));
+    public ResponseEntity<MaterialDTO> atualizarMaterial(@PathVariable Long id, @RequestBody MaterialDTO materialDTO){
+        return ResponseEntity.ok(materialService.atualizarMaterial(materialDTO));
     }
 
 

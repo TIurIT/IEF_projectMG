@@ -30,7 +30,8 @@ public class Produto {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Produto produto = (Produto) o;
-        return Objects.equals(id, produto.id) && Objects.equals(nome, produto.nome) && Objects.equals(referencia, produto.referencia);
+        return Objects.equals(id, produto.id) && Objects.equals(nome, produto.nome)
+                && Objects.equals(referencia, produto.referencia);
     }
 
     @Override

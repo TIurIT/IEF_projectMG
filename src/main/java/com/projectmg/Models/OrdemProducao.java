@@ -20,6 +20,9 @@ public class OrdemProducao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "cliente_id")
+    private Long clienteId;
+
     @Column(name = "grade_description")
     private String gradeDescription;
 
@@ -38,11 +41,14 @@ public class OrdemProducao {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         OrdemProducao that = (OrdemProducao) o;
-        return Objects.equals(id, that.id) && Objects.equals(gradeDescription, that.gradeDescription) && Objects.equals(quantidade_total, that.quantidade_total) && Objects.equals(produto, that.produto) && Objects.equals(material, that.material);
+        return Objects.equals(id, that.id) && Objects.equals(clienteId, that.clienteId)
+                && Objects.equals(gradeDescription, that.gradeDescription)
+                && Objects.equals(quantidade_total, that.quantidade_total) && Objects.equals(produto, that.produto)
+                && Objects.equals(material, that.material);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, gradeDescription, quantidade_total, produto, material);
+        return Objects.hash(id, clienteId, gradeDescription, quantidade_total, produto, material);
     }
 }

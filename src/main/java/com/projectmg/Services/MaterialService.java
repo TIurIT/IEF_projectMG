@@ -44,8 +44,8 @@ public class MaterialService {
     }
 
     public MaterialDTO cadastrarMaterial(MaterialDTO materialDTO) {
-        List<Material> materialNome = materialRepository.findByNome(materialDTO.getNome());
         materialSpec.verifyMaterialNome(materialDTO.getNome());
+        List<Material> materialNome = materialRepository.findByNome(materialDTO.getNome());
         materialSpec.verifyMaterialNomeExists(materialNome);
         materialSpec.verifyMaterialTipo(materialDTO.getTipo());
         materialSpec.verigyMaterialMarca(materialDTO.getMarca());
@@ -59,6 +59,7 @@ public class MaterialService {
         List<Material> materialNome = materialRepository.findByNome(materialDTO.getNome());
         materialSpec.verifyMaterialNomeExists(materialNome);
         materialSpec.verifyMaterialId(materialDTO.getId());
+
         Material material = materialRepository.findById(materialDTO.getId())
                         .orElseThrow(() -> new BusinessException(MSG_ESTOQUE));
         material = converterMaterialDtoParaMaterial(materialDTO);
@@ -66,7 +67,7 @@ public class MaterialService {
         return  converterMaterialParaMaterialDto(material);
     }
 
-    public void excluirMaterial(Long id) {
+    public void deletarMaterial(Long id) {
         materialRepository.deleteById(id);
     }
 
@@ -78,9 +79,7 @@ public class MaterialService {
 
     public List<MaterialDTO> buscarPorNome(String nome) {
         List<Material> materiais = materialRepository.findByNome(nome);
-        if (materiais.isEmpty()) {
-            throw new BusinessException(MSG_ESTOQUE);
-        }
+        materialSpec.verifyMaterial(materiais);
         List<MaterialDTO> dtos = new java.util.ArrayList<>();
         materiais.forEach(material -> {
             dtos.add(converterMaterialParaMaterialDto(material));
@@ -91,9 +90,7 @@ public class MaterialService {
 
     public List<MaterialDTO> buscarPorTipo(String tipo) {
         List<Material> materiais = materialRepository.findByTipo(tipo);
-        if (materiais.isEmpty()) {
-            throw new BusinessException(MSG_ESTOQUE);
-        }
+        materialSpec.verifyMaterial(materiais);
         List<MaterialDTO> dtos = new java.util.ArrayList<>();
         materiais.forEach(material -> {
             dtos.add(converterMaterialParaMaterialDto(material));
@@ -104,9 +101,7 @@ public class MaterialService {
 
     public List<MaterialDTO> buscarPorMarca(String marca) {
         List<Material> materiais = materialRepository.findByMarca(marca);
-        if (materiais.isEmpty()) {
-            throw new BusinessException(MSG_ESTOQUE);
-        }
+        materialSpec.verifyMaterial(materiais);
         List<MaterialDTO> dtos = new java.util.ArrayList<>();
         materiais.forEach(material -> {
             dtos.add(converterMaterialParaMaterialDto(material));

@@ -14,9 +14,6 @@ import static java.util.Objects.nonNull;
 @Component
 public class UsuarioSpec {
 
-
-    @Autowired
-    private UsuarioService usuarioService;
     @Autowired
     private UsuarioRepository usuarioRepository;
 

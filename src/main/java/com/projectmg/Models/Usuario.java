@@ -37,7 +37,9 @@ public class Usuario {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
-        return Objects.equals(id, usuario.id) && Objects.equals(nome, usuario.nome) && Objects.equals(email, usuario.email) && Objects.equals(senha, usuario.senha) && tipoAcesso == usuario.tipoAcesso;
+        return Objects.equals(id, usuario.id) && Objects.equals(nome, usuario.nome)
+                && Objects.equals(email, usuario.email) && Objects.equals(senha, usuario.senha)
+                && tipoAcesso == usuario.tipoAcesso;
     }
 
     @Override

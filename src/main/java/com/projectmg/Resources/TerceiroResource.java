@@ -22,8 +22,9 @@ public class TerceiroResource {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<TerceiroDTO> cadastrarTerceiro(@RequestBody TerceiroDTO terceiroDto){
-        return ResponseEntity.ok(terceiroService.cadastrarTerceiro(terceiroDto));
+    public ResponseEntity<TerceiroDTO> cadastrarTerceiro(@RequestBody TerceiroDTO terceiroDTO){
+        terceiroDTO = terceiroService.cadastrarTerceiro(terceiroDTO);
+        return ResponseEntity.ok(terceiroDTO);
     }
 
     @DeleteMapping("/deletar/{id}")
@@ -33,8 +34,8 @@ public class TerceiroResource {
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<TerceiroDTO> atualizarTerceiro(@PathVariable Long id, @RequestBody TerceiroDTO terceiroDto){
-        return ResponseEntity.ok(terceiroService.atualizarTerceiro(terceiroDto));
+    public ResponseEntity<TerceiroDTO> atualizarTerceiro(@PathVariable Long id, @RequestBody TerceiroDTO terceiroDTO){
+        return ResponseEntity.ok(terceiroService.atualizarTerceiro(terceiroDTO));
     }
 
     @GetMapping("/b/nome/{nome}")
@@ -47,4 +48,8 @@ public class TerceiroResource {
         return ResponseEntity.ok(terceiroService.buscarTerceiroPorBairro(bairro));
     }
 
+//    @GetMapping("/b/servico/{servico}")
+//    public ResponseEntity<List<TerceiroDTO>> buscarTerceiroPorServico(@PathVariable String servico){
+//        return ResponseEntity.ok(terceiroService.buscarTerceiroPorServico(servico));
+//    }
 }

@@ -4,6 +4,7 @@ import com.projectmg.Dto.TerceiroDTO;
 import com.projectmg.Enum.Servico;
 import com.projectmg.Models.Terceiro;
 import com.projectmg.Repositories.TerceiroRepository;
+import com.projectmg.Specs.TerceiroSpec;
 import com.projectmg.exceptions.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +16,11 @@ import java.util.List;
 public class TerceiroService {
 
     private static final String MSG_TERCEIRO = "Terceiro não encontrado";
+
     @Autowired
     private TerceiroRepository terceiroRepository;
+    @Autowired
+    private TerceiroSpec terceiroSpec;
 
     public Terceiro converterTerceiroDTOParaTerceiro(TerceiroDTO TerceiroDTO){
         Terceiro terceiro = new Terceiro();
@@ -39,12 +43,23 @@ public class TerceiroService {
     }
 
     public TerceiroDTO cadastrarTerceiro(TerceiroDTO terceiroDTO){
+        terceiroSpec.verifyTerceiroNome(terceiroDTO.getNome());
+        terceiroSpec.verifyTerceiroBairro(terceiroDTO.getBairro());
+        terceiroSpec.verifyTerceiroTelefone(terceiroDTO.getTelefone());
+        List<Terceiro> terceiroNome = terceiroRepository.findByNome(terceiroDTO.getNome());
+        terceiroSpec.verifyTerceiroNomeExists(terceiroNome);
+        terceiroSpec.verifyTerceiroBairroExists(terceiroNome);
         Terceiro terceiro = converterTerceiroDTOParaTerceiro(terceiroDTO);
         terceiro = terceiroRepository.save(terceiro);
         return converterTerceiroParaTerceiroDTO(terceiro);
     }
 
     public TerceiroDTO atualizarTerceiro(TerceiroDTO terceiroDTO){
+        List<Terceiro> terceiroNome = terceiroRepository.findByNome(terceiroDTO.getNome());
+        terceiroSpec.verifyTerceiroNomeExists(terceiroNome);
+        terceiroSpec.verifyTerceiroBairroExists(terceiroNome);
+        terceiroSpec.verifyTerceiroId(terceiroDTO.getId());
+
         Terceiro terceiro = terceiroRepository.findById(terceiroDTO.getId())
                 .orElseThrow(() -> new BusinessException(MSG_TERCEIRO));
         terceiro = converterTerceiroDTOParaTerceiro(terceiroDTO);
@@ -64,9 +79,7 @@ public class TerceiroService {
 
     public List<TerceiroDTO> buscarTerceiroPorNome(String nome){
         List<Terceiro> terceiros = terceiroRepository.findByNome(nome);
-        if (terceiros.isEmpty()) {
-            throw new BusinessException(MSG_TERCEIRO);
-        }
+        terceiroSpec.verifyTerceiro(terceiros);
         List<TerceiroDTO> dtos = new ArrayList<>();
         terceiros.forEach(terceiro -> {
            dtos.add(converterTerceiroParaTerceiroDTO(terceiro));
@@ -77,9 +90,7 @@ public class TerceiroService {
 
     public List<TerceiroDTO> buscarTerceiroPorBairro(String bairro){
         List<Terceiro> terceiros = terceiroRepository.findByBairro(bairro);
-        if (terceiros.isEmpty()) {
-            throw new BusinessException(MSG_TERCEIRO);
-        }
+        terceiroSpec.verifyTerceiro(terceiros);
         List<TerceiroDTO> dtos = new ArrayList<>();
         terceiros.forEach(terceiro -> {
            dtos.add(converterTerceiroParaTerceiroDTO(terceiro));
@@ -88,4 +99,15 @@ public class TerceiroService {
         return dtos;
     }
 
+//    public List<TerceiroDTO> buscarTerceiroPorServico(String servico){
+//        List<Terceiro> terceiros = terceiroRepository.findByServico(servico);
+//        terceiroSpec.verifyTerceiro(terceiros);
+//        List<TerceiroDTO> dtos = new ArrayList<>();
+//        terceiros.forEach(terceiro -> {
+//            dtos.add(converterTerceiroParaTerceiroDTO(terceiro));
+//        });
+//
+//        return dtos;
+//
+//    }
 }
