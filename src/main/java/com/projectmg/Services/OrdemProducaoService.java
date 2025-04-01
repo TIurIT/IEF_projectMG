@@ -18,12 +18,12 @@ public class OrdemProducaoService {
 
     public OrdemProducaoDTO converterOrdemProducaoParaOrdemProducaoDTO(OrdemProducao ordemProducao){
         OrdemProducaoDTO ordemProducaoDTO = new OrdemProducaoDTO();
-        ordemProducao.setId(ordemProducao.getId());
-        ordemProducao.setClienteId(ordemProducao.getClienteId());
-        ordemProducao.setGradeDescription(ordemProducao.getGradeDescription());
-        ordemProducao.setQuantidade_total(ordemProducao.getQuantidade_total());
-        ordemProducao.setProduto(ordemProducao.getProduto());
-        ordemProducao.setMaterial(ordemProducao.getMaterial());
+        ordemProducaoDTO.setId(ordemProducao.getId());
+        ordemProducaoDTO.setClienteId(ordemProducao.getClienteId());
+        ordemProducaoDTO.setGradeDescription(ordemProducao.getGradeDescription());
+        ordemProducaoDTO.setQuantidade_total(ordemProducao.getQuantidade_total());
+        ordemProducaoDTO.setProduto(ordemProducao.getProduto());
+        ordemProducaoDTO.setMaterial(ordemProducao.getMaterial());
         return ordemProducaoDTO;
     }
 
