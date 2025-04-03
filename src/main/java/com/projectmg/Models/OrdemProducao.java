@@ -6,10 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
-@Table(name = "ordem_producao")
 @Entity
+@Table(name = "tb_ordem_producao")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,37 +22,26 @@ public class OrdemProducao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    @Column(name = "grade_description")
-    private String gradeDescription;
-
-    @Column(name = "quantidade_total")
-    private Integer quantidade_total;
+    @Column(name="data_de_criacao")
+    private Date dataDeCriacao;
 
     @ManyToOne
-    @JoinColumn(name = "produto_id")
-    private Produto produto;
+    @JoinColumn(name="cliente_id")
+    private Cliente cliente;
 
-    @ManyToOne
-    @JoinColumn(name = "material_id")
-    private Material material;
-
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Cliente clienteId;
+    @OneToMany(mappedBy = "ordemProducao")
+    @JoinColumn(name = "ordem_producao_id")
+    private List<OrdemProducaoItem> itens;
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         OrdemProducao that = (OrdemProducao) o;
-        return Objects.equals(id, that.id) && Objects.equals(clienteId, that.clienteId)
-                && Objects.equals(gradeDescription, that.gradeDescription)
-                && Objects.equals(quantidade_total, that.quantidade_total) && Objects.equals(produto, that.produto)
-                && Objects.equals(material, that.material);
+        return Objects.equals(id, that.id) && Objects.equals(dataDeCriacao, that.dataDeCriacao) && Objects.equals(cliente, that.cliente) && Objects.equals(itens, that.itens);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, clienteId, gradeDescription, quantidade_total, produto, material);
+        return Objects.hash(id, dataDeCriacao, cliente, itens);
     }
 }

@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface OrdemProducaoRepository extends JpaRepository<OrdemProducao, Long> {
 
-   @Query("SELECT o FROM OrdemProducao o WHERE o.clienteId = :id")
-   List<OrdemProducao> findByClienteId(Long id);
+    @Query("SELECT o FROM OrdemProducao o WHERE o.cliente = :nome")
+    List<OrdemProducao> findByClienteByNome(String nome);
+
 }

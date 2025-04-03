@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.util.Date;
 import java.util.Objects;
 
-@Table(name = "estoque")
+@Table(name = "tb_estoque_material")
 @Entity
 @Getter
 @Setter

@@ -9,36 +9,36 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/ordem-producao")
+@RequestMapping("/mg/op")
 public class OrdemProducaoResource {
 
     @Autowired
-    private OrdemProducaoService ordemProducaoService;
+    OrdemProducaoService ordemProducaoService;
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<OrdemProducaoDTO> buscarOrdemProducaoPorId(@PathVariable Long id){
+    public ResponseEntity<OrdemProducaoDTO> buscarOrdemProducaoPorId(@PathVariable Long id) {
         return ResponseEntity.ok(ordemProducaoService.buscarOrdemProducaoPorId(id));
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<OrdemProducaoDTO> cadastrarOrdemProducao(@RequestBody OrdemProducaoDTO ordemProducaoDTO){
-        OrdemProducaoDTO ordemProducao = ordemProducaoService.cadastrarOrdemProducao(ordemProducaoDTO);
-        return ResponseEntity.ok(ordemProducao);
+    public ResponseEntity<OrdemProducaoDTO> cadastrarOrdemProducao(@RequestBody OrdemProducaoDTO ordemProducaoDTO) {
+        return ResponseEntity.ok(ordemProducaoService.cadastrarOrdemProducao(ordemProducaoDTO));
+    }
+
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<OrdemProducaoDTO> atualizarOrdemProducao(@PathVariable Long id, @RequestBody OrdemProducaoDTO ordemProducaoDTO) {
+        return ResponseEntity.ok(ordemProducaoService.atualizarOrdemProducao(ordemProducaoDTO));
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Void> deletarOrdemProducao(@PathVariable Long id){
+    public ResponseEntity<Void> deletarOrdemProducao(@PathVariable Long id) {
         ordemProducaoService.deletarOrdemProducao(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/atualizar/{id}")
-    public ResponseEntity<OrdemProducaoDTO> atualizarOrdemProducao(@PathVariable Long id, @RequestBody OrdemProducaoDTO ordemProducaoDTO){
-        return ResponseEntity.ok(ordemProducaoService.atualizarOrdemProducao(ordemProducaoDTO));
-    }
-
-    @GetMapping("/buscar/{clienteId}")
-    public ResponseEntity<List<OrdemProducaoDTO>> buscarOrdemProducaoPorCliente(@PathVariable Long clienteId){
-        return ResponseEntity.ok(ordemProducaoService.buscarOrdemProducaoPorCliente(clienteId));
+    @GetMapping("/b/cliente/{nome}")
+    public ResponseEntity<List<OrdemProducaoDTO>> buscarOrdemProducaoPorCliente(@PathVariable String nome) {
+        List<OrdemProducaoDTO> list = ordemProducaoService.buscarOrdemProducaoPorCliente(nome);
+        return ResponseEntity.ok(list);
     }
 }
