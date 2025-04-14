@@ -1,11 +1,10 @@
 package com.projectmg.Services;
 
 import com.projectmg.Dto.TerceiroDTO;
-import com.projectmg.Enum.Servico;
 import com.projectmg.Models.Terceiro;
 import com.projectmg.Repositories.TerceiroRepository;
 import com.projectmg.Specs.TerceiroSpec;
-import com.projectmg.exceptions.BusinessException;
+import com.projectmg.Exceptions.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -99,15 +98,15 @@ public class TerceiroService {
         return dtos;
     }
 
-//    public List<TerceiroDTO> buscarTerceiroPorServico(String servico){
-//        List<Terceiro> terceiros = terceiroRepository.findByServico(servico);
-//        terceiroSpec.verifyTerceiro(terceiros);
-//        List<TerceiroDTO> dtos = new ArrayList<>();
-//        terceiros.forEach(terceiro -> {
-//            dtos.add(converterTerceiroParaTerceiroDTO(terceiro));
-//        });
-//
-//        return dtos;
-//
-//    }
+    public List<TerceiroDTO> buscarTerceiroPorServico(String servico){
+        List<Terceiro> terceiros = terceiroRepository.findByServico(servico);
+        terceiroSpec.verifyTerceiro(terceiros);
+        List<TerceiroDTO> dtos = new ArrayList<>();
+        terceiros.forEach(terceiro -> {
+            dtos.add(converterTerceiroParaTerceiroDTO(terceiro));
+        });
+
+        return dtos;
+
+    }
 }

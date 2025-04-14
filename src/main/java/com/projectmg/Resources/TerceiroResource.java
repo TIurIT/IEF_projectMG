@@ -1,7 +1,6 @@
 package com.projectmg.Resources;
 
 import com.projectmg.Dto.TerceiroDTO;
-import com.projectmg.Enum.Servico;
 import com.projectmg.Services.TerceiroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,8 +47,8 @@ public class TerceiroResource {
         return ResponseEntity.ok(terceiroService.buscarTerceiroPorBairro(bairro));
     }
 
-//    @GetMapping("/b/servico/{servico}")
-//    public ResponseEntity<List<TerceiroDTO>> buscarTerceiroPorServico(@PathVariable String servico){
-//        return ResponseEntity.ok(terceiroService.buscarTerceiroPorServico(servico));
-//    }
+    @GetMapping("/b/servico/{servico}")
+    public ResponseEntity<List<TerceiroDTO>> buscarTerceiroPorServico(@PathVariable String servico){
+        return ResponseEntity.ok(terceiroService.buscarTerceiroPorServico(servico));
+    }
 }

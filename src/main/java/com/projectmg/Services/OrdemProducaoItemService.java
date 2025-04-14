@@ -6,10 +6,11 @@ import com.projectmg.Repositories.OrdemProducaoItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.projectmg.Specs.OrdemSpec.MSG_OPERACAO;
+
 @Service
 public class OrdemProducaoItemService {
 
-    private static final String MSG_OPERACAO = "Operação nao encontrada";
 
     @Autowired
     private OrdemProducaoItemRepository ordemProducaoItemRepository;

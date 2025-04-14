@@ -30,7 +30,7 @@ public class OrdemProducao {
     private Cliente cliente;
 
     @OneToMany(mappedBy = "ordemProducao")
-    @JoinColumn(name = "ordem_producao_id")
+    @JoinColumn(name = "ordem_producao_item_id")
     private List<OrdemProducaoItem> itens;
 
     @Override

@@ -1,10 +1,8 @@
 package com.projectmg.Repositories;
 
-import com.projectmg.Enum.Servico;
 import com.projectmg.Models.Terceiro;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,9 +16,6 @@ public interface TerceiroRepository extends JpaRepository<Terceiro, Long> {
     @Query("SELECT t FROM Terceiro t WHERE t.bairro LIKE %:bairro%")
     List<Terceiro> findByBairro(String bairro);
 
-//    @Query("SELECT t FROM Terceiro t WHERE t.servico LIKE %:%")
-//    List<Terceiro> findByServico(@Param("servico") String servico);
-
-//    INSERIR MAIS UMA TABELA PARA REGISTRAR TIPOS DE SERVIÇOS *VAI SUBSTITUIR O ENUM*
-//    (HÁ POSSIBILIDADE DE FAZER UMA TABELA DE SUB SERVIÇOS REALIZADOS POR CADA TIPO)
+    @Query("SELECT t FROM Terceiro t WHERE t.servico LIKE %:servico%")
+    List<Terceiro> findByServico(String servico);
 }

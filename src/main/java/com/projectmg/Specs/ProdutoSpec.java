@@ -1,9 +1,7 @@
 package com.projectmg.Specs;
 
 import com.projectmg.Models.Produto;
-import com.projectmg.Services.ProdutoService;
-import com.projectmg.exceptions.BusinessException;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.projectmg.Exceptions.BusinessException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

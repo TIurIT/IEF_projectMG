@@ -8,10 +8,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.projectmg.Specs.OrdemSpec.MSG_OPERACAO;
+
 @Service
 public class OrdemProducaoService {
 
-    private static final String MSG_OPERACAO = "Operação nao encontrada";
 
    @Autowired
    private OrdemProducaoRepository ordemProducaoRepository;

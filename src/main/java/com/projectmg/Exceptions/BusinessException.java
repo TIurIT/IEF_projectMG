@@ -1,4 +1,4 @@
-package com.projectmg.exceptions;
+package com.projectmg.Exceptions;
 
 public class BusinessException  extends RuntimeException {
     private static final long serialVersionUID = 1L;

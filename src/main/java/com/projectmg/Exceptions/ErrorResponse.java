@@ -1,4 +1,4 @@
-package com.projectmg.exceptions;
+package com.projectmg.Exceptions;
 
 public class ErrorResponse {
     private String message;

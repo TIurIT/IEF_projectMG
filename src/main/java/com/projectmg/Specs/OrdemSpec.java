@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrdemSpec {
 
-    private static final String MSG_OPERACAO = "Operação nao encontrada";
+    public static final String MSG_OPERACAO = "Operação nao encontrada";
 
 }

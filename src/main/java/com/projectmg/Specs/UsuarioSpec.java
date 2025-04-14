@@ -3,8 +3,7 @@ package com.projectmg.Specs;
 import com.projectmg.Repositories.UsuarioRepository;
 import com.projectmg.Dto.UsuarioDTO;
 import com.projectmg.Models.Usuario;
-import com.projectmg.Services.UsuarioService;
-import com.projectmg.exceptions.BusinessException;
+import com.projectmg.Exceptions.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

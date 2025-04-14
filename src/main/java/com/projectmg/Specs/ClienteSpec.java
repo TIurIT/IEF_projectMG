@@ -3,9 +3,7 @@ package com.projectmg.Specs;
 import com.projectmg.Dto.ClienteDTO;
 import com.projectmg.Models.Cliente;
 import com.projectmg.Repositories.ClienteRepository;
-import com.projectmg.Services.ClienteService;
-import com.projectmg.exceptions.BusinessException;
-import lombok.NonNull;
+import com.projectmg.Exceptions.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

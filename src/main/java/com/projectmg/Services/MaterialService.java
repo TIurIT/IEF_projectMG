@@ -4,7 +4,7 @@ import com.projectmg.Dto.MaterialDTO;
 import com.projectmg.Models.Material;
 import com.projectmg.Repositories.MaterialRepository;
 import com.projectmg.Specs.MaterialSpec;
-import com.projectmg.exceptions.BusinessException;
+import com.projectmg.Exceptions.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

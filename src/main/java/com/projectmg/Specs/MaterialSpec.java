@@ -1,10 +1,7 @@
 package com.projectmg.Specs;
 
 import com.projectmg.Models.Material;
-import com.projectmg.Repositories.MaterialRepository;
-import com.projectmg.exceptions.BusinessException;
-import org.hibernate.annotations.Comment;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.projectmg.Exceptions.BusinessException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

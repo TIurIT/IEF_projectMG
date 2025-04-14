@@ -1,9 +1,8 @@
 package com.projectmg.Specs;
 
-import com.projectmg.Enum.Servico;
 import com.projectmg.Models.Terceiro;
 import com.projectmg.Repositories.TerceiroRepository;
-import com.projectmg.exceptions.BusinessException;
+import com.projectmg.Exceptions.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -1,13 +1,11 @@
 package com.projectmg.Dto;
 
-import com.projectmg.Enum.Servico;
-
 public class TerceiroDTO {
     private Long id;
     private String nome;
     private String bairro;
     private String telefone;
-    private Servico servico;
+    private String servico;
 
     public TerceiroDTO(){}
 
@@ -35,10 +33,10 @@ public class TerceiroDTO {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-    public Servico getServico() {
+    public String getServico() {
         return servico;
     }
-    public void setServico(Servico servico) {
+    public void setServico(String servico) {
         this.servico = servico;
     }
 }
