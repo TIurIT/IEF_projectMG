@@ -22,7 +22,8 @@ public class OrdemProducaoTerceiroService {
         OrdemProducaoTerceiroDTO ordemProducaoTerceiroDTO = new OrdemProducaoTerceiroDTO();
         ordemProducaoTerceiroDTO.setId(ordemProducaoTerceiro.getId());
         ordemProducaoTerceiroDTO.setTerceiro(ordemProducaoTerceiro.getTerceiro());
-        ordemProducaoTerceiroDTO.setOrdemProducaos(ordemProducaoTerceiro.getOrdemProducaos());
+        ordemProducaoTerceiroDTO.setOrdens(ordemProducaoTerceiro.getOrdens());
+        ordemProducaoTerceiroDTO.setStatus(ordemProducaoTerceiro.getStatus());
         return ordemProducaoTerceiroDTO;
     }
 
@@ -30,7 +31,8 @@ public class OrdemProducaoTerceiroService {
         OrdemProducaoTerceiro ordemProducaoTerceiro = new OrdemProducaoTerceiro();
         ordemProducaoTerceiro.setId(ordemProducaoTerceiroDTO.getId());
         ordemProducaoTerceiro.setTerceiro(ordemProducaoTerceiroDTO.getTerceiro());
-        ordemProducaoTerceiro.setOrdemProducaos(ordemProducaoTerceiroDTO.getOrdemProducaos());
+        ordemProducaoTerceiro.setOrdens(ordemProducaoTerceiroDTO.getOrdens());
+        ordemProducaoTerceiro.setStatus(ordemProducaoTerceiroDTO.getStatus());
         return ordemProducaoTerceiro;
     }
 

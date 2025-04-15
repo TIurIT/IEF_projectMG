@@ -1,5 +1,6 @@
 package com.projectmg.Dto;
 
+import com.projectmg.Enum.Status;
 import com.projectmg.Models.OrdemProducao;
 import com.projectmg.Models.Terceiro;
 
@@ -9,7 +10,8 @@ public class OrdemProducaoTerceiroDTO {
 
     private Long id;
     private Terceiro terceiro;
-    private List<OrdemProducao> ordemProducaos;
+    private List<OrdemProducao> ordens;
+    private Status status;
 
     public OrdemProducaoTerceiroDTO() {}
 
@@ -17,7 +19,8 @@ public class OrdemProducaoTerceiroDTO {
     public void setId(Long id) { this.id = id; }
     public Terceiro getTerceiro() { return terceiro; }
     public void setTerceiro(Terceiro terceiro) { this.terceiro = terceiro; }
-    public List<OrdemProducao> getOrdemProducaos() { return ordemProducaos; }
-    public void setOrdemProducaos(List<OrdemProducao> ordemProducaos) { this.ordemProducaos = ordemProducaos; }
-
+    public List<OrdemProducao> getOrdens() { return ordens; }
+    public void setOrdens(List<OrdemProducao> ordemProducaos) { this.ordens = ordemProducaos; }
+    public Status getStatus() { return status; }
+    public void setStatus(Status status) { this.status = status; }
 }

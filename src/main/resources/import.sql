@@ -10,12 +10,12 @@ INSERT INTO tb_produto (id, nome, referencia) VALUES (10, 'Regata Nadador', '08'
 INSERT INTO tb_produto (id, nome, referencia) VALUES (11, 'Regata Alça Fina', '09');
 INSERT INTO tb_produto (id, nome, referencia) VALUES (12, 'Regata Cropped', '10');
 
-INSERT INTO tb_estoque (id, tipo, nome, marca, quantidade, data_de_criacao) VALUES (1, 'Dryfit', 'Alumínio', 'Coltex', 100, '2021-01-01');
-INSERT INTO tb_estoque (id, tipo, nome, marca, quantidade, data_de_criacao) VALUES (2, 'Dryfit', 'Preto', 'Coltex', 100, '2021-01-01');
-INSERT INTO tb_estoque (id, tipo, nome, marca, quantidade, data_de_criacao) VALUES (3, 'Dryfit', 'Branco', 'Coltex', 100, '2021-01-01');
-INSERT INTO tb_estoque (id, tipo, nome, marca, quantidade, data_de_criacao) VALUES (4, 'Dryfit', 'Amarelo', 'Coltex', 100, '2021-01-01');
-INSERT INTO tb_estoque (id, tipo, nome, marca, quantidade, data_de_criacao) VALUES (5, 'Dryfit', 'Azul', 'Coltex', 100, '2021-01-01');
-INSERT INTO tb_estoque (id, tipo, nome, marca, quantidade, data_de_criacao) VALUES (6, 'Dryfit', 'Vermelho', 'Coltex', 100, '2021-01-01');
+INSERT INTO tb_estoque_material (id, tipo, nome, marca, quantidade, data_de_criacao) VALUES (1, 'Dryfit', 'Alumínio', 'Coltex', 100, '2021-01-01');
+INSERT INTO tb_estoque_material (id, tipo, nome, marca, quantidade, data_de_criacao) VALUES (2, 'Dryfit', 'Preto', 'Coltex', 100, '2021-01-01');
+INSERT INTO tb_estoque_material (id, tipo, nome, marca, quantidade, data_de_criacao) VALUES (3, 'Dryfit', 'Branco', 'Coltex', 100, '2021-01-01');
+INSERT INTO tb_estoque_material (id, tipo, nome, marca, quantidade, data_de_criacao) VALUES (4, 'Dryfit', 'Amarelo', 'Coltex', 100, '2021-01-01');
+INSERT INTO tb_estoque_material (id, tipo, nome, marca, quantidade, data_de_criacao) VALUES (5, 'Dryfit', 'Azul', 'Coltex', 100, '2021-01-01');
+INSERT INTO tb_estoque_material (id, tipo, nome, marca, quantidade, data_de_criacao) VALUES (6, 'Dryfit', 'Vermelho', 'Coltex', 100, '2021-01-01');
 
 INSERT INTO tb_cliente (id, nome, email, telefone, cpf_cnpj) VALUES (1, 'João da Silva', 'joao@gmail.com', '(11) 99999-9999', '123.456.000-00');
 INSERT INTO tb_cliente (id, nome, email, telefone, cpf_cnpj) VALUES (2, 'Maria da Silva', 'maria@gmail.com', '(11) 99999-9999', '123.456.712-00');

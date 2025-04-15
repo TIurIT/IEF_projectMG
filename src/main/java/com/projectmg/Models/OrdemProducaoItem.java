@@ -38,7 +38,9 @@ public class OrdemProducaoItem {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         OrdemProducaoItem that = (OrdemProducaoItem) o;
-        return Objects.equals(id, that.id) && Objects.equals(gradeDescription, that.gradeDescription) && Objects.equals(quantidadeTotal, that.quantidadeTotal) && Objects.equals(produto, that.produto) && Objects.equals(material, that.material);
+        return Objects.equals(id, that.id) && Objects.equals(gradeDescription, that.gradeDescription)
+                && Objects.equals(quantidadeTotal, that.quantidadeTotal) && Objects.equals(produto, that.produto)
+                && Objects.equals(material, that.material);
     }
 
     @Override

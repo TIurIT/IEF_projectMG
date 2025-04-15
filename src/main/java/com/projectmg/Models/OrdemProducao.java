@@ -29,15 +29,16 @@ public class OrdemProducao {
     @JoinColumn(name="cliente_id")
     private Cliente cliente;
 
-    @OneToMany(mappedBy = "ordemProducao")
-    @JoinColumn(name = "ordem_producao_item_id")
+    @OneToMany
+    @JoinColumn(name = "ordem_producao_item_id", nullable = true)
     private List<OrdemProducaoItem> itens;
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         OrdemProducao that = (OrdemProducao) o;
-        return Objects.equals(id, that.id) && Objects.equals(dataDeCriacao, that.dataDeCriacao) && Objects.equals(cliente, that.cliente) && Objects.equals(itens, that.itens);
+        return Objects.equals(id, that.id) && Objects.equals(dataDeCriacao, that.dataDeCriacao)
+                && Objects.equals(cliente, that.cliente) && Objects.equals(itens, that.itens);
     }
 
     @Override
