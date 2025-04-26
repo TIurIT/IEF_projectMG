@@ -30,3 +30,4 @@ INSERT INTO tb_terceiro (id, nome, bairro, telefone, servico) VALUES (3, 'Pedro 
 
 
 SET FOREIGN_KEY_CHECKS=1;
+
