@@ -1,3 +1,5 @@
+SET FOREIGN_KEY_CHECKS=0;
+
 INSERT INTO tb_produto (id, nome, referencia) VALUES (1, 'Camiseta Slim', '01');
 INSERT INTO tb_produto (id, nome, referencia) VALUES (2, 'Camiseta Manga Longa', '01.1');
 INSERT INTO tb_produto (id, nome, referencia) VALUES (4, 'Camiseta Babylook', '02');
@@ -27,3 +29,4 @@ INSERT INTO tb_terceiro (id, nome, bairro, telefone, servico) VALUES (2, 'Maria 
 INSERT INTO tb_terceiro (id, nome, bairro, telefone, servico) VALUES (3, 'Pedro da Silva', 'JARDIM DA SONIA', '(11) 99999-9999', 'CORTADOR');
 
 
+SET FOREIGN_KEY_CHECKS=1;

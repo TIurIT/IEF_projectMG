@@ -1,6 +1,7 @@
 package com.projectmg.Resources;
 
 import com.projectmg.Dto.MaterialDTO;
+import com.projectmg.Repositories.MaterialRepository;
 import com.projectmg.Services.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,12 @@ public class MaterialResource {
 
     @Autowired
     private MaterialService materialService;
+
+
+    @GetMapping("/")
+    public ResponseEntity<List<MaterialDTO>> getAllMaterials() {
+        return ResponseEntity.ok(materialService.buscarMaterials());
+    }
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<MaterialDTO> buscarMaterialPorId(@PathVariable Long id){

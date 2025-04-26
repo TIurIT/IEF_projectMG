@@ -8,6 +8,7 @@ import com.projectmg.Exceptions.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -75,6 +76,18 @@ public class MaterialService {
        Material material = materialRepository.findById(id)
                .orElseThrow(() -> new BusinessException(MSG_ESTOQUE));
        return converterMaterialParaMaterialDto(material);
+    }
+
+    public List<MaterialDTO> buscarMaterials() {
+        List<Material> materiais = materialRepository.findAll();
+        materialSpec.verifyMaterial(materiais);
+        List<MaterialDTO> dtos = new ArrayList<>();
+        materiais.forEach(material -> {
+            dtos.add(converterMaterialParaMaterialDto(material));
+        });
+
+        return dtos;
+
     }
 
     public List<MaterialDTO> buscarPorNome(String nome) {

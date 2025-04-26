@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -34,7 +35,7 @@ public class Material {
     private Integer quantidade;
 
     @Column(name = "data_de_criacao")
-    private Date dataDeCriacao;
+    private LocalDate dataDeCriacao;
 
     @Override
     public boolean equals(Object o) {

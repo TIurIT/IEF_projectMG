@@ -1,5 +1,6 @@
 package com.projectmg.Dto;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class MaterialDTO {
@@ -8,7 +9,7 @@ public class MaterialDTO {
     private String nome;
     private String marca;
     private Integer quantidade;
-    private Date dataDeCriacao;
+    private LocalDate dataDeCriacao;
 
     public MaterialDTO(){}
 
@@ -42,10 +43,10 @@ public class MaterialDTO {
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
-    public Date getDataDeCriacao() {
+    public LocalDate getDataDeCriacao() {
         return dataDeCriacao;
     }
-    public void setDataDeCriacao(Date dataDeCriacao) {
+    public void setDataDeCriacao(LocalDate dataDeCriacao) {
         this.dataDeCriacao = dataDeCriacao;
     }
 }
