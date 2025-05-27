@@ -2,10 +2,12 @@ package com.projectmg.Dto;
 
 import com.projectmg.Models.Cliente;
 import com.projectmg.Models.OrdemProducaoItem;
+import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
 
+@Data
 public class OrdemProducaoDTO {
     private Long id;
     private Date dataDeCriacao;

@@ -109,4 +109,15 @@ public class TerceiroService {
         return dtos;
 
     }
+
+    public List<TerceiroDTO> buscarTerceiros(){
+        List<Terceiro> terceiros = terceiroRepository.findAll();
+        terceiroSpec.verifyTerceiro(terceiros);
+        List<TerceiroDTO> dtos = new ArrayList<>();
+        terceiros.forEach(terceiro -> {
+            dtos.add(converterTerceiroParaTerceiroDTO(terceiro));
+        });
+
+        return dtos;
+    }
 }

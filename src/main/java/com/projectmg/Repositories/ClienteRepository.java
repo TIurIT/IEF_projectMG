@@ -16,4 +16,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     Cliente findByEmail(String email);
     Cliente findByCpfCnpj(String cpfCnpj);
     Cliente findByNome(String nome);
+
+    @Query("select c from Cliente c")
+    List<Cliente> findAll();
 }

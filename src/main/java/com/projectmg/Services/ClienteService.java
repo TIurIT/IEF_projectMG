@@ -87,4 +87,15 @@ public class ClienteService {
 
         return dtos;
     }
+
+    public List<ClienteDTO> buscarClienteTodos(){
+        List<Cliente> clientes = clienteRepository.findAll();
+        clienteSpec.verifyCliente(clientes);
+        List<ClienteDTO> dtos = new java.util.ArrayList<>();
+        clientes.forEach(cliente -> {
+            dtos.add(converterClienteParaClienteDTO(cliente));
+        });
+
+        return dtos;
+    }
 }

@@ -16,4 +16,6 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     @Query("SELECT p FROM Produto p WHERE p.referencia LIKE %:referencia%")
     List<Produto> findByReferencia(String referencia);
 
+    @Query("select p from Produto p")
+    List<Produto> findAll();
 }

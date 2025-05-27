@@ -94,4 +94,15 @@ public class ProdutoService {
 
         return dtos;
     }
+
+    public List<ProdutoDTO> buscarProdutoTodos(){
+        List<Produto> produtos = produtoRepository.findAll();
+        produtoSpec.verifyProduto(produtos);
+        List<ProdutoDTO> dtos = new java.util.ArrayList<>();
+        produtos.forEach(produto -> {
+            dtos.add(converterProdutoParaProdutoDTO(produto));
+        });
+
+        return dtos;
+    }
 }

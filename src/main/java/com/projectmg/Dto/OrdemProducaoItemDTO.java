@@ -2,7 +2,9 @@ package com.projectmg.Dto;
 
 import com.projectmg.Models.Material;
 import com.projectmg.Models.Produto;
+import lombok.Data;
 
+@Data
 public class OrdemProducaoItemDTO {
 
     private Long id;

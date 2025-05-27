@@ -2,9 +2,11 @@ package com.projectmg.Dto;
 
 
 import com.projectmg.Enum.TipoAcesso;
+import lombok.Data;
 
+@Data
 public class UsuarioDTO {
-        private Long id;
+    private Long id;
     private String nome;
     private String email;
     private String senha;

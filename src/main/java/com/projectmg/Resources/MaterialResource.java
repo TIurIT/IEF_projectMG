@@ -18,7 +18,7 @@ public class MaterialResource {
     private MaterialService materialService;
 
 
-    @GetMapping("/")
+    @GetMapping({"/",""})
     public ResponseEntity<List<MaterialDTO>> getAllMaterials() {
         return ResponseEntity.ok(materialService.buscarMaterials());
     }

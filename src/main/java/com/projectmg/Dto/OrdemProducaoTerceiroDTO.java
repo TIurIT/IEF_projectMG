@@ -3,9 +3,11 @@ package com.projectmg.Dto;
 import com.projectmg.Enum.Status;
 import com.projectmg.Models.OrdemProducao;
 import com.projectmg.Models.Terceiro;
+import lombok.Data;
 
 import java.util.List;
 
+@Data
 public class OrdemProducaoTerceiroDTO {
 
     private Long id;

@@ -15,6 +15,11 @@ public class ClienteResource {
     @Autowired
     private ClienteService clienteService;
 
+    @GetMapping({"/",""})
+    public ResponseEntity<List<ClienteDTO>> getAllClientes() {
+        return ResponseEntity.ok(clienteService.buscarClienteTodos());
+    }
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<ClienteDTO> buscarClientePorId(@PathVariable Long id) {
         return ResponseEntity.ok(clienteService.buscarClientePorId(id));

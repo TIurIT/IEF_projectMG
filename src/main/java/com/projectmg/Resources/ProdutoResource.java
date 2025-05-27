@@ -5,10 +5,7 @@ import com.projectmg.Services.ProdutoService;
 import jakarta.persistence.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,6 +15,11 @@ public class ProdutoResource {
 
     @Autowired
     private ProdutoService produtoService;
+
+    @GetMapping({"/", ""})
+    public ResponseEntity<List<ProdutoDTO>> getAllProdutos() {
+        return ResponseEntity.ok(produtoService.buscarProdutoTodos());
+    }
 
     @RequestMapping("/buscar/{id}")
     public ResponseEntity<ProdutoDTO> buscarProdutoPorId(@PathVariable Long id){

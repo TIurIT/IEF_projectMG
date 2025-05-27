@@ -1,5 +1,8 @@
 package com.projectmg.Dto;
 
+import lombok.Data;
+
+@Data
 public class ProdutoDTO {
 
     private Long id;

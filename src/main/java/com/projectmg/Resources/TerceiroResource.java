@@ -15,6 +15,11 @@ public class TerceiroResource {
     @Autowired
     private TerceiroService terceiroService;
 
+    @GetMapping({"/",""})
+    public ResponseEntity<List<TerceiroDTO>> getAllTerceiros() {
+        return ResponseEntity.ok(terceiroService.buscarTerceiros());
+    }
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<TerceiroDTO> buscarTerceiroPorId(@PathVariable Long id){
         return ResponseEntity.ok(terceiroService.buscarTerceiroPorId(id));

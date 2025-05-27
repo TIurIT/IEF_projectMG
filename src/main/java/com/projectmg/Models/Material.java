@@ -1,5 +1,6 @@
 package com.projectmg.Models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,6 +36,7 @@ public class Material {
     private Integer quantidade;
 
     @Column(name = "data_de_criacao")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataDeCriacao;
 
     @Override
