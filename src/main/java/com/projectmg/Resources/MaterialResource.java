@@ -22,13 +22,13 @@ public class MaterialResource {
     private MaterialRepository materialRepository;
 
     @GetMapping({"/",""})
-    public ResponseEntity<List<MaterialDTO>> getAllMaterials() {
-        return ResponseEntity.ok(materialService.buscarMaterials());
+    public ResponseEntity<List<MaterialDTO>> buscarTodosMateriais() {
+        return ResponseEntity.ok(materialService.buscarMaterialTodos());
     }
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<MaterialDTO> buscarMaterialPorId(@PathVariable Long id){
-        return ResponseEntity.ok(materialService.buscarMaterial(id));
+        return ResponseEntity.ok(materialService.buscarMaterialPorId(id));
     }
 
     @PostMapping("/cadastrar")
@@ -45,6 +45,7 @@ public class MaterialResource {
 
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<MaterialDTO> atualizarMaterial(@PathVariable Long id, @RequestBody MaterialDTO materialDTO){
+        materialDTO.setId(id);
         return ResponseEntity.ok(materialService.atualizarMaterial(materialDTO));
     }
 

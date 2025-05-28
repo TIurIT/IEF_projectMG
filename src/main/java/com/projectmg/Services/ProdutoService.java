@@ -33,6 +33,7 @@ public class ProdutoService {
         produtoDTO.setDataAtualizacao(produto.getDataAtualizacao());
         produtoDTO.setUsuarioUltimaAlteracao(produto.getUsuarioUltimaAlteracao());
         produtoDTO.setAcao(produto.getAcao());
+
         return produtoDTO;
     }
 
@@ -44,6 +45,7 @@ public class ProdutoService {
         produto.setDataAtualizacao(produtoDTO.getDataAtualizacao());
         produto.setUsuarioUltimaAlteracao(produtoDTO.getUsuarioUltimaAlteracao());
         produto.setAcao(produtoDTO.getAcao());
+
         return produto;
     }
 
@@ -57,6 +59,7 @@ public class ProdutoService {
         Produto produto = converterProdutoDTOParaProduto(produtoDTO);
         produto.setAcao(produto.getId() == null ? TipoAcao.CRIADO : TipoAcao.ATUALIZADO);
         produto = produtoRepository.save(produto);
+
         return converterProdutoParaProdutoDTO(produto);
     }
 

@@ -65,7 +65,7 @@ public class ProdutoSpec {
     }
 
     public void verifyProdutoRefDup(String ref, Long id) {
-        if (produtoRepository.existsByNomeAndIdNot(ref, id)){
+        if (produtoRepository.existsByReferenciaAndIdNot(ref, id)){
             throw new BusinessException(MSG_PRODUTO_NOME);
         }
     }

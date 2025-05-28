@@ -20,11 +20,11 @@ public interface MaterialRepository extends JpaRepository<Material, Long> {
     @Query("select e from Material e where e.marca like %:marca%")
     List<Material> findByMarca(String marca);
 
-    @Query("select e from Material e")
-    List<Material> findAll();
+    @Query("select e from Material e where e.acao !='DELETADO'")
+    List<Material> findAllAtivos();
 
     List<Material> findTop5ByOrderByDataDeCriacaoDesc();
 
-
     boolean existsByNomeAndIdNot(String nome, Long id);
+
 }

@@ -1,14 +1,12 @@
 package com.projectmg.Dto;
 
+import com.projectmg.Enum.TipoAcao;
 import com.projectmg.Security.UsuarioAuditoria;
-import jakarta.persistence.Column;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 public class MaterialDTO {
@@ -18,17 +16,18 @@ public class MaterialDTO {
     private String marca;
     private Integer quantidade;
     private LocalDate dataDeCriacao;
-    private LocalDateTime dataAtualizacao;
+    private LocalDate dataAtualizacao;
     private String usuarioUltimaAlteracao;
+    private TipoAcao acao;
 
     @PrePersist
     @PreUpdate
     public void atualizarDataAtualizacao() {
-        this.dataAtualizacao = LocalDateTime.now();
+        this.dataAtualizacao = LocalDate.now();
         this.usuarioUltimaAlteracao = UsuarioAuditoria.getUsuarioLogado();
     }
 
-    public MaterialDTO(Long id, String tipo, String nome, String marca, Integer quantidade, LocalDate dataDeCriacao, LocalDateTime dataAtualizacao, String usuarioUltimaAlteracao) {
+    public MaterialDTO(Long id, String tipo, String nome, String marca, Integer quantidade, LocalDate dataDeCriacao, LocalDate dataAtualizacao, String usuarioUltimaAlteracao, TipoAcao acao) {
         this.id = id;
         this.tipo = tipo;
         this.nome = nome;
@@ -37,6 +36,7 @@ public class MaterialDTO {
         this.dataDeCriacao = dataDeCriacao;
         this.dataAtualizacao = dataAtualizacao;
         this.usuarioUltimaAlteracao = usuarioUltimaAlteracao;
+        this.acao = acao;
     }
 
     public MaterialDTO(){}
@@ -77,10 +77,10 @@ public class MaterialDTO {
     public void setDataDeCriacao(LocalDate dataDeCriacao) {
         this.dataDeCriacao = dataDeCriacao;
     }
-    public LocalDateTime getDataAtualizacao() {
+    public LocalDate getDataAtualizacao() {
         return dataAtualizacao;
     }
-    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+    public void setDataAtualizacao(LocalDate dataAtualizacao) {
         this.dataAtualizacao = dataAtualizacao;
     }
     public String getUsuarioUltimaAlteracao() {
@@ -88,5 +88,11 @@ public class MaterialDTO {
     }
     public void setUsuarioUltimaAlteracao(String usuarioUltimaAlteracao) {
         this.usuarioUltimaAlteracao = usuarioUltimaAlteracao;
+    }
+    public TipoAcao getAcao() {
+        return acao;
+    }
+    public void setAcao(TipoAcao acao) {
+        this.acao = acao;
     }
 }

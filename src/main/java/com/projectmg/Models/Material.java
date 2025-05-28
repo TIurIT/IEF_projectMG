@@ -1,6 +1,7 @@
 package com.projectmg.Models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.projectmg.Enum.TipoAcao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,8 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Objects;
 
 @Table(name = "tb_estoque_material")
@@ -48,10 +47,7 @@ public class Material {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Produto.TipoAcao acao;
-    public enum TipoAcao {
-        CRIADO, ATUALIZADO, DELETADO
-    }
+    private TipoAcao acao;
 
     @Override
     public boolean equals(Object o) {

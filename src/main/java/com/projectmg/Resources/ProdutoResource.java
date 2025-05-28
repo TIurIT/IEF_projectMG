@@ -22,13 +22,12 @@ public class ProdutoResource {
     private ProdutoRepository produtoRepository;
 
     @GetMapping({"/", ""})
-    public ResponseEntity<List<ProdutoDTO>> buscarTodos() {
+    public ResponseEntity<List<ProdutoDTO>> buscarTodosProdutos() {
         return ResponseEntity.ok(produtoService.buscarProdutoTodos());
     }
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<ProdutoDTO> buscarProdutoPorId(@PathVariable Long id){
-        produtoService.buscarProdutoPorId(id);
         return ResponseEntity.ok(produtoService.buscarProdutoPorId(id));
     }
 
@@ -53,13 +52,11 @@ public class ProdutoResource {
 
     @GetMapping("/b/nome/{nome}")
     public ResponseEntity<List<ProdutoDTO>> buscarProdutoPorNome(@PathVariable String nome){
-        produtoService.buscarProdutoPorNome(nome);
         return ResponseEntity.ok(produtoService.buscarProdutoPorNome(nome));
     }
 
     @GetMapping("/b/ref/{referencia}")
     public ResponseEntity<List<ProdutoDTO>> buscarProdutoPorReferencia(@PathVariable String referencia){
-        produtoService.buscarProdutoPorReferencia(referencia);
         return ResponseEntity.ok(produtoService.buscarProdutoPorReferencia(referencia));
     }
 
