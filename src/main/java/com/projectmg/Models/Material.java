@@ -41,20 +41,27 @@ public class Material {
     private LocalDate dataDeCriacao;
 
     @Column(name = "data_atualizacao")
-    private LocalDateTime dataAtualizacao;
+    private LocalDate dataAtualizacao;
 
     @Column(name = "usuario_ultima_alteracao")
     private String usuarioUltimaAlteracao;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Produto.TipoAcao acao;
+    public enum TipoAcao {
+        CRIADO, ATUALIZADO, DELETADO
+    }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Material material = (Material) o;
-        return Objects.equals(id, material.id) && Objects.equals(tipo, material.tipo) && Objects.equals(nome, material.nome) && Objects.equals(marca, material.marca) && Objects.equals(quantidade, material.quantidade) && Objects.equals(dataDeCriacao, material.dataDeCriacao) && Objects.equals(dataAtualizacao, material.dataAtualizacao) && Objects.equals(usuarioUltimaAlteracao, material.usuarioUltimaAlteracao);
+        return Objects.equals(id, material.id) && Objects.equals(tipo, material.tipo) && Objects.equals(nome, material.nome) && Objects.equals(marca, material.marca) && Objects.equals(quantidade, material.quantidade) && Objects.equals(dataDeCriacao, material.dataDeCriacao) && Objects.equals(dataAtualizacao, material.dataAtualizacao) && Objects.equals(usuarioUltimaAlteracao, material.usuarioUltimaAlteracao) && acao == material.acao;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tipo, nome, marca, quantidade, dataDeCriacao, dataAtualizacao, usuarioUltimaAlteracao);
+        return Objects.hash(id, tipo, nome, marca, quantidade, dataDeCriacao, dataAtualizacao, usuarioUltimaAlteracao, acao);
     }
 }

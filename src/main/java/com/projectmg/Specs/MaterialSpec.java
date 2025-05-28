@@ -2,6 +2,8 @@ package com.projectmg.Specs;
 
 import com.projectmg.Models.Material;
 import com.projectmg.Exceptions.BusinessException;
+import com.projectmg.Repositories.MaterialRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -10,6 +12,9 @@ import static java.util.Objects.isNull;
 
 @Component
 public class MaterialSpec {
+
+    @Autowired
+    private MaterialRepository materialRepository;
 
     private static final String MSG_MATERIAL = "Material não encontrado";
     private static final String MSG_MATERIAL_NOME = "Nome já cadastrado";
@@ -53,5 +58,13 @@ public class MaterialSpec {
             throw new BusinessException(MSG_MATERIAL);
         }
     }
+
+    public void verifyProdutoNomeDup(String nome, Long id) {
+        if (materialRepository.existsByNomeAndIdNot(nome, id)){
+            throw new BusinessException(MSG_MATERIAL_NOME);
+        }
+    }
+
+
 }
 

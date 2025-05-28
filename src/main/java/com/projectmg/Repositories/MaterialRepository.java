@@ -26,6 +26,5 @@ public interface MaterialRepository extends JpaRepository<Material, Long> {
     List<Material> findTop5ByOrderByDataDeCriacaoDesc();
 
 
-
-
+    boolean existsByNomeAndIdNot(String nome, Long id);
 }

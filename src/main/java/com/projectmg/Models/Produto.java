@@ -1,12 +1,13 @@
 package com.projectmg.Models;
 
+import com.projectmg.Enum.TipoAcao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Table(name = "tb_produto")
@@ -28,27 +29,25 @@ public class Produto {
     private String referencia;
 
     @Column(name = "data_atualizacao")
-    private LocalDateTime dataAtualizacao;
+    private LocalDate dataAtualizacao;
 
     @Column(name = "usuario_ultima_alteracao")
     private String usuarioUltimaAlteracao;
 
     @Enumerated(EnumType.STRING)
-    private TipoAcao acao; // Novo campo
+    @Column(nullable = false)
+    private TipoAcao acao;
 
-    public enum TipoAcao {
-        CRIADO, ATUALIZADO, DELETADO
-    }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Produto produto = (Produto) o;
-        return Objects.equals(id, produto.id) && Objects.equals(nome, produto.nome) && Objects.equals(referencia, produto.referencia) && Objects.equals(dataAtualizacao, produto.dataAtualizacao) && Objects.equals(usuarioUltimaAlteracao, produto.usuarioUltimaAlteracao);
+        return Objects.equals(id, produto.id) && Objects.equals(nome, produto.nome) && Objects.equals(referencia, produto.referencia) && Objects.equals(dataAtualizacao, produto.dataAtualizacao) && Objects.equals(usuarioUltimaAlteracao, produto.usuarioUltimaAlteracao) && acao == produto.acao;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, referencia, dataAtualizacao, usuarioUltimaAlteracao);
+        return Objects.hash(id, nome, referencia, dataAtualizacao, usuarioUltimaAlteracao, acao);
     }
 }

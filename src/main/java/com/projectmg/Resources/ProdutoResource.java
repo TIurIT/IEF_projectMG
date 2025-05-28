@@ -22,41 +22,42 @@ public class ProdutoResource {
     private ProdutoRepository produtoRepository;
 
     @GetMapping({"/", ""})
-    public ResponseEntity<List<ProdutoDTO>> getAllProdutos() {
+    public ResponseEntity<List<ProdutoDTO>> buscarTodos() {
         return ResponseEntity.ok(produtoService.buscarProdutoTodos());
     }
 
-    @RequestMapping("/buscar/{id}")
+    @GetMapping("/buscar/{id}")
     public ResponseEntity<ProdutoDTO> buscarProdutoPorId(@PathVariable Long id){
         produtoService.buscarProdutoPorId(id);
         return ResponseEntity.ok(produtoService.buscarProdutoPorId(id));
     }
 
-    @RequestMapping("/cadastrar")
+    @PostMapping("/cadastrar")
     public ResponseEntity<ProdutoDTO> cadastrarProduto(@RequestBody ProdutoDTO produtoDTO){
         produtoDTO = produtoService.cadastrarProduto(produtoDTO);
         return ResponseEntity.ok(produtoDTO);
     }
 
-    @RequestMapping("/deletar/{id}")
+    @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> deletarProduto(@PathVariable Long id){
         produtoService.deletarProduto(id);
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping("/atualizar/{id}")
+    @PutMapping("/atualizar/{id}")
     public ResponseEntity<ProdutoDTO> atualizarProduto(@PathVariable Long id, @RequestBody ProdutoDTO produtoDTO){
+        produtoDTO.setId(id);
         produtoDTO = produtoService.atualizarProduto(produtoDTO);
-        return ResponseEntity.ok(produtoService.atualizarProduto(produtoDTO));
+        return ResponseEntity.ok(produtoDTO);
     }
 
-    @RequestMapping("/b/nome/{nome}")
+    @GetMapping("/b/nome/{nome}")
     public ResponseEntity<List<ProdutoDTO>> buscarProdutoPorNome(@PathVariable String nome){
         produtoService.buscarProdutoPorNome(nome);
         return ResponseEntity.ok(produtoService.buscarProdutoPorNome(nome));
     }
 
-    @RequestMapping("/b/ref/{referencia}")
+    @GetMapping("/b/ref/{referencia}")
     public ResponseEntity<List<ProdutoDTO>> buscarProdutoPorReferencia(@PathVariable String referencia){
         produtoService.buscarProdutoPorReferencia(referencia);
         return ResponseEntity.ok(produtoService.buscarProdutoPorReferencia(referencia));
