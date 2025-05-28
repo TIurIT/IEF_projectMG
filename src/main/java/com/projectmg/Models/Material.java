@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -39,18 +40,21 @@ public class Material {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataDeCriacao;
 
+    @Column(name = "data_atualizacao")
+    private LocalDateTime dataAtualizacao;
+
+    @Column(name = "usuario_ultima_alteracao")
+    private String usuarioUltimaAlteracao;
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Material material = (Material) o;
-        return Objects.equals(id, material.id) && Objects.equals(tipo, material.tipo)
-                && Objects.equals(nome, material.nome) && Objects.equals(marca, material.marca)
-                && Objects.equals(quantidade, material.quantidade)
-                && Objects.equals(dataDeCriacao, material.dataDeCriacao);
+        return Objects.equals(id, material.id) && Objects.equals(tipo, material.tipo) && Objects.equals(nome, material.nome) && Objects.equals(marca, material.marca) && Objects.equals(quantidade, material.quantidade) && Objects.equals(dataDeCriacao, material.dataDeCriacao) && Objects.equals(dataAtualizacao, material.dataAtualizacao) && Objects.equals(usuarioUltimaAlteracao, material.usuarioUltimaAlteracao);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tipo, nome, marca, quantidade, dataDeCriacao);
+        return Objects.hash(id, tipo, nome, marca, quantidade, dataDeCriacao, dataAtualizacao, usuarioUltimaAlteracao);
     }
 }

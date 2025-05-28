@@ -1,6 +1,7 @@
 package com.projectmg.Resources;
 
 import com.projectmg.Dto.MaterialDTO;
+import com.projectmg.Models.Material;
 import com.projectmg.Repositories.MaterialRepository;
 import com.projectmg.Services.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class MaterialResource {
     @Autowired
     private MaterialService materialService;
 
+    @Autowired
+    private MaterialRepository materialRepository;
 
     @GetMapping({"/",""})
     public ResponseEntity<List<MaterialDTO>> getAllMaterials() {
@@ -59,5 +62,10 @@ public class MaterialResource {
     @GetMapping("/b/marca/{marca}")
     public ResponseEntity<List<MaterialDTO>> buscarPorMarca(@PathVariable String marca){
         return ResponseEntity.ok(materialService.buscarPorMarca(marca));
+    }
+
+    @GetMapping("/ultimos")
+    public List<Material> ultimosMaterial(){
+        return materialRepository.findTop5ByOrderByDataDeCriacaoDesc();
     }
 }

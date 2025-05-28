@@ -1,6 +1,8 @@
 package com.projectmg.Resources;
 
 import com.projectmg.Dto.ProdutoDTO;
+import com.projectmg.Models.Produto;
+import com.projectmg.Repositories.ProdutoRepository;
 import com.projectmg.Services.ProdutoService;
 import jakarta.persistence.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ public class ProdutoResource {
 
     @Autowired
     private ProdutoService produtoService;
+
+    @Autowired
+    private ProdutoRepository produtoRepository;
 
     @GetMapping({"/", ""})
     public ResponseEntity<List<ProdutoDTO>> getAllProdutos() {
@@ -55,5 +60,10 @@ public class ProdutoResource {
     public ResponseEntity<List<ProdutoDTO>> buscarProdutoPorReferencia(@PathVariable String referencia){
         produtoService.buscarProdutoPorReferencia(referencia);
         return ResponseEntity.ok(produtoService.buscarProdutoPorReferencia(referencia));
+    }
+
+    @GetMapping("/ultimos")
+    public List<Produto> listarUltimosProdutos() {
+        return produtoRepository.findTop5ByOrderByDataAtualizacaoDesc();
     }
 }

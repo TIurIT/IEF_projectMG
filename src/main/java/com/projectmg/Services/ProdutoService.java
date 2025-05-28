@@ -7,6 +7,7 @@ import com.projectmg.Specs.ProdutoSpec;
 import com.projectmg.Exceptions.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
@@ -44,8 +45,8 @@ public class ProdutoService {
         List<Produto> produtoRef = produtoRepository.findByReferencia(produtoDTO.getReferencia());
         produtoSpec.verifyProdutoNomeExists(produtoNome);
         produtoSpec.verifyProdutoRefExists(produtoRef);
-
         Produto produto = converterProdutoDTOParaProduto(produtoDTO);
+        produto.setAcao(produto.getId() == null ? Produto.TipoAcao.CRIADO : Produto.TipoAcao.ATUALIZADO);
         produto = produtoRepository.save(produto);
         return converterProdutoParaProdutoDTO(produto);
     }
@@ -64,6 +65,9 @@ public class ProdutoService {
     }
 
     public void deletarProduto(Long id){
+        Produto produto = produtoRepository.findById(id).orElseThrow();
+        produto.setAcao(Produto.TipoAcao.DELETADO);
+        produtoRepository.save(produto);
         produtoRepository.deleteById(id);
     }
 

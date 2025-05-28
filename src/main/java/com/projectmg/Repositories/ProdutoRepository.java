@@ -18,4 +18,6 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
     @Query("select p from Produto p")
     List<Produto> findAll();
+
+    List<Produto> findTop5ByOrderByDataAtualizacaoDesc();
 }

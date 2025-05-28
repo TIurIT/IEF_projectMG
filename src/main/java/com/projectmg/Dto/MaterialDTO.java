@@ -1,8 +1,13 @@
 package com.projectmg.Dto;
 
+import com.projectmg.Security.UsuarioAuditoria;
+import jakarta.persistence.Column;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -13,6 +18,26 @@ public class MaterialDTO {
     private String marca;
     private Integer quantidade;
     private LocalDate dataDeCriacao;
+    private LocalDateTime dataAtualizacao;
+    private String usuarioUltimaAlteracao;
+
+    @PrePersist
+    @PreUpdate
+    public void atualizarDataAtualizacao() {
+        this.dataAtualizacao = LocalDateTime.now();
+        this.usuarioUltimaAlteracao = UsuarioAuditoria.getUsuarioLogado();
+    }
+
+    public MaterialDTO(Long id, String tipo, String nome, String marca, Integer quantidade, LocalDate dataDeCriacao, LocalDateTime dataAtualizacao, String usuarioUltimaAlteracao) {
+        this.id = id;
+        this.tipo = tipo;
+        this.nome = nome;
+        this.marca = marca;
+        this.quantidade = quantidade;
+        this.dataDeCriacao = dataDeCriacao;
+        this.dataAtualizacao = dataAtualizacao;
+        this.usuarioUltimaAlteracao = usuarioUltimaAlteracao;
+    }
 
     public MaterialDTO(){}
 
@@ -51,5 +76,17 @@ public class MaterialDTO {
     }
     public void setDataDeCriacao(LocalDate dataDeCriacao) {
         this.dataDeCriacao = dataDeCriacao;
+    }
+    public LocalDateTime getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
+    }
+    public String getUsuarioUltimaAlteracao() {
+        return usuarioUltimaAlteracao;
+    }
+    public void setUsuarioUltimaAlteracao(String usuarioUltimaAlteracao) {
+        this.usuarioUltimaAlteracao = usuarioUltimaAlteracao;
     }
 }

@@ -23,7 +23,7 @@ public interface MaterialRepository extends JpaRepository<Material, Long> {
     @Query("select e from Material e")
     List<Material> findAll();
 
-
+    List<Material> findTop5ByOrderByDataDeCriacaoDesc();
 
 
 
