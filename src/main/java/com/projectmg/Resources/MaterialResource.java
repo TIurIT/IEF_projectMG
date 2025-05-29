@@ -67,6 +67,6 @@ public class MaterialResource {
 
     @GetMapping("/ultimos")
     public List<Material> ultimosMaterial(){
-        return materialRepository.findTop5ByOrderByDataDeCriacaoDesc();
+        return materialRepository.findTop5ByOrderByDataAtualizacaoDesc();
     }
 }

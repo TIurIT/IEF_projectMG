@@ -23,7 +23,7 @@ public interface MaterialRepository extends JpaRepository<Material, Long> {
     @Query("select e from Material e where e.acao !='DELETADO'")
     List<Material> findAllAtivos();
 
-    List<Material> findTop5ByOrderByDataDeCriacaoDesc();
+    List<Material> findTop5ByOrderByDataAtualizacaoDesc();
 
     boolean existsByNomeAndIdNot(String nome, Long id);
 
