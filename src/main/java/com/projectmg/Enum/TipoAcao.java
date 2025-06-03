@@ -5,7 +5,9 @@ import com.projectmg.Models.Produto;
 public enum TipoAcao {
     CRIADO("CRIADO"),
     ATUALIZADO("ATUALIZADO"),
-    DELETADO("DELETADO");
+    DELETADO("DELETADO"),
+    ADICIONADO("ADICIONADO"),
+    RETIRADO("RETIRADO");
 
     private final String acao;
 

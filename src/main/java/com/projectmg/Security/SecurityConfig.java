@@ -17,6 +17,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/mg/produto/**").permitAll()
+                .requestMatchers("/mg/estoque/**").permitAll()
                 .anyRequest().permitAll());
 
 //                .anyRequest().authenticated(); // tudo o resto exige login

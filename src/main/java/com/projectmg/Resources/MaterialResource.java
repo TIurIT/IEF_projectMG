@@ -1,7 +1,10 @@
 package com.projectmg.Resources;
 
+import com.projectmg.Dto.HistoricoMaterialDTO;
 import com.projectmg.Dto.MaterialDTO;
+import com.projectmg.Models.HistoricoMaterial;
 import com.projectmg.Models.Material;
+import com.projectmg.Repositories.HistoricoMaterialRepository;
 import com.projectmg.Repositories.MaterialRepository;
 import com.projectmg.Services.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,9 @@ public class MaterialResource {
 
     @Autowired
     private MaterialRepository materialRepository;
+
+    @Autowired
+    private HistoricoMaterialRepository historicoRepository;
 
     @GetMapping({"/",""})
     public ResponseEntity<List<MaterialDTO>> buscarTodosMateriais() {
@@ -69,4 +75,24 @@ public class MaterialResource {
     public List<Material> ultimosMaterial(){
         return materialRepository.findTop5ByOrderByDataAtualizacaoDesc();
     }
+
+    @PutMapping("/adicionar-quantidade/{id}/{quantidade}")
+        public MaterialDTO adicionarMaterial(@PathVariable Long id, @PathVariable Integer quantidade,@RequestParam String comentario){
+        return materialService.adicionarQuantidade(id, quantidade, comentario);
+    }
+
+    @PutMapping("/retirar-quantidade/{id}/{quantidade}")
+    public MaterialDTO retirarMaterial(@PathVariable Long id, @PathVariable Integer quantidade,@RequestParam String comentario){
+        return materialService.retirarQuantidade(id, quantidade, comentario);
+    }
+
+    @GetMapping("/item/historico/{id}")
+    public ResponseEntity<List<HistoricoMaterialDTO>> buscarHistoricoPorMaterial(@PathVariable Long id) {
+        List<HistoricoMaterial> historicos = historicoRepository.findByMaterialId(id);
+        List<HistoricoMaterialDTO> dtos = historicos.stream()
+                .map(materialService::converterHistoricoParaDTO)
+                .toList();
+        return ResponseEntity.ok(dtos);
+    }
+
 }

@@ -42,6 +42,9 @@ public class Material {
     @Column(name = "data_atualizacao")
     private LocalDate dataAtualizacao;
 
+    @Column(name = "comentario")
+    private String comentario;
+
     @Column(name = "usuario_ultima_alteracao")
     private String usuarioUltimaAlteracao;
 
@@ -53,11 +56,11 @@ public class Material {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Material material = (Material) o;
-        return Objects.equals(id, material.id) && Objects.equals(tipo, material.tipo) && Objects.equals(nome, material.nome) && Objects.equals(marca, material.marca) && Objects.equals(quantidade, material.quantidade) && Objects.equals(dataDeCriacao, material.dataDeCriacao) && Objects.equals(dataAtualizacao, material.dataAtualizacao) && Objects.equals(usuarioUltimaAlteracao, material.usuarioUltimaAlteracao) && acao == material.acao;
+        return Objects.equals(id, material.id) && Objects.equals(tipo, material.tipo) && Objects.equals(nome, material.nome) && Objects.equals(marca, material.marca) && Objects.equals(quantidade, material.quantidade) && Objects.equals(dataDeCriacao, material.dataDeCriacao) && Objects.equals(dataAtualizacao, material.dataAtualizacao) && Objects.equals(comentario, material.comentario) && Objects.equals(usuarioUltimaAlteracao, material.usuarioUltimaAlteracao) && acao == material.acao;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tipo, nome, marca, quantidade, dataDeCriacao, dataAtualizacao, usuarioUltimaAlteracao, acao);
+        return Objects.hash(id, tipo, nome, marca, quantidade, dataDeCriacao, dataAtualizacao, comentario, usuarioUltimaAlteracao, acao);
     }
 }

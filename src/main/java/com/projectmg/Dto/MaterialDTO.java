@@ -17,8 +17,10 @@ public class MaterialDTO {
     private Integer quantidade;
     private LocalDate dataDeCriacao;
     private LocalDate dataAtualizacao;
+    private String comentario;
     private String usuarioUltimaAlteracao;
     private TipoAcao acao;
+
 
     @PrePersist
     @PreUpdate
@@ -27,7 +29,7 @@ public class MaterialDTO {
         this.usuarioUltimaAlteracao = UsuarioAuditoria.getUsuarioLogado();
     }
 
-    public MaterialDTO(Long id, String tipo, String nome, String marca, Integer quantidade, LocalDate dataDeCriacao, LocalDate dataAtualizacao, String usuarioUltimaAlteracao, TipoAcao acao) {
+    public MaterialDTO(Long id, String tipo, String nome, String marca, Integer quantidade, LocalDate dataDeCriacao, LocalDate dataAtualizacao, String usuarioUltimaAlteracao, TipoAcao acao, String comentario) {
         this.id = id;
         this.tipo = tipo;
         this.nome = nome;
@@ -35,6 +37,7 @@ public class MaterialDTO {
         this.quantidade = quantidade;
         this.dataDeCriacao = dataDeCriacao;
         this.dataAtualizacao = dataAtualizacao;
+        this.comentario = comentario;
         this.usuarioUltimaAlteracao = usuarioUltimaAlteracao;
         this.acao = acao;
     }
@@ -94,5 +97,13 @@ public class MaterialDTO {
     }
     public void setAcao(TipoAcao acao) {
         this.acao = acao;
+    }
+
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
     }
 }
