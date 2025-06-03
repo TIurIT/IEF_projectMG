@@ -48,6 +48,7 @@ public class MaterialService {
         material.setDataAtualizacao(materialDTO.getDataAtualizacao());
         material.setUsuarioUltimaAlteracao(materialDTO.getUsuarioUltimaAlteracao());
         material.setAcao(materialDTO.getAcao());
+        material.setHistoricos(materialDTO.getHistoricoMaterialList());
 
         return material;
     }
@@ -63,6 +64,7 @@ public class MaterialService {
         materialDTO.setDataAtualizacao(material.getDataAtualizacao());
         materialDTO.setUsuarioUltimaAlteracao(material.getUsuarioUltimaAlteracao());
         materialDTO.setAcao(material.getAcao());
+        materialDTO.setHistoricoMaterialList(material.getHistoricos());
 
         return materialDTO;
     }
@@ -182,7 +184,7 @@ public class MaterialService {
                 .toList();
     }
 
-    private void salvarHistorico(Material material, Integer quantidade, String comentario, TipoAcao acao) {
+    private void salvarHistorico() {
         HistoricoMaterial historico = new HistoricoMaterial();
         historico.setMaterial(material);
         historico.setQuantidadeAlterada(quantidade);
@@ -193,7 +195,6 @@ public class MaterialService {
         if (comentario != null && !comentario.isBlank()) {
             Comentario comentarioHistorico = new Comentario();
             comentarioHistorico.setComentario(comentario);
-            comentarioHistorico.setHistorico(historico);
             comentarioRepository.save(comentarioHistorico);
 
             historico.setComentario(comentarioHistorico.getComentario());
@@ -211,11 +212,6 @@ public class MaterialService {
         material.setAcao(TipoAcao.ADICIONADO);
         materialRepository.save(material);
 
-        Comentario comentarioHistorico = new Comentario();
-        comentarioHistorico.setComentario(comentario);
-
-        salvarHistorico(material, quantidade, comentario, TipoAcao.ADICIONADO);
-
         return converterMaterialParaMaterialDto(material);
     }
     public MaterialDTO retirarQuantidade(Long id, Integer quantidade, String comentario){
@@ -225,11 +221,6 @@ public class MaterialService {
         material.setUsuarioUltimaAlteracao(UsuarioAuditoria.getUsuarioLogado());
         material.setAcao(TipoAcao.RETIRADO);
         materialRepository.save(material);
-
-        Comentario comentarioHistorico = new Comentario();
-        comentarioHistorico.setComentario(comentario);
-
-        salvarHistorico(material, quantidade, comentario, TipoAcao.RETIRADO);
 
         return converterMaterialParaMaterialDto(material);
     }

@@ -1,6 +1,8 @@
 package com.projectmg.Dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.projectmg.Enum.TipoAcao;
+import com.projectmg.Models.HistoricoMaterial;
 import com.projectmg.Security.UsuarioAuditoria;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -21,7 +23,8 @@ public class MaterialDTO {
     private String usuarioUltimaAlteracao;
     private TipoAcao acao;
 
-    private List<HistoricoMaterialDTO> historicoMaterialDTOList;
+    @JsonIgnore
+    private List<HistoricoMaterial> historicoMaterialList;
 
     @PrePersist
     @PreUpdate
@@ -30,7 +33,7 @@ public class MaterialDTO {
         this.usuarioUltimaAlteracao = UsuarioAuditoria.getUsuarioLogado();
     }
 
-    public MaterialDTO(Long id, String tipo, String nome, String marca, Integer quantidade, LocalDate dataDeCriacao, LocalDate dataAtualizacao, String usuarioUltimaAlteracao, TipoAcao acao, List<HistoricoMaterialDTO> historicoMaterialDTOList) {
+    public MaterialDTO(Long id, String tipo, String nome, String marca, Integer quantidade, LocalDate dataDeCriacao, LocalDate dataAtualizacao, String usuarioUltimaAlteracao, TipoAcao acao, List<HistoricoMaterial> historicoMaterialList) {
         this.id = id;
         this.tipo = tipo;
         this.nome = nome;
@@ -40,7 +43,7 @@ public class MaterialDTO {
         this.dataAtualizacao = dataAtualizacao;
         this.usuarioUltimaAlteracao = usuarioUltimaAlteracao;
         this.acao = acao;
-        this.historicoMaterialDTOList = historicoMaterialDTOList;
+        this.historicoMaterialList = historicoMaterialList;
     }
 
     public MaterialDTO(){}
@@ -99,10 +102,10 @@ public class MaterialDTO {
     public void setAcao(TipoAcao acao) {
         this.acao = acao;
     }
-    public List<HistoricoMaterialDTO> getHistoricoMaterialDTOList() {
-        return historicoMaterialDTOList;
+    public List<HistoricoMaterial> getHistoricoMaterialList() {
+        return historicoMaterialList;
     }
-    public void setHistoricoMaterialDTOList(List<HistoricoMaterialDTO> historicoMaterialDTOList) {
-        this.historicoMaterialDTOList = historicoMaterialDTOList;
+    public void setHistoricoMaterialList(List<HistoricoMaterial> historicoMaterialList) {
+        this.historicoMaterialList = historicoMaterialList;
     }
 }

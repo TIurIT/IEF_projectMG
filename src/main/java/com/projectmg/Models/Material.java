@@ -1,6 +1,7 @@
 package com.projectmg.Models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.projectmg.Enum.TipoAcao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -52,6 +53,7 @@ public class Material {
     private TipoAcao acao;
 
     @OneToMany(mappedBy = "material", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<HistoricoMaterial> historicos = new ArrayList<>();
 
     @Override

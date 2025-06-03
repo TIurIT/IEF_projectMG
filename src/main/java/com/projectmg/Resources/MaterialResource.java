@@ -77,7 +77,7 @@ public class MaterialResource {
     }
 
     @PutMapping("/adicionar-quantidade/{id}/{quantidade}")
-        public MaterialDTO adicionarMaterial(@PathVariable Long id, @PathVariable Integer quantidade,@RequestParam String comentario){
+        public MaterialDTO adicionarMaterial(@PathVariable Long id, @PathVariable Integer quantidade,@PathVariable String comentario){
         return materialService.adicionarQuantidade(id, quantidade, comentario);
     }
 
@@ -86,7 +86,7 @@ public class MaterialResource {
         return materialService.retirarQuantidade(id, quantidade, comentario);
     }
 
-    @GetMapping("/item/historico/{id}")
+    @GetMapping("/item-historico/{id}")
     public ResponseEntity<List<HistoricoMaterialDTO>> buscarHistoricoPorMaterial(@PathVariable Long id) {
         return ResponseEntity.ok(materialService.buscarHistoricoPorMaterial(id));
     }

@@ -14,7 +14,7 @@ INSERT INTO tb_produto (id, nome, referencia, acao) VALUES (12, 'Regata Cropped'
 
 INSERT INTO tb_estoque_material (id, tipo, nome, marca, quantidade, data_de_criacao, acao) VALUES (1, 'Dryfit', 'Alumínio', 'Coltex', 100, '2021-01-01', 'CRIADO');
 INSERT INTO tb_estoque_material (id, tipo, nome, marca, quantidade, data_de_criacao, acao) VALUES (2, 'Dryfit', 'Preto', 'Coltex', 100, '2021-01-01', 'CRIADO');
-INSERT INTO tb_estoque_material (id, tipo, nome, marca, quantidade, data_de_criacao, acao) VALUES (3, 'Dryfit', 'Branco', 'Coltex', 100, '2021-01-01', 'CRIADO');
+INSERT INTO tb_estoque_material (id, tipo, nome, marca, quantidade, data_de_criacao, acao) VALUES (3, 'Dryfit', 'Branco', 'Coltex', 100, '2025-06-03', 'CRIADO');
 INSERT INTO tb_estoque_material (id, tipo, nome, marca, quantidade, data_de_criacao, acao) VALUES (4, 'Dryfit', 'Amarelo', 'Coltex', 100, '2021-01-01', 'CRIADO');
 INSERT INTO tb_estoque_material (id, tipo, nome, marca, quantidade, data_de_criacao, acao) VALUES (5, 'Dryfit', 'Azul', 'Coltex', 100, '2021-01-01', 'CRIADO');
 INSERT INTO tb_estoque_material (id, tipo, nome, marca, quantidade, data_de_criacao, acao) VALUES (6, 'Dryfit', 'Vermelho', 'Coltex', 100, '2021-01-01', 'CRIADO');
