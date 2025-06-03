@@ -23,7 +23,7 @@ public class Comentario {
     @Column(nullable = false)
     private String comentario;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "historico_id", nullable = false)
     private HistoricoMaterial historico;
 }

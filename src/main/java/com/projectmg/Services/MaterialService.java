@@ -184,7 +184,7 @@ public class MaterialService {
                 .toList();
     }
 
-    private void salvarHistorico() {
+    private void salvarHistorico( Material material, Integer quantidade, TipoAcao acao, String comentarioTexto) {
         HistoricoMaterial historico = new HistoricoMaterial();
         historico.setMaterial(material);
         historico.setQuantidadeAlterada(quantidade);
@@ -192,12 +192,12 @@ public class MaterialService {
         historico.setAcao(acao);
         historico.setUsuarioUltimaAlteracao(UsuarioAuditoria.getUsuarioLogado());
 
-        if (comentario != null && !comentario.isBlank()) {
-            Comentario comentarioHistorico = new Comentario();
-            comentarioHistorico.setComentario(comentario);
-            comentarioRepository.save(comentarioHistorico);
+        if (comentarioTexto != null && !comentarioTexto.isBlank()) {
+            Comentario comentario = new Comentario();
+            comentario.setComentario(comentarioTexto);
+            comentario.setHistorico(historico);
 
-            historico.setComentario(comentarioHistorico.getComentario());
+            historico.getComentarios().add(comentario);
         }
 
         historicoRepository.save(historico);
@@ -212,6 +212,8 @@ public class MaterialService {
         material.setAcao(TipoAcao.ADICIONADO);
         materialRepository.save(material);
 
+        salvarHistorico(material, quantidade, TipoAcao.ADICIONADO, comentario);
+
         return converterMaterialParaMaterialDto(material);
     }
     public MaterialDTO retirarQuantidade(Long id, Integer quantidade, String comentario){
@@ -221,6 +223,8 @@ public class MaterialService {
         material.setUsuarioUltimaAlteracao(UsuarioAuditoria.getUsuarioLogado());
         material.setAcao(TipoAcao.RETIRADO);
         materialRepository.save(material);
+
+        salvarHistorico(material, quantidade, TipoAcao.RETIRADO, comentario);
 
         return converterMaterialParaMaterialDto(material);
     }

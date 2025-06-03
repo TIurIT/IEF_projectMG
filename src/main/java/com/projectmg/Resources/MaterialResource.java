@@ -2,6 +2,7 @@ package com.projectmg.Resources;
 
 import com.projectmg.Dto.HistoricoMaterialDTO;
 import com.projectmg.Dto.MaterialDTO;
+import com.projectmg.Dto.OperacaoeEstoqueDTO;
 import com.projectmg.Models.HistoricoMaterial;
 import com.projectmg.Models.Material;
 import com.projectmg.Repositories.HistoricoMaterialRepository;
@@ -76,14 +77,16 @@ public class MaterialResource {
         return materialRepository.findTop5ByOrderByDataAtualizacaoDesc();
     }
 
-    @PutMapping("/adicionar-quantidade/{id}/{quantidade}")
-        public MaterialDTO adicionarMaterial(@PathVariable Long id, @PathVariable Integer quantidade,@PathVariable String comentario){
-        return materialService.adicionarQuantidade(id, quantidade, comentario);
+    @PutMapping("/adicionar-quantidade")
+        public ResponseEntity<Void> adicionarMaterial(@RequestBody OperacaoeEstoqueDTO opDTO){
+        materialService.adicionarQuantidade(opDTO.getId(), opDTO.getQuantidade(), opDTO.getComentario());
+        return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/retirar-quantidade/{id}/{quantidade}")
-    public MaterialDTO retirarMaterial(@PathVariable Long id, @PathVariable Integer quantidade,@RequestParam String comentario){
-        return materialService.retirarQuantidade(id, quantidade, comentario);
+    @PutMapping("/retirar-quantidade")
+    public ResponseEntity<Void> retirarMaterial(@RequestBody OperacaoeEstoqueDTO opDTO){
+        materialService.retirarQuantidade(opDTO.getId(), opDTO.getQuantidade(), opDTO.getComentario());
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/item-historico/{id}")
