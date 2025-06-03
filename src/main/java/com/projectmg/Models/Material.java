@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Table(name = "tb_estoque_material")
@@ -42,9 +44,6 @@ public class Material {
     @Column(name = "data_atualizacao")
     private LocalDate dataAtualizacao;
 
-    @Column(name = "comentario")
-    private String comentario;
-
     @Column(name = "usuario_ultima_alteracao")
     private String usuarioUltimaAlteracao;
 
@@ -52,15 +51,18 @@ public class Material {
     @Column(nullable = false)
     private TipoAcao acao;
 
+    @OneToMany(mappedBy = "material", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<HistoricoMaterial> historicos = new ArrayList<>();
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Material material = (Material) o;
-        return Objects.equals(id, material.id) && Objects.equals(tipo, material.tipo) && Objects.equals(nome, material.nome) && Objects.equals(marca, material.marca) && Objects.equals(quantidade, material.quantidade) && Objects.equals(dataDeCriacao, material.dataDeCriacao) && Objects.equals(dataAtualizacao, material.dataAtualizacao) && Objects.equals(comentario, material.comentario) && Objects.equals(usuarioUltimaAlteracao, material.usuarioUltimaAlteracao) && acao == material.acao;
+        return Objects.equals(id, material.id) && Objects.equals(tipo, material.tipo) && Objects.equals(nome, material.nome) && Objects.equals(marca, material.marca) && Objects.equals(quantidade, material.quantidade) && Objects.equals(dataDeCriacao, material.dataDeCriacao) && Objects.equals(dataAtualizacao, material.dataAtualizacao) && Objects.equals(usuarioUltimaAlteracao, material.usuarioUltimaAlteracao) && acao == material.acao && Objects.equals(historicos, material.historicos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tipo, nome, marca, quantidade, dataDeCriacao, dataAtualizacao, comentario, usuarioUltimaAlteracao, acao);
+        return Objects.hash(id, tipo, nome, marca, quantidade, dataDeCriacao, dataAtualizacao, usuarioUltimaAlteracao, acao, historicos);
     }
 }

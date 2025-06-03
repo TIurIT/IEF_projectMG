@@ -1,7 +1,6 @@
 package com.projectmg.Models;
 
 import com.projectmg.Enum.TipoAcao;
-import com.projectmg.Security.UsuarioAuditoria;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -24,22 +24,25 @@ public class HistoricoMaterial {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "material_id")
-    private Material material;
-
     @Column(nullable = false)
-    private Integer quantidade;
+    private Integer quantidadeAlterada;
 
     @Column(nullable = false)
     private String comentario;
 
-    @Column(name = "data_historico", nullable = false)
-    private LocalDate dataHistorico;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoAcao acao;
+
+    @ManyToOne
+    @JoinColumn(name = "material_id", nullable = false)
+    private Material material;
+
+    @OneToMany(mappedBy = "historico", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comentario> comentarios = new ArrayList<>();
+
+    @Column(name = "data_historico", nullable = false)
+    private LocalDate dataHistorico;
 
     @Column(name = "usuarioUltimaAlteracao", nullable = false)
     private String usuarioUltimaAlteracao;
@@ -48,11 +51,11 @@ public class HistoricoMaterial {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         HistoricoMaterial that = (HistoricoMaterial) o;
-        return Objects.equals(id, that.id) && Objects.equals(material, that.material) && Objects.equals(quantidade, that.quantidade) && Objects.equals(comentario, that.comentario) && Objects.equals(dataHistorico, that.dataHistorico) && acao == that.acao && Objects.equals(usuarioUltimaAlteracao, that.usuarioUltimaAlteracao);
+        return Objects.equals(id, that.id) && Objects.equals(material, that.material) && Objects.equals(quantidadeAlterada, that.quantidadeAlterada) && Objects.equals(comentario, that.comentario) && Objects.equals(dataHistorico, that.dataHistorico) && acao == that.acao && Objects.equals(usuarioUltimaAlteracao, that.usuarioUltimaAlteracao);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, material, quantidade, comentario, dataHistorico, acao, usuarioUltimaAlteracao);
+        return Objects.hash(id, material, quantidadeAlterada, comentario, dataHistorico, acao, usuarioUltimaAlteracao);
     }
 }

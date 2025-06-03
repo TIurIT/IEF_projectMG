@@ -7,6 +7,7 @@ import jakarta.persistence.PreUpdate;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class MaterialDTO {
@@ -17,10 +18,10 @@ public class MaterialDTO {
     private Integer quantidade;
     private LocalDate dataDeCriacao;
     private LocalDate dataAtualizacao;
-    private String comentario;
     private String usuarioUltimaAlteracao;
     private TipoAcao acao;
 
+    private List<HistoricoMaterialDTO> historicoMaterialDTOList;
 
     @PrePersist
     @PreUpdate
@@ -29,7 +30,7 @@ public class MaterialDTO {
         this.usuarioUltimaAlteracao = UsuarioAuditoria.getUsuarioLogado();
     }
 
-    public MaterialDTO(Long id, String tipo, String nome, String marca, Integer quantidade, LocalDate dataDeCriacao, LocalDate dataAtualizacao, String usuarioUltimaAlteracao, TipoAcao acao, String comentario) {
+    public MaterialDTO(Long id, String tipo, String nome, String marca, Integer quantidade, LocalDate dataDeCriacao, LocalDate dataAtualizacao, String usuarioUltimaAlteracao, TipoAcao acao, List<HistoricoMaterialDTO> historicoMaterialDTOList) {
         this.id = id;
         this.tipo = tipo;
         this.nome = nome;
@@ -37,9 +38,9 @@ public class MaterialDTO {
         this.quantidade = quantidade;
         this.dataDeCriacao = dataDeCriacao;
         this.dataAtualizacao = dataAtualizacao;
-        this.comentario = comentario;
         this.usuarioUltimaAlteracao = usuarioUltimaAlteracao;
         this.acao = acao;
+        this.historicoMaterialDTOList = historicoMaterialDTOList;
     }
 
     public MaterialDTO(){}
@@ -98,12 +99,10 @@ public class MaterialDTO {
     public void setAcao(TipoAcao acao) {
         this.acao = acao;
     }
-
-    public String getComentario() {
-        return comentario;
+    public List<HistoricoMaterialDTO> getHistoricoMaterialDTOList() {
+        return historicoMaterialDTOList;
     }
-
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
+    public void setHistoricoMaterialDTOList(List<HistoricoMaterialDTO> historicoMaterialDTOList) {
+        this.historicoMaterialDTOList = historicoMaterialDTOList;
     }
 }

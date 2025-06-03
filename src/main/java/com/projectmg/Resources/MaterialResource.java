@@ -88,11 +88,7 @@ public class MaterialResource {
 
     @GetMapping("/item/historico/{id}")
     public ResponseEntity<List<HistoricoMaterialDTO>> buscarHistoricoPorMaterial(@PathVariable Long id) {
-        List<HistoricoMaterial> historicos = historicoRepository.findByMaterialId(id);
-        List<HistoricoMaterialDTO> dtos = historicos.stream()
-                .map(materialService::converterHistoricoParaDTO)
-                .toList();
-        return ResponseEntity.ok(dtos);
+        return ResponseEntity.ok(materialService.buscarHistoricoPorMaterial(id));
     }
 
 }

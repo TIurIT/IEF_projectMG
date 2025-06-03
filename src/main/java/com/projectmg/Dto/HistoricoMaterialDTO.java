@@ -4,30 +4,29 @@ import com.projectmg.Enum.TipoAcao;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class HistoricoMaterialDTO {
     private Long id;
     private Long materialId;
-    private String materialNome;
-    private Integer quantidade;
-    private String comentario;
+    private Integer quantidadeAlterada;
     private LocalDate dataHistorico;
     private TipoAcao acao;
     private String usuarioUltimaAlteracao;
+    private List<String> comentarios;
 
     public HistoricoMaterialDTO() {
     }
 
-    public HistoricoMaterialDTO(Long id, Long materialId, String materialNome, Integer quantidade, String comentario, LocalDate dataHistorico, TipoAcao acao, String usuarioUltimaAlteracao) {
+    public HistoricoMaterialDTO(Long id, Long materialId, Integer quantidadeAlterada, LocalDate dataHistorico, TipoAcao acao, String usuarioUltimaAlteracao, List<String> comentarios) {
         this.id = id;
         this.materialId = materialId;
-        this.materialNome = materialNome;
-        this.quantidade = quantidade;
-        this.comentario = comentario;
+        this.quantidadeAlterada = quantidadeAlterada;
         this.dataHistorico = dataHistorico;
         this.acao = acao;
         this.usuarioUltimaAlteracao = usuarioUltimaAlteracao;
+        this.comentarios = comentarios;
     }
 
     public Long getId() {
@@ -46,28 +45,12 @@ public class HistoricoMaterialDTO {
         this.materialId = materialId;
     }
 
-    public String getMaterialNome() {
-        return materialNome;
+    public Integer getQuantidadeAlterada() {
+        return quantidadeAlterada;
     }
 
-    public void setMaterialNome(String materialNome) {
-        this.materialNome = materialNome;
-    }
-
-    public Integer getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
-    }
-
-    public String getComentario() {
-        return comentario;
-    }
-
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
+    public void setQuantidadeAlterada(Integer quantidadeAlterada) {
+        this.quantidadeAlterada = quantidadeAlterada;
     }
 
     public LocalDate getDataHistorico() {
@@ -92,5 +75,13 @@ public class HistoricoMaterialDTO {
 
     public void setUsuarioUltimaAlteracao(String usuarioUltimaAlteracao) {
         this.usuarioUltimaAlteracao = usuarioUltimaAlteracao;
+    }
+
+    public List<String> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<String> comentarios) {
+        this.comentarios = comentarios;
     }
 }
