@@ -17,8 +17,8 @@ public interface MaterialRepository extends JpaRepository<Material, Long> {
     @Query("select e from Material e where e.tipo like %:tipo%")
     List<Material> findByTipo(String tipo);
 
-    @Query("select e from Material e where e.marca like %:marca%")
-    List<Material> findByMarca(String marca);
+    @Query("select e from Material e where e.fornecedor like %:fornecedor%")
+    List<Material> findByfornecedor(String fornecedor);
 
     @Query("select e from Material e where e.acao !='DELETADO'")
     List<Material> findAllAtivos();

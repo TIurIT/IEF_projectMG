@@ -1,5 +1,6 @@
 package com.projectmg.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.projectmg.Enum.TipoAcao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,8 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -24,38 +24,44 @@ public class HistoricoMaterial {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TipoAcao acao; // ADICIONADO, RETIRADO, ATUALIZADO
+
     private Integer quantidadeAlterada;
 
-    @Column(nullable = false)
+    private String usuarioUltimaAtualizacao;
+
+    @Column(length = 1000)
     private String comentario;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private TipoAcao acao;
-
-    @ManyToOne
-    @JoinColumn(name = "material_id", nullable = false)
+    @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn(name = "material_id")
     private Material material;
 
-    @OneToMany(mappedBy = "historico", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comentario> comentarios = new ArrayList<>();
+    private LocalDateTime dataCriacao;
 
-    @Column(name = "data_historico", nullable = false)
-    private LocalDate dataHistorico;
+    private LocalDateTime dataAtualizacao;
 
-    @Column(name = "usuarioUltimaAlteracao", nullable = false)
-    private String usuarioUltimaAlteracao;
+    @PrePersist
+    public void prePersist() {
+        dataCriacao = LocalDateTime.now();
+        dataAtualizacao = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        dataAtualizacao = LocalDateTime.now();
+    }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         HistoricoMaterial that = (HistoricoMaterial) o;
-        return Objects.equals(id, that.id) && Objects.equals(material, that.material) && Objects.equals(quantidadeAlterada, that.quantidadeAlterada) && Objects.equals(comentario, that.comentario) && Objects.equals(dataHistorico, that.dataHistorico) && acao == that.acao && Objects.equals(usuarioUltimaAlteracao, that.usuarioUltimaAlteracao);
+        return Objects.equals(id, that.id) && acao == that.acao && Objects.equals(quantidadeAlterada, that.quantidadeAlterada) && Objects.equals(usuarioUltimaAtualizacao, that.usuarioUltimaAtualizacao) && Objects.equals(comentario, that.comentario) && Objects.equals(material, that.material) && Objects.equals(dataCriacao, that.dataCriacao) && Objects.equals(dataAtualizacao, that.dataAtualizacao);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, material, quantidadeAlterada, comentario, dataHistorico, acao, usuarioUltimaAlteracao);
+        return Objects.hash(id, acao, quantidadeAlterada, usuarioUltimaAtualizacao, comentario, material, dataCriacao, dataAtualizacao);
     }
 }

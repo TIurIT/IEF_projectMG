@@ -12,12 +12,12 @@ INSERT INTO tb_produto (id, nome, referencia, acao) VALUES (10, 'Regata Nadador'
 INSERT INTO tb_produto (id, nome, referencia, acao) VALUES (11, 'Regata Alça Fina', '09', 'CRIADO');
 INSERT INTO tb_produto (id, nome, referencia, acao) VALUES (12, 'Regata Cropped', '10', 'CRIADO');
 
-INSERT INTO tb_estoque_material (id, tipo, nome, marca, quantidade, data_de_criacao, acao) VALUES (1, 'Dryfit', 'Alumínio', 'Coltex', 100, '2021-01-01', 'CRIADO');
-INSERT INTO tb_estoque_material (id, tipo, nome, marca, quantidade, data_de_criacao, acao) VALUES (2, 'Dryfit', 'Preto', 'Coltex', 100, '2021-01-01', 'CRIADO');
-INSERT INTO tb_estoque_material (id, tipo, nome, marca, quantidade, data_de_criacao, acao) VALUES (3, 'Dryfit', 'Branco', 'Coltex', 100, '2021-01-01', 'CRIADO');
-INSERT INTO tb_estoque_material (id, tipo, nome, marca, quantidade, data_de_criacao, acao) VALUES (4, 'Dryfit', 'Amarelo', 'Coltex', 100, '2021-01-01', 'CRIADO');
-INSERT INTO tb_estoque_material (id, tipo, nome, marca, quantidade, data_de_criacao, acao) VALUES (5, 'Dryfit', 'Azul', 'Coltex', 100, '2021-01-01', 'CRIADO');
-INSERT INTO tb_estoque_material (id, tipo, nome, marca, quantidade, data_de_criacao, acao) VALUES (6, 'Dryfit', 'Vermelho', 'Coltex', 100, '2021-01-01', 'CRIADO');
+INSERT INTO tb_estoque_material (id, tipo, nome, fornecedor, quantidade, data_de_criacao, acao) VALUES (1, 'Dryfit', 'Alumínio', 'Coltex', 100, '2021-01-01', 'CRIADO');
+INSERT INTO tb_estoque_material (id, tipo, nome, fornecedor, quantidade, data_de_criacao, acao) VALUES (2, 'Dryfit', 'Preto', 'Coltex', 100, '2021-01-01', 'CRIADO');
+INSERT INTO tb_estoque_material (id, tipo, nome, fornecedor, quantidade, data_de_criacao, acao) VALUES (3, 'Dryfit', 'Branco', 'Coltex', 100, '2021-01-01', 'CRIADO');
+INSERT INTO tb_estoque_material (id, tipo, nome, fornecedor, quantidade, data_de_criacao, acao) VALUES (4, 'Dryfit', 'Amarelo', 'Coltex', 100, '2021-01-01', 'CRIADO');
+INSERT INTO tb_estoque_material (id, tipo, nome, fornecedor, quantidade, data_de_criacao, acao) VALUES (5, 'Dryfit', 'Azul', 'Coltex', 100, '2021-01-01', 'CRIADO');
+INSERT INTO tb_estoque_material (id, tipo, nome, fornecedor, quantidade, data_de_criacao, acao) VALUES (6, 'Dryfit', 'Vermelho', 'Coltex', 100, '2021-01-01', 'CRIADO');
 
 INSERT INTO tb_cliente (id, nome, email, telefone, cpf_cnpj) VALUES (1, 'João da Silva', 'joao@gmail.com', '(11) 99999-9999', '123.456.000-00');
 INSERT INTO tb_cliente (id, nome, email, telefone, cpf_cnpj) VALUES (2, 'Maria da Silva', 'maria@gmail.com', '(11) 99999-9999', '123.456.712-00');

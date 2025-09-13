@@ -1,236 +1,150 @@
 package com.projectmg.Services;
 
-import com.projectmg.Dto.HistoricoMaterialDTO;
 import com.projectmg.Dto.MaterialDTO;
+import com.projectmg.Dto.HistoricoMaterialDTO;
 import com.projectmg.Enum.TipoAcao;
-import com.projectmg.Models.Comentario;
-import com.projectmg.Models.HistoricoMaterial;
 import com.projectmg.Models.Material;
-import com.projectmg.Repositories.ComentarioRepository;
+import com.projectmg.Models.HistoricoMaterial;
 import com.projectmg.Repositories.HistoricoMaterialRepository;
 import com.projectmg.Repositories.MaterialRepository;
-import com.projectmg.Security.UsuarioAuditoria;
-import com.projectmg.Specs.MaterialSpec;
-import com.projectmg.Exceptions.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
 public class MaterialService {
 
-    private static final String MSG_ESTOQUE = "Material não encontrado";
-
     @Autowired
     private MaterialRepository materialRepository;
 
     @Autowired
-    private MaterialSpec materialSpec;
-
-    @Autowired
     private HistoricoMaterialRepository historicoRepository;
 
-    @Autowired
-    private ComentarioRepository comentarioRepository;
-
-    public Material converterMaterialDtoParaMaterial(MaterialDTO materialDTO){
-        Material material = new Material();
-        material.setId(materialDTO.getId());
-        material.setTipo(materialDTO.getTipo());
-        material.setNome(materialDTO.getNome());
-        material.setMarca(materialDTO.getMarca());
-        material.setQuantidade(materialDTO.getQuantidade());
-        material.setDataDeCriacao(materialDTO.getDataDeCriacao());
-        material.setDataAtualizacao(materialDTO.getDataAtualizacao());
-        material.setUsuarioUltimaAlteracao(materialDTO.getUsuarioUltimaAlteracao());
-        material.setAcao(materialDTO.getAcao());
-
-        return material;
-    }
-
-    public MaterialDTO converterMaterialParaMaterialDto(Material material){
-        MaterialDTO materialDTO = new MaterialDTO();
-        materialDTO.setId(material.getId());
-        materialDTO.setTipo(material.getTipo());
-        materialDTO.setNome(material.getNome());
-        materialDTO.setMarca(material.getMarca());
-        materialDTO.setQuantidade(material.getQuantidade());
-        materialDTO.setDataDeCriacao(material.getDataDeCriacao());
-        materialDTO.setDataAtualizacao(material.getDataAtualizacao());
-        materialDTO.setUsuarioUltimaAlteracao(material.getUsuarioUltimaAlteracao());
-        materialDTO.setAcao(material.getAcao());
-
-        return materialDTO;
-    }
-
-    public MaterialDTO cadastrarMaterial(MaterialDTO materialDTO) {
-        materialSpec.verifyMaterialNome(materialDTO.getNome());
-        List<Material> materialNome = materialRepository.findByNome(materialDTO.getNome());
-        materialSpec.verifyMaterialNomeExists(materialNome);
-        materialSpec.verifyMaterialTipo(materialDTO.getTipo());
-        materialSpec.verigyMaterialMarca(materialDTO.getMarca());
-        Material material = converterMaterialDtoParaMaterial(materialDTO);
-        material.setAcao(material.getId() == null ? TipoAcao.CRIADO : TipoAcao.ATUALIZADO);
-        material = materialRepository.save(material);
-
-        return converterMaterialParaMaterialDto(material);
-    }
-
-    public MaterialDTO atualizarMaterial(MaterialDTO materialDTO) {
-        materialSpec.verifyMaterialId(materialDTO.getId());
-        Material materialExistente = materialRepository.findById(materialDTO.getId())
-                .orElseThrow(() -> new BusinessException(MSG_ESTOQUE));
-        materialSpec.verifyProdutoNomeDup(materialDTO.getNome(),materialDTO.getId());
-        materialExistente.setNome(materialDTO.getNome());
-        materialExistente.setMarca( materialDTO.getMarca());
-        materialExistente.setTipo(materialDTO.getTipo());
-        materialExistente.setQuantidade(materialDTO.getQuantidade());
-        materialExistente.setDataDeCriacao(materialDTO.getDataDeCriacao());
-        materialExistente.setDataAtualizacao(LocalDate.now());
-        materialExistente.setUsuarioUltimaAlteracao(UsuarioAuditoria.getUsuarioLogado());
-        materialExistente.setAcao(TipoAcao.ATUALIZADO);
-        materialRepository.save(materialExistente);
-
-        return  converterMaterialParaMaterialDto(materialExistente);
-    }
-
-    public void deletarMaterial(Long id) {
-        Material material = materialRepository.findById(id).orElseThrow();
-        material.setAcao(TipoAcao.DELETADO);
-        material.setDataAtualizacao(LocalDate.now());
-        material.setUsuarioUltimaAlteracao(UsuarioAuditoria.getUsuarioLogado());
-        materialRepository.deleteById(id);
-    }
-
-    public MaterialDTO buscarMaterialPorId(Long id) {
-       Material material = materialRepository.findById(id)
-               .orElseThrow(() -> new BusinessException(MSG_ESTOQUE));
-       return converterMaterialParaMaterialDto(material);
-    }
-
-    public List<MaterialDTO> buscarPorNome(String nome) {
-        List<Material> materiais = materialRepository.findByNome(nome);
-        materialSpec.verifyMaterial(materiais);
-        List<MaterialDTO> dtos = new java.util.ArrayList<>();
-        materiais.forEach(material -> {
-            dtos.add(converterMaterialParaMaterialDto(material));
-        });
-
-        return dtos;
-    }
-
-    public List<MaterialDTO> buscarPorTipo(String tipo) {
-        List<Material> materiais = materialRepository.findByTipo(tipo);
-        materialSpec.verifyMaterial(materiais);
-        List<MaterialDTO> dtos = new java.util.ArrayList<>();
-        materiais.forEach(material -> {
-            dtos.add(converterMaterialParaMaterialDto(material));
-        });
-
-        return dtos;
-    }
-
-    public List<MaterialDTO> buscarPorMarca(String marca) {
-        List<Material> materiais = materialRepository.findByMarca(marca);
-        materialSpec.verifyMaterial(materiais);
-        List<MaterialDTO> dtos = new java.util.ArrayList<>();
-        materiais.forEach(material -> {
-            dtos.add(converterMaterialParaMaterialDto(material));
-        });
-
-        return dtos;
-    }
-
-    public List<MaterialDTO> buscarMaterialTodos(){
-        List<Material> materiais = materialRepository.findAllAtivos();
-        materialSpec.verifyMaterial(materiais);
-        List<MaterialDTO> dtos = new java.util.ArrayList<>();
-        materiais.forEach(material -> {
-            dtos.add(converterMaterialParaMaterialDto(material));
-        });
-
-        return dtos;
-    }
-
-    public HistoricoMaterialDTO converterHistoricoParaDTO(HistoricoMaterial historico) {
-        HistoricoMaterialDTO dto = new HistoricoMaterialDTO();
-        dto.setId(historico.getId());
-        dto.setMaterialId(historico.getMaterial().getId());
-        dto.setQuantidadeAlterada(historico.getQuantidadeAlterada());
-        dto.setDataHistorico(historico.getDataHistorico());
-        dto.setAcao(historico.getAcao());
-        dto.setUsuarioUltimaAlteracao(historico.getUsuarioUltimaAlteracao());
-
-        if (historico.getComentarios() != null) {
-            dto.setComentarios(
-                    historico.getComentarios().stream()
-                            .map(Comentario::getComentario)
-                            .toList()
-            );
-        }
-        return dto;
-    }
-
-    public List<HistoricoMaterialDTO> buscarHistoricoPorMaterial(Long idMaterial) {
-        List<HistoricoMaterial> historicos = historicoRepository.findByMaterialId(idMaterial);
-        return historicos.stream()
-                .map(this::converterHistoricoParaDTO)
+    public List<MaterialDTO> listarTodos() {
+        return materialRepository.findAllAtivos()
+                .stream()
+                .map(MaterialDTO::fromEntity)
                 .toList();
     }
 
-    private void salvarHistorico(Material material, Integer quantidade, String comentario, TipoAcao acao) {
-        HistoricoMaterial historico = new HistoricoMaterial();
-        historico.setMaterial(material);
-        historico.setQuantidadeAlterada(quantidade);
-        historico.setDataHistorico(LocalDate.now());
-        historico.setAcao(acao);
-        historico.setUsuarioUltimaAlteracao(UsuarioAuditoria.getUsuarioLogado());
+    public List<MaterialDTO> listarUltimos() {
+        List<Material> materiais = materialRepository.findTop5ByOrderByDataAtualizacaoDesc();
+        return materiais.stream()
+                .map(MaterialDTO::fromEntity)  // agora inclui ultimoComentario
+                .toList();
+    }
 
-        if (comentario != null && !comentario.isBlank()) {
-            Comentario comentarioHistorico = new Comentario();
-            comentarioHistorico.setComentario(comentario);
-            comentarioHistorico.setHistorico(historico);
-            comentarioRepository.save(comentarioHistorico);
-
-            historico.setComentario(comentarioHistorico.getComentario());
+    private MaterialDTO toDTOComUltimoComentario(Material m) {
+        String ultimoComentario = null;
+        if (m.getHistoricos() != null && !m.getHistoricos().isEmpty()) {
+            HistoricoMaterial ultimo = m.getHistoricos()
+                    .stream()
+                    .max(Comparator.comparing(HistoricoMaterial::getDataAtualizacao))
+                    .orElse(null);
+            if (ultimo != null) {
+                ultimoComentario = ultimo.getComentario();
+            }
         }
 
+        return new MaterialDTO(
+                m.getId(),
+                m.getNome(),
+                m.getTipo(),
+                m.getFornecedor(),
+                m.getQuantidade(),
+                m.getDataDeCriacao(),
+                m.getDataAtualizacao(),
+                m.getAcao(),
+                m.getUsuarioUltimaAlteracao(),
+                ultimoComentario
+        );
+    }
+
+    public MaterialDTO cadastrarMaterial(MaterialDTO dto, String usuario) {
+        Material material = new Material();
+        material.setNome(dto.nome());
+        material.setTipo(dto.tipo());
+        material.setFornecedor(dto.fornecedor());
+        material.setQuantidade(dto.quantidade());
+        material.setUsuarioUltimaAlteracao(usuario);
+        material.setDataDeCriacao(LocalDateTime.now());
+        material.setDataAtualizacao(LocalDateTime.now());
+
+        Material salvo = materialRepository.save(material);
+
+        registrarHistorico(salvo, TipoAcao.CRIADO, dto.quantidade(), usuario, "Cadastro inicial");
+
+        return toDTOComUltimoComentario(salvo);
+    }
+
+    public MaterialDTO atualizarMaterial(Long id, MaterialDTO dto, String usuario) {
+        Material material = materialRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Material não encontrado"));
+
+        material.setNome(dto.nome());
+        material.setTipo(dto.tipo());
+        material.setFornecedor(dto.fornecedor());
+        material.setQuantidade(dto.quantidade());
+
+        material.setAcao(TipoAcao.ATUALIZADO);
+        material.setUsuarioUltimaAlteracao(usuario);
+        material.setDataAtualizacao(LocalDateTime.now());
+
+        Material salvo = materialRepository.save(material);
+
+        String comentario = dto.ultimoComentario() != null ? dto.ultimoComentario() : "Atualização manual";
+        registrarHistorico(salvo, TipoAcao.ATUALIZADO, dto.quantidade(), usuario, comentario);
+
+        return MaterialDTO.fromEntity(salvo);
+    }
+
+
+    public void deletarMaterial(Long id) { materialRepository .deleteById(id); }
+
+    public MaterialDTO atualizarQuantidade(Long id, int quantidade, TipoAcao acao, String usuario, String comentario) {
+        Material material = materialRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Material não encontrado"));
+
+        if (acao == TipoAcao.ADICIONADO) {
+            material.setQuantidade(material.getQuantidade() + quantidade);
+        } else if (acao == TipoAcao.RETIRADO) {
+            material.setQuantidade(material.getQuantidade() - quantidade);
+        }
+
+        material.setAcao(acao);
+        material.setUsuarioUltimaAlteracao(usuario);
+        material.setDataAtualizacao(LocalDateTime.now());
+
+        Material salvo = materialRepository.save(material);
+
+        registrarHistorico(salvo, acao, quantidade, usuario, comentario);
+
+        return toDTOComUltimoComentario(salvo);
+    }
+
+    private void registrarHistorico(Material material, TipoAcao acao, Integer quantidade, String usuario, String comentario) {
+        HistoricoMaterial historico = new HistoricoMaterial();
+        historico.setMaterial(material);
+        historico.setAcao(acao);
+        historico.setQuantidadeAlterada(quantidade);
+        historico.setUsuarioUltimaAtualizacao(usuario);
+        historico.setComentario(comentario);
+        historico.setDataAtualizacao(LocalDateTime.now());
         historicoRepository.save(historico);
     }
 
-
-    public MaterialDTO adicionarQuantidade(Long id, Integer quantidade, String comentario){
-        Material material = materialRepository.findById(id).orElseThrow(() -> new BusinessException(MSG_ESTOQUE));
-        material.setQuantidade(material.getQuantidade() + quantidade);
-        material.setDataAtualizacao(LocalDate.now());
-        material.setUsuarioUltimaAlteracao(UsuarioAuditoria.getUsuarioLogado());
-        material.setAcao(TipoAcao.ADICIONADO);
-        materialRepository.save(material);
-
-        Comentario comentarioHistorico = new Comentario();
-        comentarioHistorico.setComentario(comentario);
-
-        salvarHistorico(material, quantidade, comentario, TipoAcao.ADICIONADO);
-
-        return converterMaterialParaMaterialDto(material);
-    }
-    public MaterialDTO retirarQuantidade(Long id, Integer quantidade, String comentario){
-        Material material = materialRepository.findById(id).orElseThrow(() -> new BusinessException(MSG_ESTOQUE));
-        material.setQuantidade(material.getQuantidade() - quantidade);
-        material.setDataAtualizacao(LocalDate.now());
-        material.setUsuarioUltimaAlteracao(UsuarioAuditoria.getUsuarioLogado());
-        material.setAcao(TipoAcao.RETIRADO);
-        materialRepository.save(material);
-
-        Comentario comentarioHistorico = new Comentario();
-        comentarioHistorico.setComentario(comentario);
-
-        salvarHistorico(material, quantidade, comentario, TipoAcao.RETIRADO);
-
-        return converterMaterialParaMaterialDto(material);
+    public List<HistoricoMaterialDTO> listarHistorico(Long materialId) {
+        return historicoRepository.findByMaterialId(materialId)
+                .stream()
+                .map(HistoricoMaterialDTO::fromEntity)
+                .sorted((h1, h2) -> h2.dataAtualizacao().compareTo(h1.dataAtualizacao())) // ordem decrescente
+                .collect(Collectors.toList());
     }
 }

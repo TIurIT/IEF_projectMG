@@ -2,6 +2,7 @@ package com.projectmg.Resources;
 
 import com.projectmg.Dto.HistoricoMaterialDTO;
 import com.projectmg.Dto.MaterialDTO;
+import com.projectmg.Enum.TipoAcao;
 import com.projectmg.Models.HistoricoMaterial;
 import com.projectmg.Models.Material;
 import com.projectmg.Repositories.HistoricoMaterialRepository;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -21,74 +23,48 @@ public class MaterialResource {
     @Autowired
     private MaterialService materialService;
 
-    @Autowired
-    private MaterialRepository materialRepository;
-
-    @Autowired
-    private HistoricoMaterialRepository historicoRepository;
-
-    @GetMapping({"/",""})
-    public ResponseEntity<List<MaterialDTO>> buscarTodosMateriais() {
-        return ResponseEntity.ok(materialService.buscarMaterialTodos());
-    }
-
-    @GetMapping("/buscar/{id}")
-    public ResponseEntity<MaterialDTO> buscarMaterialPorId(@PathVariable Long id){
-        return ResponseEntity.ok(materialService.buscarMaterialPorId(id));
-    }
-
-    @PostMapping("/cadastrar")
-    public ResponseEntity<MaterialDTO> cadastrarMaterial(@RequestBody MaterialDTO materialDTO){
-        MaterialDTO material = materialService.cadastrarMaterial(materialDTO);
-        return ResponseEntity.ok(material);
-    }
-
-    @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Void> deletarMaterial(@PathVariable Long id) {
-        materialService.deletarMaterial(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PutMapping("/atualizar/{id}")
-    public ResponseEntity<MaterialDTO> atualizarMaterial(@PathVariable Long id, @RequestBody MaterialDTO materialDTO){
-        materialDTO.setId(id);
-        return ResponseEntity.ok(materialService.atualizarMaterial(materialDTO));
-    }
-
-
-    @GetMapping("/b/nome/{nome}")
-    public ResponseEntity<List<MaterialDTO>> buscarPorNome(@PathVariable String nome){
-        return ResponseEntity.ok(materialService.buscarPorNome(nome));
-    }
-
-    @GetMapping("/b/tipo/{tipo}")
-    public ResponseEntity<List<MaterialDTO>> buscarPorTipo(@PathVariable String tipo){
-        return ResponseEntity.ok(materialService.buscarPorTipo(tipo));
-    }
-
-    @GetMapping("/b/marca/{marca}")
-    public ResponseEntity<List<MaterialDTO>> buscarPorMarca(@PathVariable String marca){
-        return ResponseEntity.ok(materialService.buscarPorMarca(marca));
+    @GetMapping("/")
+    public List<MaterialDTO> listarTodos() {
+        return materialService.listarTodos();
     }
 
     @GetMapping("/ultimos")
-    public List<Material> ultimosMaterial(){
-        return materialRepository.findTop5ByOrderByDataAtualizacaoDesc();
+    public List<MaterialDTO> listarUltimos() {
+        return materialService.listarUltimos();
     }
 
-    @PutMapping("/adicionar-quantidade/{id}/{quantidade}")
-        public MaterialDTO adicionarMaterial(@PathVariable Long id, @PathVariable Integer quantidade,@RequestParam String comentario){
-        return materialService.adicionarQuantidade(id, quantidade, comentario);
+    @PostMapping("/cadastrar")
+    public MaterialDTO cadastrarMaterial(@RequestBody MaterialDTO dto) {
+        return materialService.cadastrarMaterial(dto, "Sistema"); // aqui você pode puxar do usuário logado
     }
 
-    @PutMapping("/retirar-quantidade/{id}/{quantidade}")
-    public MaterialDTO retirarMaterial(@PathVariable Long id, @PathVariable Integer quantidade,@RequestParam String comentario){
-        return materialService.retirarQuantidade(id, quantidade, comentario);
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<MaterialDTO> atualizarMaterial(
+            @PathVariable Long id,
+            @RequestBody MaterialDTO dto,
+            @RequestHeader("usuario") String usuario) {
+        MaterialDTO atualizado = materialService.atualizarMaterial(id, dto, usuario);
+        return ResponseEntity.ok(atualizado);
+    }
+
+
+    @DeleteMapping("/deletar/{id}")
+    public void deletarMaterial(@PathVariable Long id) {
+        materialService.deletarMaterial(id);
+    }
+
+    @PutMapping("/adicionar-quantidade/{id}/{qtd}")
+    public MaterialDTO adicionar(@PathVariable Long id, @PathVariable int qtd, @RequestBody Map<String, String> body) {
+        return materialService.atualizarQuantidade(id, qtd, TipoAcao.ADICIONADO, "sistema", body.get("comentario"));
+    }
+
+    @PutMapping("/retirar-quantidade/{id}/{qtd}")
+    public MaterialDTO retirar(@PathVariable Long id, @PathVariable int qtd, @RequestBody Map<String, String> body) {
+        return materialService.atualizarQuantidade(id, qtd, TipoAcao.RETIRADO, "sistema", body.get("comentario"));
     }
 
     @GetMapping("/item/historico/{id}")
-    public ResponseEntity<List<HistoricoMaterialDTO>> buscarHistoricoPorMaterial(@PathVariable Long id) {
-        return ResponseEntity.ok(materialService.buscarHistoricoPorMaterial(id));
+    public List<HistoricoMaterialDTO> historico(@PathVariable Long id) {
+        return materialService.listarHistorico(id);
     }
-
 }
