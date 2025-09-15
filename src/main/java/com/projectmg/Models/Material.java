@@ -53,6 +53,8 @@ public class Material {
     @Column(nullable = false)
     private TipoAcao acao;
 
+    private boolean ativo = true;
+
     @OneToMany(mappedBy = "material", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<HistoricoMaterial> historicos = new ArrayList<>();

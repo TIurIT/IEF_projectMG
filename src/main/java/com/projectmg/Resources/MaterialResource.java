@@ -24,8 +24,15 @@ public class MaterialResource {
     private MaterialService materialService;
 
     @GetMapping("/")
-    public List<MaterialDTO> listarTodos() {
-        return materialService.listarTodos();
+    public ResponseEntity<List<MaterialDTO>> listarAtivos() {
+        List<MaterialDTO> materiais = materialService.listarAtivos();
+        return ResponseEntity.ok(materiais);
+    }
+
+    @GetMapping("/todos")
+    public ResponseEntity<List<MaterialDTO>> listarTodos() {
+        List<MaterialDTO> materiais = materialService.listarTodos();
+        return ResponseEntity.ok(materiais);
     }
 
     @GetMapping("/ultimos")
@@ -49,8 +56,11 @@ public class MaterialResource {
 
 
     @DeleteMapping("/deletar/{id}")
-    public void deletarMaterial(@PathVariable Long id) {
-        materialService.deletarMaterial(id);
+    public ResponseEntity<Void> deletarMaterial(
+            @PathVariable Long id,
+            @RequestHeader("usuario") String usuario) { // recebe o header
+        materialService.deletarMaterial(id, usuario);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/adicionar-quantidade/{id}/{qtd}")
@@ -63,8 +73,4 @@ public class MaterialResource {
         return materialService.atualizarQuantidade(id, qtd, TipoAcao.RETIRADO, "sistema", body.get("comentario"));
     }
 
-    @GetMapping("/item/historico/{id}")
-    public List<HistoricoMaterialDTO> historico(@PathVariable Long id) {
-        return materialService.listarHistorico(id);
-    }
 }

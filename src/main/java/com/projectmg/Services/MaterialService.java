@@ -7,6 +7,7 @@ import com.projectmg.Models.Material;
 import com.projectmg.Models.HistoricoMaterial;
 import com.projectmg.Repositories.HistoricoMaterialRepository;
 import com.projectmg.Repositories.MaterialRepository;
+import com.projectmg.Security.UsuarioAuditoria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,17 +28,25 @@ public class MaterialService {
     @Autowired
     private HistoricoMaterialRepository historicoRepository;
 
+
     public List<MaterialDTO> listarTodos() {
-        return materialRepository.findAllAtivos()
-                .stream()
+        return materialRepository.findAll().stream()
                 .map(MaterialDTO::fromEntity)
                 .toList();
     }
 
+
+    public List<MaterialDTO> listarAtivos() {
+        return materialRepository.findAllAtivos().stream()
+                .map(MaterialDTO::fromEntity)
+                .toList();
+    }
+
+
     public List<MaterialDTO> listarUltimos() {
         List<Material> materiais = materialRepository.findTop5ByOrderByDataAtualizacaoDesc();
         return materiais.stream()
-                .map(MaterialDTO::fromEntity)  // agora inclui ultimoComentario
+                .map(MaterialDTO::fromEntity)
                 .toList();
     }
 
@@ -63,7 +72,8 @@ public class MaterialService {
                 m.getDataAtualizacao(),
                 m.getAcao(),
                 m.getUsuarioUltimaAlteracao(),
-                ultimoComentario
+                ultimoComentario,
+                m.isAtivo()
         );
     }
 
@@ -106,7 +116,25 @@ public class MaterialService {
     }
 
 
-    public void deletarMaterial(Long id) { materialRepository .deleteById(id); }
+    public void deletarMaterial(Long id, String usuario) {
+        Material material = materialRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Material não encontrado"));
+
+        material.setAtivo(false);
+        materialRepository.save(material);
+
+        HistoricoMaterial historico = new HistoricoMaterial();
+        historico.setMaterial(material);
+        historico.setAcao(TipoAcao.DELETADO);
+        historico.setQuantidadeAlterada(0);
+        historico.setComentario("Material deletado");
+        historico.setUsuarioUltimaAtualizacao(usuario);
+        historico.setDataAtualizacao(LocalDateTime.now());
+
+        historicoRepository.save(historico);
+    }
+
+
 
     public MaterialDTO atualizarQuantidade(Long id, int quantidade, TipoAcao acao, String usuario, String comentario) {
         Material material = materialRepository.findById(id)
@@ -140,11 +168,4 @@ public class MaterialService {
         historicoRepository.save(historico);
     }
 
-    public List<HistoricoMaterialDTO> listarHistorico(Long materialId) {
-        return historicoRepository.findByMaterialId(materialId)
-                .stream()
-                .map(HistoricoMaterialDTO::fromEntity)
-                .sorted((h1, h2) -> h2.dataAtualizacao().compareTo(h1.dataAtualizacao())) // ordem decrescente
-                .collect(Collectors.toList());
-    }
 }

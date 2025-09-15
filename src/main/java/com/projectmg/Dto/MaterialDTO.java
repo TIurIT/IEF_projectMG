@@ -3,9 +3,10 @@ package com.projectmg.Dto;
 import com.projectmg.Enum.TipoAcao;
 import com.projectmg.Models.HistoricoMaterial;
 import com.projectmg.Models.Material;
+
+
 import java.time.LocalDateTime;
 import java.util.Comparator;
-
 
 public record MaterialDTO(
         Long id,
@@ -17,7 +18,8 @@ public record MaterialDTO(
         LocalDateTime dataAtualizacao,
         TipoAcao acao,
         String usuarioUltimaAlteracao,
-        String ultimoComentario
+        String ultimoComentario,
+        boolean ativo
 ) {
 
     public static MaterialDTO fromEntity(Material m) {
@@ -41,7 +43,8 @@ public record MaterialDTO(
                 m.getDataAtualizacao(),
                 m.getAcao(),
                 m.getUsuarioUltimaAlteracao(),
-                ultimoComentario
+                ultimoComentario,
+                m.isAtivo()
         );
     }
 

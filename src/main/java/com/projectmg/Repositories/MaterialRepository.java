@@ -20,7 +20,7 @@ public interface MaterialRepository extends JpaRepository<Material, Long> {
     @Query("select e from Material e where e.fornecedor like %:fornecedor%")
     List<Material> findByfornecedor(String fornecedor);
 
-    @Query("select e from Material e where e.acao !='DELETADO'")
+    @Query("select e from Material e where e.ativo = true")
     List<Material> findAllAtivos();
 
     List<Material> findTop5ByOrderByDataAtualizacaoDesc();

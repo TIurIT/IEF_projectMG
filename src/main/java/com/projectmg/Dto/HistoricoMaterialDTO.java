@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 
 public record HistoricoMaterialDTO(
         Long id,
+        String nome,
         TipoAcao acao,
         Integer quantidadeAlterada,
         String usuarioUltimaAtualizacao,
@@ -19,6 +20,7 @@ public record HistoricoMaterialDTO(
     public static HistoricoMaterialDTO fromEntity(HistoricoMaterial h) {
         return new HistoricoMaterialDTO(
                 h.getId(),
+                h.getMaterial() != null ? h.getMaterial().getNome() : "Material removido",
                 h.getAcao(),
                 h.getQuantidadeAlterada(),
                 h.getUsuarioUltimaAtualizacao(),                h.getComentario(),
