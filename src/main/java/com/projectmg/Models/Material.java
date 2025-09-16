@@ -49,6 +49,9 @@ public class Material {
     @Column(name = "usuario_ultima_alteracao")
     private String usuarioUltimaAlteracao;
 
+    @Column(name = "limite_Minimo", nullable = true)
+    private Integer limiteMinimo;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoAcao acao;
@@ -75,11 +78,11 @@ public class Material {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Material material = (Material) o;
-        return Objects.equals(id, material.id) && Objects.equals(tipo, material.tipo) && Objects.equals(nome, material.nome) && Objects.equals(fornecedor, material.fornecedor) && Objects.equals(quantidade, material.quantidade) && Objects.equals(dataDeCriacao, material.dataDeCriacao) && Objects.equals(dataAtualizacao, material.dataAtualizacao) && Objects.equals(usuarioUltimaAlteracao, material.usuarioUltimaAlteracao) && acao == material.acao && Objects.equals(historicos, material.historicos);
+        return ativo == material.ativo && Objects.equals(id, material.id) && Objects.equals(tipo, material.tipo) && Objects.equals(nome, material.nome) && Objects.equals(fornecedor, material.fornecedor) && Objects.equals(quantidade, material.quantidade) && Objects.equals(dataDeCriacao, material.dataDeCriacao) && Objects.equals(dataAtualizacao, material.dataAtualizacao) && Objects.equals(usuarioUltimaAlteracao, material.usuarioUltimaAlteracao) && Objects.equals(limiteMinimo, material.limiteMinimo) && acao == material.acao && Objects.equals(historicos, material.historicos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tipo, nome, fornecedor, quantidade, dataDeCriacao, dataAtualizacao, usuarioUltimaAlteracao, acao, historicos);
+        return Objects.hash(id, tipo, nome, fornecedor, quantidade, dataDeCriacao, dataAtualizacao, usuarioUltimaAlteracao, limiteMinimo, acao, ativo, historicos);
     }
 }

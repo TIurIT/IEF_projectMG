@@ -73,4 +73,13 @@ public class MaterialResource {
         return materialService.atualizarQuantidade(id, qtd, TipoAcao.RETIRADO, "sistema", body.get("comentario"));
     }
 
+    @PutMapping("/definir-limite/{id}/{limiteMinimo}")
+    public ResponseEntity<MaterialDTO> definirLimite(
+            @PathVariable Long id,
+            @PathVariable Integer limiteMinimo) {
+        MaterialDTO atualizado = materialService.definirLimite(id, limiteMinimo);
+        return ResponseEntity.ok(atualizado);
+    }
+
+
 }

@@ -73,6 +73,7 @@ public class MaterialService {
                 m.getAcao(),
                 m.getUsuarioUltimaAlteracao(),
                 ultimoComentario,
+                m.getLimiteMinimo(),
                 m.isAtivo()
         );
     }
@@ -115,7 +116,6 @@ public class MaterialService {
         return MaterialDTO.fromEntity(salvo);
     }
 
-
     // MaterialService.java
     public void deletarMaterial(Long id, String usuario) {
         Material material = materialRepository.findById(id)
@@ -135,9 +135,6 @@ public class MaterialService {
         material.setAtivo(false);
         materialRepository.save(material);
     }
-
-
-
 
     public MaterialDTO atualizarQuantidade(Long id, int quantidade, TipoAcao acao, String usuario, String comentario) {
         Material material = materialRepository.findById(id)
@@ -171,5 +168,15 @@ public class MaterialService {
         historicoRepository.save(historico);
     }
 
+    public MaterialDTO definirLimite(Long materialId, Integer limiteMinimo) {
+        Material material = materialRepository.findById(materialId)
+                .orElseThrow(() -> new RuntimeException("Material não encontrado"));
+
+        material.setLimiteMinimo(limiteMinimo);
+
+        Material atualizado = materialRepository.save(material);
+
+        return MaterialDTO.fromEntity(atualizado);
+    }
 
 }

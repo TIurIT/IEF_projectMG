@@ -19,20 +19,23 @@ public record MaterialDTO(
         TipoAcao acao,
         String usuarioUltimaAlteracao,
         String ultimoComentario,
+        Integer limiteMinimo,
         boolean ativo
 ) {
 
     public static MaterialDTO fromEntity(Material m) {
-        String ultimoComentario = null;
+        HistoricoMaterial ultimoHistorico = null;
         if (m.getHistoricos() != null && !m.getHistoricos().isEmpty()) {
-            HistoricoMaterial ultimo = m.getHistoricos()
+            ultimoHistorico = m.getHistoricos()
                     .stream()
-                    .max(Comparator.comparing(HistoricoMaterial::getDataAtualizacao))
+                    .max(Comparator.comparing(h -> h.getDataAtualizacao() != null ? h.getDataAtualizacao() : h.getDataCriacao()))
                     .orElse(null);
-            if (ultimo != null) {
-                ultimoComentario = ultimo.getComentario();
-            }
         }
+
+        String ultimoComentario = ultimoHistorico != null ? ultimoHistorico.getComentario() : null;
+        TipoAcao acao = ultimoHistorico != null ? ultimoHistorico.getAcao() : null;
+        String usuarioUltimaAlteracao = ultimoHistorico != null ? ultimoHistorico.getUsuarioUltimaAtualizacao() : null;
+
         return new MaterialDTO(
                 m.getId(),
                 m.getNome(),
@@ -41,9 +44,10 @@ public record MaterialDTO(
                 m.getQuantidade(),
                 m.getDataDeCriacao(),
                 m.getDataAtualizacao(),
-                m.getAcao(),
-                m.getUsuarioUltimaAlteracao(),
+                acao,
+                usuarioUltimaAlteracao,
                 ultimoComentario,
+                m.getLimiteMinimo(),
                 m.isAtivo()
         );
     }
