@@ -116,23 +116,26 @@ public class MaterialService {
     }
 
 
+    // MaterialService.java
     public void deletarMaterial(Long id, String usuario) {
         Material material = materialRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Material não encontrado"));
 
-        material.setAtivo(false);
+        material.setQuantidade(0);
         materialRepository.save(material);
 
         HistoricoMaterial historico = new HistoricoMaterial();
         historico.setMaterial(material);
         historico.setAcao(TipoAcao.DELETADO);
         historico.setQuantidadeAlterada(0);
-        historico.setComentario("Material deletado");
         historico.setUsuarioUltimaAtualizacao(usuario);
-        historico.setDataAtualizacao(LocalDateTime.now());
-
+        historico.setComentario("Material deletado");
         historicoRepository.save(historico);
+
+        material.setAtivo(false);
+        materialRepository.save(material);
     }
+
 
 
 
@@ -167,5 +170,6 @@ public class MaterialService {
         historico.setDataAtualizacao(LocalDateTime.now());
         historicoRepository.save(historico);
     }
+
 
 }
