@@ -1,6 +1,6 @@
 package com.projectmg.Resources;
 
-import com.projectmg.Dto.TerceiroDTO;
+import com.projectmg.Dtos.TerceiroDTO;
 import com.projectmg.Services.TerceiroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

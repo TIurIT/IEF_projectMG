@@ -1,7 +1,6 @@
-package com.projectmg.Dto;
+package com.projectmg.Dtos;
 
 import com.projectmg.Enum.TipoAcao;
-import com.projectmg.Models.Produto;
 import com.projectmg.Security.UsuarioAuditoria;
 
 import jakarta.persistence.PrePersist;

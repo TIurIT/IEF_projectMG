@@ -1,6 +1,6 @@
 package com.projectmg.Services;
 
-import com.projectmg.Dto.TerceiroDTO;
+import com.projectmg.Dtos.TerceiroDTO;
 import com.projectmg.Models.Terceiro;
 import com.projectmg.Repositories.TerceiroRepository;
 import com.projectmg.Specs.TerceiroSpec;

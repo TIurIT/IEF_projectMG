@@ -1,4 +1,4 @@
-package com.projectmg.Dto;
+package com.projectmg.Dtos;
 
 import com.projectmg.Enum.Status;
 import com.projectmg.Models.OrdemProducao;

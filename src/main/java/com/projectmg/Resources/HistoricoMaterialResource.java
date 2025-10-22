@@ -2,7 +2,7 @@ package com.projectmg.Resources;
 
 
 
-import com.projectmg.Dto.HistoricoMaterialDTO;
+import com.projectmg.Dtos.HistoricoMaterialDTO;
 import com.projectmg.Services.HistoricoMaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

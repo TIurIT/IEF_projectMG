@@ -1,4 +1,4 @@
-package com.projectmg.Dto;
+package com.projectmg.Dtos;
 
 import lombok.Data;
 

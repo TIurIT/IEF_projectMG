@@ -1,6 +1,6 @@
 package com.projectmg.Services;
 
-import com.projectmg.Dto.ProdutoDTO;
+import com.projectmg.Dtos.ProdutoDTO;
 import com.projectmg.Enum.TipoAcao;
 import com.projectmg.Models.Produto;
 import com.projectmg.Repositories.ProdutoRepository;

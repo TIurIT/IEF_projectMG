@@ -1,10 +1,9 @@
 package com.projectmg.Resources;
 
-import com.projectmg.Dto.ProdutoDTO;
+import com.projectmg.Dtos.ProdutoDTO;
 import com.projectmg.Models.Produto;
 import com.projectmg.Repositories.ProdutoRepository;
 import com.projectmg.Services.ProdutoService;
-import jakarta.persistence.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

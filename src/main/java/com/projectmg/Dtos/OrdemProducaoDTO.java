@@ -1,4 +1,4 @@
-package com.projectmg.Dto;
+package com.projectmg.Dtos;
 
 import com.projectmg.Models.Cliente;
 import com.projectmg.Models.OrdemProducaoItem;

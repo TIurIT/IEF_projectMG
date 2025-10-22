@@ -1,6 +1,6 @@
 package com.projectmg.Resources;
 
-import com.projectmg.Dto.OrdemProducaoItemDTO;
+import com.projectmg.Dtos.OrdemProducaoItemDTO;
 import com.projectmg.Services.OrdemProducaoItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

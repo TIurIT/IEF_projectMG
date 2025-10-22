@@ -1,6 +1,6 @@
 package com.projectmg.Services;
 
-import com.projectmg.Dto.UsuarioDTO;
+import com.projectmg.Dtos.UsuarioDTO;
 import com.projectmg.Models.Usuario;
 import com.projectmg.Repositories.UsuarioRepository;
 import com.projectmg.Specs.ClienteSpec;

@@ -1,6 +1,6 @@
 package com.projectmg.Resources;
 
-import com.projectmg.Dto.ClienteDTO;
+import com.projectmg.Dtos.ClienteDTO;
 import com.projectmg.Services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

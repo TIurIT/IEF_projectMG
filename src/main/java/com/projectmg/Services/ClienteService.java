@@ -1,6 +1,6 @@
 package com.projectmg.Services;
 
-import com.projectmg.Dto.ClienteDTO;
+import com.projectmg.Dtos.ClienteDTO;
 import com.projectmg.Models.Cliente;
 import com.projectmg.Repositories.ClienteRepository;
 import com.projectmg.Specs.ClienteSpec;

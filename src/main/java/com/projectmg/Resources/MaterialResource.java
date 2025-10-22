@@ -1,12 +1,7 @@
 package com.projectmg.Resources;
 
-import com.projectmg.Dto.HistoricoMaterialDTO;
-import com.projectmg.Dto.MaterialDTO;
+import com.projectmg.Dtos.MaterialDTO;
 import com.projectmg.Enum.TipoAcao;
-import com.projectmg.Models.HistoricoMaterial;
-import com.projectmg.Models.Material;
-import com.projectmg.Repositories.HistoricoMaterialRepository;
-import com.projectmg.Repositories.MaterialRepository;
 import com.projectmg.Services.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

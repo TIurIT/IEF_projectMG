@@ -1,6 +1,5 @@
 package com.projectmg.Repositories;
 
-import com.projectmg.Dto.MaterialDTO;
 import com.projectmg.Models.Material;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

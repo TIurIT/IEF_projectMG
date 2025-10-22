@@ -1,4 +1,4 @@
-package com.projectmg.Dto;
+package com.projectmg.Dtos;
 
 import com.projectmg.Models.Material;
 import com.projectmg.Models.Produto;

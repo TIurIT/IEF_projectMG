@@ -1,6 +1,6 @@
 package com.projectmg.Services;
 
-import com.projectmg.Dto.OrdemProducaoDTO;
+import com.projectmg.Dtos.OrdemProducaoDTO;
 import com.projectmg.Models.OrdemProducao;
 import com.projectmg.Repositories.OrdemProducaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

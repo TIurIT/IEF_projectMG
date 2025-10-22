@@ -1,7 +1,7 @@
 package com.projectmg.Specs;
 
 import com.projectmg.Repositories.UsuarioRepository;
-import com.projectmg.Dto.UsuarioDTO;
+import com.projectmg.Dtos.UsuarioDTO;
 import com.projectmg.Models.Usuario;
 import com.projectmg.Exceptions.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
