@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,30 +26,30 @@ public class Material {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "tipo")
     private String tipo;
 
-    @Column(name = "nome")
     private String nome;
 
-    @Column(name = "fornecedor")
     private String fornecedor;
 
-    @Column(name = "quantidade")
-    private Integer quantidade;
+    // Agora é Double, representando KG
+    private Double quantidade;
 
-    @Column(name = "data_de_criacao")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    // Novo campo: rendimento (quantas peças por kg, por exemplo)
+    private Double rendimento;
+
+    // Campo calculado: total de peças (rendimento * quantidade)
+    @Column(name = "total_de_pecas")
+    private Double totalDePecas;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dataDeCriacao;
 
-    @Column(name = "data_atualizacao")
     private LocalDateTime dataAtualizacao;
 
-    @Column(name = "usuario_ultima_alteracao")
     private String usuarioUltimaAlteracao;
 
-    @Column(name = "limite_Minimo", nullable = true)
-    private Integer limiteMinimo;
+    private Double limiteMinimo;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -67,22 +66,38 @@ public class Material {
         this.dataDeCriacao = LocalDateTime.now();
         this.dataAtualizacao = LocalDateTime.now();
         this.acao = TipoAcao.CRIADO;
+
+        if (this.rendimento != null && this.quantidade != null) {
+            this.totalDePecas = this.rendimento * this.quantidade;
+        }
     }
 
     @PreUpdate
     public void preUpdate() {
         this.dataAtualizacao = LocalDateTime.now();
+
+        if (this.rendimento != null && this.quantidade != null) {
+            this.totalDePecas = this.rendimento * this.quantidade;
+        }
     }
+
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Material material = (Material) o;
-        return ativo == material.ativo && Objects.equals(id, material.id) && Objects.equals(tipo, material.tipo) && Objects.equals(nome, material.nome) && Objects.equals(fornecedor, material.fornecedor) && Objects.equals(quantidade, material.quantidade) && Objects.equals(dataDeCriacao, material.dataDeCriacao) && Objects.equals(dataAtualizacao, material.dataAtualizacao) && Objects.equals(usuarioUltimaAlteracao, material.usuarioUltimaAlteracao) && Objects.equals(limiteMinimo, material.limiteMinimo) && acao == material.acao && Objects.equals(historicos, material.historicos);
+        if (this == o) return true;
+        if (!(o instanceof Material material)) return false;
+        return ativo == material.ativo &&
+                Objects.equals(id, material.id) &&
+                Objects.equals(tipo, material.tipo) &&
+                Objects.equals(nome, material.nome) &&
+                Objects.equals(fornecedor, material.fornecedor) &&
+                Objects.equals(quantidade, material.quantidade) &&
+                Objects.equals(rendimento, material.rendimento) &&
+                Objects.equals(totalDePecas, material.totalDePecas);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tipo, nome, fornecedor, quantidade, dataDeCriacao, dataAtualizacao, usuarioUltimaAlteracao, limiteMinimo, acao, ativo, historicos);
+        return Objects.hash(id, tipo, nome, fornecedor, quantidade, rendimento, totalDePecas, ativo);
     }
 }

@@ -11,7 +11,7 @@ public record HistoricoMaterialDTO(
         Long id,
         String nome,
         TipoAcao acao,
-        Integer quantidadeAlterada,
+        Double quantidadeAlterada,
         String usuarioUltimaAtualizacao,
         String comentario,
         LocalDateTime dataCriacao,

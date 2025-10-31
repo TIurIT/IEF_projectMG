@@ -59,19 +59,19 @@ public class MaterialResource {
     }
 
     @PutMapping("/adicionar-quantidade/{id}/{qtd}")
-    public MaterialDTO adicionar(@PathVariable Long id, @PathVariable int qtd, @RequestBody Map<String, String> body) {
+    public MaterialDTO adicionar(@PathVariable Long id, @PathVariable Double qtd, @RequestBody Map<String, String> body) {
         return materialService.atualizarQuantidade(id, qtd, TipoAcao.ADICIONADO, "sistema", body.get("comentario"));
     }
 
     @PutMapping("/retirar-quantidade/{id}/{qtd}")
-    public MaterialDTO retirar(@PathVariable Long id, @PathVariable int qtd, @RequestBody Map<String, String> body) {
+    public MaterialDTO retirar(@PathVariable Long id, @PathVariable Double qtd, @RequestBody Map<String, String> body) {
         return materialService.atualizarQuantidade(id, qtd, TipoAcao.RETIRADO, "sistema", body.get("comentario"));
     }
 
     @PutMapping("/definir-limite/{id}/{limiteMinimo}")
     public ResponseEntity<MaterialDTO> definirLimite(
             @PathVariable Long id,
-            @PathVariable Integer limiteMinimo) {
+            @PathVariable Double limiteMinimo) {
         MaterialDTO atualizado = materialService.definirLimite(id, limiteMinimo);
         return ResponseEntity.ok(atualizado);
     }

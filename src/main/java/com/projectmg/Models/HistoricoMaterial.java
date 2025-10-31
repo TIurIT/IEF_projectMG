@@ -27,7 +27,7 @@ public class HistoricoMaterial {
     @Enumerated(EnumType.STRING)
     private TipoAcao acao; // ADICIONADO, RETIRADO, ATUALIZADO
 
-    private Integer quantidadeAlterada;
+    private Double quantidadeAlterada;
 
     private String usuarioUltimaAtualizacao;
 

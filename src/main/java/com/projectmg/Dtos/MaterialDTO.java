@@ -4,7 +4,6 @@ import com.projectmg.Enum.TipoAcao;
 import com.projectmg.Models.HistoricoMaterial;
 import com.projectmg.Models.Material;
 
-
 import java.time.LocalDateTime;
 import java.util.Comparator;
 
@@ -13,13 +12,15 @@ public record MaterialDTO(
         String nome,
         String tipo,
         String fornecedor,
-        Integer quantidade,
+        Double quantidade,        // agora Double (kg)
+        Double rendimento,        // novo campo
+        Double totalDePecas,      // novo campo calculado
         LocalDateTime dataDeCriacao,
         LocalDateTime dataAtualizacao,
         TipoAcao acao,
         String usuarioUltimaAlteracao,
         String ultimoComentario,
-        Integer limiteMinimo,
+        Double limiteMinimo,
         boolean ativo
 ) {
 
@@ -42,6 +43,8 @@ public record MaterialDTO(
                 m.getTipo(),
                 m.getFornecedor(),
                 m.getQuantidade(),
+                m.getRendimento(),
+                m.getTotalDePecas(),
                 m.getDataDeCriacao(),
                 m.getDataAtualizacao(),
                 acao,
@@ -51,5 +54,4 @@ public record MaterialDTO(
                 m.isAtivo()
         );
     }
-
 }
