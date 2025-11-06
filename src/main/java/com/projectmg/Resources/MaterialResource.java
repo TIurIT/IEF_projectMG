@@ -37,14 +37,14 @@ public class MaterialResource {
 
     @PostMapping("/cadastrar")
     public MaterialDTO cadastrarMaterial(@RequestBody MaterialDTO dto) {
-        return materialService.cadastrarMaterial(dto, "Sistema"); // aqui você pode puxar do usuário logado
+        return materialService.cadastrarMaterial(dto, "UsuarioAtual"); // aqui você pode puxar do usuário logado
     }
 
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<MaterialDTO> atualizarMaterial(
             @PathVariable Long id,
             @RequestBody MaterialDTO dto,
-            @RequestHeader("usuario") String usuario) {
+            @RequestHeader("UsuarioAtual") String usuario) {
         MaterialDTO atualizado = materialService.atualizarMaterial(id, dto, usuario);
         return ResponseEntity.ok(atualizado);
     }
@@ -53,19 +53,19 @@ public class MaterialResource {
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> deletarMaterial(
             @PathVariable Long id,
-            @RequestHeader("usuario") String usuario) { // recebe o header
+            @RequestHeader("UsuarioAtual") String usuario) { // recebe o header
         materialService.deletarMaterial(id, usuario);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/adicionar-quantidade/{id}/{qtd}")
     public MaterialDTO adicionar(@PathVariable Long id, @PathVariable Double qtd, @RequestBody Map<String, String> body) {
-        return materialService.atualizarQuantidade(id, qtd, TipoAcao.ADICIONADO, "sistema", body.get("comentario"));
+        return materialService.atualizarQuantidade(id, qtd, TipoAcao.ADICIONADO, "UsuarioAtual", body.get("comentario"));
     }
 
     @PutMapping("/retirar-quantidade/{id}/{qtd}")
     public MaterialDTO retirar(@PathVariable Long id, @PathVariable Double qtd, @RequestBody Map<String, String> body) {
-        return materialService.atualizarQuantidade(id, qtd, TipoAcao.RETIRADO, "sistema", body.get("comentario"));
+        return materialService.atualizarQuantidade(id, qtd, TipoAcao.RETIRADO, "UsuarioAtual", body.get("comentario"));
     }
 
     @PutMapping("/definir-limite/{id}/{limiteMinimo}")
@@ -76,5 +76,12 @@ public class MaterialResource {
         return ResponseEntity.ok(atualizado);
     }
 
+    @PutMapping("/reativar/{id}")
+    public ResponseEntity<MaterialDTO> reativarMaterial(
+            @PathVariable Long id,
+            @RequestHeader("UsuarioAtual") String usuario) {
+        MaterialDTO atualizado = materialService.reativarMaterial(id, usuario);
+        return ResponseEntity.ok(atualizado);
+    }
 
 }

@@ -190,4 +190,24 @@ public class MaterialService {
         return MaterialDTO.fromEntity(atualizado);
     }
 
+    public MaterialDTO reativarMaterial(Long id, String usuario) {
+        Material material = materialRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Material não encontrado"));
+
+        if (material.isAtivo()) {
+            throw new RuntimeException("O material já está ativo.");
+        }
+
+        material.setAtivo(true);
+        material.setDataAtualizacao(LocalDateTime.now());
+        material.setUsuarioUltimaAlteracao(usuario);
+        material.setAcao(TipoAcao.ATUALIZADO);
+
+        Material salvo = materialRepository.save(material);
+
+        registrarHistorico(salvo, TipoAcao.ATUALIZADO, 0.0, usuario, "Material Voltando ao Estoque");
+
+        return MaterialDTO.fromEntity(salvo);
+    }
+
 }
