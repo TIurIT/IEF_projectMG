@@ -70,6 +70,7 @@ public class MaterialService {
                 ultimoComentario,
                 m.getLimiteMinimo(),
                 m.isAtivo()
+                m.getDataProgramadaCompra()
         );
     }
 
