@@ -4,6 +4,7 @@ import com.projectmg.Enum.TipoAcao;
 import com.projectmg.Models.HistoricoMaterial;
 import com.projectmg.Models.Material;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 
@@ -21,7 +22,8 @@ public record MaterialDTO(
         String usuarioUltimaAlteracao,
         String ultimoComentario,
         Double limiteMinimo,
-        boolean ativo
+        boolean ativo,
+        LocalDate dataProgamadaCompra
 ) {
 
     public static MaterialDTO fromEntity(Material m) {
@@ -51,7 +53,8 @@ public record MaterialDTO(
                 usuarioUltimaAlteracao,
                 ultimoComentario,
                 m.getLimiteMinimo(),
-                m.isAtivo()
+                m.isAtivo(),
+                m.getDataProgramadaCompra()
         );
     }
 }

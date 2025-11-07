@@ -2,6 +2,7 @@ package com.projectmg.Resources;
 
 import com.projectmg.Dtos.MaterialDTO;
 import com.projectmg.Enum.TipoAcao;
+import com.projectmg.Models.Material;
 import com.projectmg.Services.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -83,5 +84,17 @@ public class MaterialResource {
         MaterialDTO atualizado = materialService.reativarMaterial(id, usuario);
         return ResponseEntity.ok(atualizado);
     }
+
+    @PutMapping("/programar-compra/{id}")
+    public ResponseEntity<Material> programarCompra(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> body,
+            @RequestHeader("UsuarioAtual") String usuario) {
+
+        String data = body.get("dataProgramadaCompra");
+        Material atualizado = materialService.programarCompra(id, data, usuario);
+        return ResponseEntity.ok(atualizado);
+    }
+
 
 }

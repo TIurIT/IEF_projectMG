@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,8 @@ public class Material {
 
     private boolean ativo = true;
 
+    private LocalDate dataProgramadaCompra;
+
     @OneToMany(mappedBy = "material", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<HistoricoMaterial> historicos = new ArrayList<>();
@@ -93,11 +96,12 @@ public class Material {
                 Objects.equals(fornecedor, material.fornecedor) &&
                 Objects.equals(quantidade, material.quantidade) &&
                 Objects.equals(rendimento, material.rendimento) &&
-                Objects.equals(totalDePecas, material.totalDePecas);
+                Objects.equals(totalDePecas, material.totalDePecas) &&
+                Objects.equals(dataProgramadaCompra, material.dataProgramadaCompra);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tipo, nome, fornecedor, quantidade, rendimento, totalDePecas, ativo);
+        return Objects.hash(id, tipo, nome, fornecedor, quantidade, rendimento, totalDePecas, ativo, dataProgramadaCompra);
     }
 }

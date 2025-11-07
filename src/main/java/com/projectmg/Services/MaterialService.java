@@ -9,6 +9,7 @@ import com.projectmg.Repositories.MaterialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -151,10 +152,11 @@ public class MaterialService {
         } else if (acao == TipoAcao.RETIRADO) {
             material.setQuantidade(material.getQuantidade() - quantidade);
         }
-
-        // Atualiza o total de peças conforme o rendimento
         if (material.getRendimento() != null && material.getQuantidade() != null) {
             material.setTotalDePecas(material.getRendimento() * material.getQuantidade());
+        }
+        if (material.getLimiteMinimo() != null && material.getTotalDePecas() >= material.getLimiteMinimo()) {
+            material.setDataProgramadaCompra(null);
         }
 
         material.setAcao(acao);
@@ -208,6 +210,15 @@ public class MaterialService {
         registrarHistorico(salvo, TipoAcao.ATUALIZADO, 0.0, usuario, "Material Voltando ao Estoque");
 
         return MaterialDTO.fromEntity(salvo);
+    }
+
+    public Material programarCompra(Long id, String data, String usuario) {
+        Material material = materialRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Material não encontrado"));
+        material.setDataProgramadaCompra(LocalDate.parse(data));
+        material.setDataAtualizacao(LocalDateTime.now());
+        material.setUsuarioUltimaAlteracao(usuario);
+        return materialRepository.save(material);
     }
 
 }
