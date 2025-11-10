@@ -96,5 +96,10 @@ public class MaterialResource {
         return ResponseEntity.ok(atualizado);
     }
 
+    @PutMapping("/favorito/{id}")
+    public ResponseEntity<MaterialDTO> alternarFavorito(@PathVariable Long id) {
+        MaterialDTO atualizado = materialService.alternarFavorito(id);
+        return ResponseEntity.ok(atualizado);
+    }
 
 }

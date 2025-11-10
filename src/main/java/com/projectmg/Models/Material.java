@@ -57,7 +57,9 @@ public class Material {
     private TipoAcao acao;
 
     private boolean ativo = true;
+    private boolean favorito = false;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataProgramadaCompra;
 
     @OneToMany(mappedBy = "material", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)

@@ -23,7 +23,8 @@ public record MaterialDTO(
         String ultimoComentario,
         Double limiteMinimo,
         boolean ativo,
-        LocalDate dataProgamadaCompra
+        LocalDate dataProgramadaCompra,
+        boolean favorito
 ) {
 
     public static MaterialDTO fromEntity(Material m) {
@@ -54,7 +55,8 @@ public record MaterialDTO(
                 ultimoComentario,
                 m.getLimiteMinimo(),
                 m.isAtivo(),
-                m.getDataProgramadaCompra()
+                m.getDataProgramadaCompra(),
+                m.isFavorito()
         );
     }
 }

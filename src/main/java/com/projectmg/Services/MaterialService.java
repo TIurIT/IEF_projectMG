@@ -70,7 +70,8 @@ public class MaterialService {
                 ultimoComentario,
                 m.getLimiteMinimo(),
                 m.isAtivo(),
-                m.getDataProgramadaCompra()
+                m.getDataProgramadaCompra(),
+                m.isFavorito()
         );
     }
 
@@ -222,4 +223,12 @@ public class MaterialService {
         return materialRepository.save(material);
     }
 
+    public MaterialDTO alternarFavorito(Long id) {
+        Material material = materialRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Material não encontrado"));
+        material.setFavorito(!material.isFavorito());
+        material.setDataAtualizacao(LocalDateTime.now());
+        Material salvo = materialRepository.save(material);
+        return MaterialDTO.fromEntity(salvo);
+    }
 }
