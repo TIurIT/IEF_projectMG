@@ -1,9 +1,12 @@
 package com.projectmg.Resources;
 
 import com.projectmg.Dtos.UsuarioDTO;
+import com.projectmg.Models.Usuario;
+import com.projectmg.Repositories.UsuarioRepository;
 import com.projectmg.Services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,6 +15,8 @@ public class UsuarioResource {
 
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<UsuarioDTO> buscarUsuarioPorId(@PathVariable Long id){
@@ -39,4 +44,21 @@ public class UsuarioResource {
     public ResponseEntity<UsuarioDTO> buscarUsuarioPorEmail(@PathVariable String email){
         return ResponseEntity.ok(usuarioService.buscarUsuarioPorEmail(email));
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<UsuarioDTO> login(@RequestBody UsuarioDTO loginDTO) {
+        Usuario usuario = usuarioRepository.findByEmail(loginDTO.getEmail());
+        if (usuario == null) {
+            return ResponseEntity.status(401).build();
+        }
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if (!encoder.matches(loginDTO.getSenha(), usuario.getSenha())) {
+            return ResponseEntity.status(401).build();
+        }
+
+        UsuarioDTO dto = usuarioService.converterUsuarioParaUsuarioDto(usuario);
+        return ResponseEntity.ok(dto);
+    }
+
 }

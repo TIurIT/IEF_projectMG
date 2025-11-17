@@ -20,7 +20,7 @@ public class OrdemProducaoItemService {
         ordemProducaoItemDTO.setId(ordemProducaoItem.getId());
         ordemProducaoItemDTO.setGradeDescription(ordemProducaoItem.getGradeDescription());
         ordemProducaoItemDTO.setQuantidadeTotal(ordemProducaoItem.getQuantidadeTotal());
-        ordemProducaoItemDTO.setProduto(ordemProducaoItem.getProduto());
+        ordemProducaoItemDTO.setReferencia(ordemProducaoItem.getReferencia());
         ordemProducaoItemDTO.setMaterial(ordemProducaoItem.getMaterial());
         return ordemProducaoItemDTO;
     }
@@ -30,7 +30,7 @@ public class OrdemProducaoItemService {
         ordemProducaoItem.setId(ordemProducaoItemDTO.getId());
         ordemProducaoItem.setGradeDescription(ordemProducaoItemDTO.getGradeDescription());
         ordemProducaoItem.setQuantidadeTotal(ordemProducaoItemDTO.getQuantidadeTotal());
-        ordemProducaoItem.setProduto(ordemProducaoItemDTO.getProduto());
+        ordemProducaoItem.setReferencia(ordemProducaoItemDTO.getReferencia());
         ordemProducaoItem.setMaterial(ordemProducaoItemDTO.getMaterial());
         return ordemProducaoItem;
     }

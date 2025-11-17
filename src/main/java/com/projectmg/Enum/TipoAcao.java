@@ -1,7 +1,5 @@
 package com.projectmg.Enum;
 
-import com.projectmg.Models.Produto;
-
 public enum TipoAcao {
     CRIADO("CRIADO"),
     ATUALIZADO("ATUALIZADO"),

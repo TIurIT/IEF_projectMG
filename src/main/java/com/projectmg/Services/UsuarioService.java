@@ -6,6 +6,7 @@ import com.projectmg.Repositories.UsuarioRepository;
 import com.projectmg.Specs.ClienteSpec;
 import com.projectmg.Specs.UsuarioSpec;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -27,7 +28,7 @@ public class UsuarioService {
         usuarioDTO.setId(usuario.getId());
         usuarioDTO.setNome(usuario.getNome());
         usuarioDTO.setEmail(usuario.getEmail());
-        usuarioDTO.setSenha(usuario.getSenha());
+        usuarioDTO.setSenha(null);
         usuarioDTO.setTipo(usuario.getTipoAcesso());
         usuarioDTO.setVerificado(usuario.isVerificado());
         return usuarioDTO;
@@ -48,6 +49,10 @@ public class UsuarioService {
         Usuario usuarioEmail = usuarioRepository.findByEmail(usuarioDTO.getEmail());
         usuarioSpec.verifyEmailDup(usuarioEmail);
 
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        usuarioDTO.setSenha(encoder.encode(usuarioDTO.getSenha()));
+
+
         Usuario usuario = converterUsuarioDtoParaUsuario(usuarioDTO);
         usuario = usuarioRepository.save(usuario);
         return converterUsuarioParaUsuarioDto(usuario);
@@ -62,6 +67,14 @@ public class UsuarioService {
         Usuario usuario = usuarioRepository.findById(usuarioDTO.getId())
                 .orElseThrow(() -> new RuntimeException(MSG_USUARIO));
         usuarioSpec.verifyEmailEmUso(usuario, usuarioDTO);
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if (usuarioDTO.getSenha() == null || usuarioDTO.getSenha().isEmpty()) {
+            usuarioDTO.setSenha(usuario.getSenha());
+        } else {
+            usuarioDTO.setSenha(encoder.encode(usuarioDTO.getSenha()));
+        }
+
         usuario = converterUsuarioDtoParaUsuario(usuarioDTO);
         usuarioRepository.save(usuario);
         return  converterUsuarioParaUsuarioDto(usuario);

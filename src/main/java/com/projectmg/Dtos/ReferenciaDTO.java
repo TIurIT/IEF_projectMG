@@ -1,7 +1,7 @@
 package com.projectmg.Dtos;
 
 import com.projectmg.Enum.TipoAcao;
-import com.projectmg.Security.UsuarioAuditoria;
+import com.projectmg.Configuration.UsuarioAuditoria;
 
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -12,7 +12,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class ProdutoDTO {
+public class ReferenciaDTO {
 
     private Long id;
     private String nome;
@@ -28,9 +28,9 @@ public class ProdutoDTO {
         this.usuarioUltimaAlteracao = UsuarioAuditoria.getUsuarioLogado();
     }
 
-    public ProdutoDTO(){}
+    public ReferenciaDTO(){}
 
-    public ProdutoDTO(Long id, String nome, String referencia, LocalDate dataAtualizacao, String usuarioUltimaAlteracao, TipoAcao acao) {
+    public ReferenciaDTO(Long id, String nome, String referencia, LocalDate dataAtualizacao, String usuarioUltimaAlteracao, TipoAcao acao) {
         this.id = id;
         this.nome = nome;
         this.referencia = referencia;

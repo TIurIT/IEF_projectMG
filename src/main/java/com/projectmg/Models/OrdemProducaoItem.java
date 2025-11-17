@@ -28,7 +28,7 @@ public class OrdemProducaoItem {
 
     @ManyToOne
     @JoinColumn(name = "produto_id")
-    private Produto produto;
+    private Referencia referencia;
 
     @ManyToOne
     @JoinColumn(name = "material_id")
@@ -39,12 +39,12 @@ public class OrdemProducaoItem {
         if (o == null || getClass() != o.getClass()) return false;
         OrdemProducaoItem that = (OrdemProducaoItem) o;
         return Objects.equals(id, that.id) && Objects.equals(gradeDescription, that.gradeDescription)
-                && Objects.equals(quantidadeTotal, that.quantidadeTotal) && Objects.equals(produto, that.produto)
+                && Objects.equals(quantidadeTotal, that.quantidadeTotal) && Objects.equals(referencia, that.referencia)
                 && Objects.equals(material, that.material);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, gradeDescription, quantidadeTotal, produto, material);
+        return Objects.hash(id, gradeDescription, quantidadeTotal, referencia, material);
     }
 }

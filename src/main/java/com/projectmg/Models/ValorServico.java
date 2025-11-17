@@ -26,7 +26,7 @@ public class ValorServico {
 
     @OneToOne
     @JoinColumn(name = "produto_id", nullable = false)
-    private Produto produto;
+    private Referencia referencia;
 
     @Column(nullable = false)
     private Double valor;
@@ -36,11 +36,11 @@ public class ValorServico {
         if (o == null || getClass() != o.getClass()) return false;
         ValorServico that = (ValorServico) o;
         return id == that.id && Objects.equals(terceiro, that.terceiro)
-                && Objects.equals(produto, that.produto) && Objects.equals(valor, that.valor);
+                && Objects.equals(referencia, that.referencia) && Objects.equals(valor, that.valor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, terceiro, produto, valor);
+        return Objects.hash(id, terceiro, referencia, valor);
     }
 }

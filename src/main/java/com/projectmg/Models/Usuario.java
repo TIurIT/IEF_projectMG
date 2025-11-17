@@ -21,20 +21,21 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nome")
+    @Column(name = "nome",nullable = false)
     private String nome;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name = "senha")
+    @Column(name = "senha",nullable = false)
     private String senha;
 
-    @Column(name = "tipoAcesso")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipoAcesso",nullable = false)
     private TipoAcesso tipoAcesso;
 
     @Column(name = "verificado")
-    private boolean verificado;
+    private boolean verificado = false;
 
     @Override
     public boolean equals(Object o) {

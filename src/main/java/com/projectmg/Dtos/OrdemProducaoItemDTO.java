@@ -1,7 +1,7 @@
 package com.projectmg.Dtos;
 
 import com.projectmg.Models.Material;
-import com.projectmg.Models.Produto;
+import com.projectmg.Models.Referencia;
 import lombok.Data;
 
 @Data
@@ -10,17 +10,17 @@ public class OrdemProducaoItemDTO {
     private Long id;
     private String gradeDescription;
     private Integer quantidadeTotal;
-    private Produto produto;
+    private Referencia referencia;
     private Material material;
 
     public OrdemProducaoItemDTO(){}
 
     public OrdemProducaoItemDTO(Long id, String gradeDescription, Integer quantidadeTotal,
-                                Produto produto, Material material) {
+                                Referencia referencia, Material material) {
         this.id = id;
         this.gradeDescription = gradeDescription;
         this.quantidadeTotal = quantidadeTotal;
-        this.produto = produto;
+        this.referencia = referencia;
         this.material = material;
     }
 
@@ -48,12 +48,12 @@ public class OrdemProducaoItemDTO {
         this.quantidadeTotal = quantidadeTotal;
     }
 
-    public Produto getProduto() {
-        return produto;
+    public Referencia getReferencia() {
+        return referencia;
     }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
+    public void setReferencia(Referencia referencia) {
+        this.referencia = referencia;
     }
 
     public Material getMaterial() {

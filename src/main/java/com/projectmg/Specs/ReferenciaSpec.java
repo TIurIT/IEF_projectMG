@@ -1,8 +1,8 @@
 package com.projectmg.Specs;
 
-import com.projectmg.Models.Produto;
+import com.projectmg.Models.Referencia;
 import com.projectmg.Exceptions.BusinessException;
-import com.projectmg.Repositories.ProdutoRepository;
+import com.projectmg.Repositories.ReferenciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,10 +11,10 @@ import java.util.List;
 import static java.util.Objects.isNull;
 
 @Component
-public class ProdutoSpec {
+public class ReferenciaSpec {
 
     @Autowired
-    private ProdutoRepository produtoRepository;
+    private ReferenciaRepository referenciaRepository;
 
     private static final String MSG_PRODUTO = "Produto não encontrado.";
     private static final String MSG_PRODUTO_REF = "Referência ja cadastrada.";
@@ -22,20 +22,20 @@ public class ProdutoSpec {
     private static final String MSG_PRODUTO_NullREF = "Referência não pode ser vazia.";
     private static final String MSG_PRODUTO_NullNOME = "Nome não pode ser vazio.";
 
-    public void verifyProdutoNomeExists(List<Produto> produtos) {
-        if (produtos.size() > 0) {
+    public void verifyProdutoNomeExists(List<Referencia> referencias) {
+        if (referencias.size() > 0) {
             throw new BusinessException(MSG_PRODUTO_NOME);
         }
     }
 
-    public void verifyProduto(List<Produto> produtos) {
-        if (produtos.size() == 0) {
+    public void verifyProduto(List<Referencia> referencias) {
+        if (referencias.size() == 0) {
             throw new BusinessException(MSG_PRODUTO);
         }
     }
 
-    public void verifyProdutoRefExists(List<Produto> produtos) {
-        if (produtos.size() > 0) {
+    public void verifyProdutoRefExists(List<Referencia> referencias) {
+        if (referencias.size() > 0) {
             throw new BusinessException(MSG_PRODUTO_REF);
         }
     }
@@ -59,13 +59,13 @@ public class ProdutoSpec {
     }
 
     public void verifyProdutoNomeDup(String nome, Long id) {
-        if (produtoRepository.existsByNomeAndIdNot(nome, id)){
+        if (referenciaRepository.existsByNomeAndIdNot(nome, id)){
             throw new BusinessException(MSG_PRODUTO_NOME);
         }
     }
 
     public void verifyProdutoRefDup(String ref, Long id) {
-        if (produtoRepository.existsByReferenciaAndIdNot(ref, id)){
+        if (referenciaRepository.existsByReferenciaAndIdNot(ref, id)){
             throw new BusinessException(MSG_PRODUTO_NOME);
         }
     }

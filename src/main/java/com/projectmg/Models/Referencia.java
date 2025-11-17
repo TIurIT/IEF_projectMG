@@ -10,13 +10,13 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.util.Objects;
 
-@Table(name = "tb_produto")
+@Table(name = "tb_referencia")
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Produto {
+public class Referencia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,8 +42,8 @@ public class Produto {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Produto produto = (Produto) o;
-        return Objects.equals(id, produto.id) && Objects.equals(nome, produto.nome) && Objects.equals(referencia, produto.referencia) && Objects.equals(dataAtualizacao, produto.dataAtualizacao) && Objects.equals(usuarioUltimaAlteracao, produto.usuarioUltimaAlteracao) && acao == produto.acao;
+        Referencia referencia = (Referencia) o;
+        return Objects.equals(id, referencia.id) && Objects.equals(nome, referencia.nome) && Objects.equals(this.referencia, referencia.referencia) && Objects.equals(dataAtualizacao, referencia.dataAtualizacao) && Objects.equals(usuarioUltimaAlteracao, referencia.usuarioUltimaAlteracao) && acao == referencia.acao;
     }
 
     @Override
