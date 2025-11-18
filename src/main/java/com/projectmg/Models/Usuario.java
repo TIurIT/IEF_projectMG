@@ -34,20 +34,15 @@ public class Usuario {
     @Column(name = "tipoAcesso",nullable = false)
     private TipoAcesso tipoAcesso;
 
-    @Column(name = "verificado")
-    private boolean verificado = false;
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
-        return verificado == usuario.verificado && Objects.equals(id, usuario.id)
-                && Objects.equals(nome, usuario.nome) && Objects.equals(email, usuario.email)
-                && Objects.equals(senha, usuario.senha) && tipoAcesso == usuario.tipoAcesso;
+        return Objects.equals(id, usuario.id) && Objects.equals(nome, usuario.nome) && Objects.equals(email, usuario.email) && Objects.equals(senha, usuario.senha) && tipoAcesso == usuario.tipoAcesso;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, email, senha, tipoAcesso, verificado);
+        return Objects.hash(id, nome, email, senha, tipoAcesso);
     }
 }

@@ -33,9 +33,9 @@ INSERT INTO tb_terceiro (id, nome, bairro, telefone, servico) VALUES (2, 'Maria 
 INSERT INTO tb_terceiro (id, nome, bairro, telefone, servico) VALUES (3, 'Pedro da Silva', 'JARDIM DA SONIA', '(11) 99999-9999', 'CORTADOR');
 
 -- USUÁRIOS
-INSERT INTO tb_usuario (id, nome, email, senha, tipo_acesso, verificado) VALUES (1, 'Admin', 'admin@gmail.com', '123', 'ADMINISTRADOR', TRUE);
-INSERT INTO tb_usuario (id, nome, email, senha, tipo_acesso, verificado) VALUES (2, 'Gerente João', 'gerente@gmail.com', '123', 'GERENTE', FALSE);
-INSERT INTO tb_usuario (id, nome, email, senha, tipo_acesso, verificado) VALUES (3, 'Produção Maria', 'producao@gmail.com', '123', 'PRODUCAO', FALSE);
-INSERT INTO tb_usuario (id, nome, email, senha, tipo_acesso, verificado) VALUES (4, 'Vendas Pedro', 'vendas@gmail.com', '123', 'VENDAS', FALSE);
+--INSERT INTO tb_usuario (id, nome, email, senha, tipo_acesso, verificado) VALUES (1, 'Admin', 'admin@gmail.com', '$2a$10$XwcN1YjmLy3MojT3OzjTI.RnTGpd79JW0sxuyKQXhAvrXKnz5gNQm', 'ADMINISTRADOR', TRUE);
+--INSERT INTO tb_usuario (id, nome, email, senha, tipo_acesso, verificado) VALUES (2, 'Gerente João', 'gerente@gmail.com', '$2a$10$XwcN1YjmLy3MojT3OzjTI.RnTGpd79JW0sxuyKQXhAvrXKnz5gNQm', 'GERENTE', FALSE);
+--INSERT INTO tb_usuario (id, nome, email, senha, tipo_acesso, verificado) VALUES (3, 'Produção Maria', 'producao@gmail.com', '$2a$10$XwcN1YjmLy3MojT3OzjTI.RnTGpd79JW0sxuyKQXhAvrXKnz5gNQm', 'PRODUCAO', FALSE);
+--INSERT INTO tb_usuario (id, nome, email, senha, tipo_acesso, verificado) VALUES (4, 'Vendas Pedro', 'vendas@gmail.com', '$2a$10$XwcN1YjmLy3MojT3OzjTI.RnTGpd79JW0sxuyKQXhAvrXKnz5gNQm', 'VENDAS', FALSE);
 
 SET FOREIGN_KEY_CHECKS = 1;

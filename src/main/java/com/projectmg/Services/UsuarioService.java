@@ -30,7 +30,6 @@ public class UsuarioService {
         usuarioDTO.setEmail(usuario.getEmail());
         usuarioDTO.setSenha(null);
         usuarioDTO.setTipo(usuario.getTipoAcesso());
-        usuarioDTO.setVerificado(usuario.isVerificado());
         return usuarioDTO;
     }
 
@@ -41,7 +40,6 @@ public class UsuarioService {
         usuario.setEmail(usuarioDTO.getEmail());
         usuario.setSenha(usuarioDTO.getSenha());
         usuario.setTipoAcesso(usuarioDTO.getTipoAcesso());
-        usuario.setVerificado(usuarioDTO.isVerificado());
         return usuario;
     }
 

@@ -11,7 +11,6 @@ public class UsuarioDTO {
     private String email;
     private String senha;
     private TipoAcesso tipoAcesso;
-    private boolean verificado;
 
     public UsuarioDTO(){}
 
@@ -45,10 +44,5 @@ public class UsuarioDTO {
     public void setTipo(TipoAcesso tipoAcesso) {
         this.tipoAcesso = tipoAcesso;
     }
-    public boolean isVerificado() {
-        return verificado;
-    }
-    public void setVerificado(boolean verificado) {
-        this.verificado = verificado;
-    }
+
 }
