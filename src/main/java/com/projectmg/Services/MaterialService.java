@@ -23,33 +23,34 @@ public class MaterialService {
     @Autowired
     private HistoricoMaterialRepository historicoRepository;
 
-
     public List<MaterialDTO> listarTodos() {
         return materialRepository.findAll().stream()
-                .map(MaterialDTO::fromEntity)
+                .map(this::toDTOComUltimoComentario)
                 .toList();
     }
 
     public List<MaterialDTO> listarAtivos() {
         return materialRepository.findAllAtivos().stream()
-                .map(MaterialDTO::fromEntity)
+                .map(this::toDTOComUltimoComentario)
                 .toList();
     }
 
     public List<MaterialDTO> listarUltimos() {
-        List<Material> materiais = materialRepository.findTop5ByOrderByDataAtualizacaoDesc();
-        return materiais.stream()
-                .map(MaterialDTO::fromEntity)
+        return materialRepository.findTop5ByOrderByDataAtualizacaoDesc()
+                .stream()
+                .map(this::toDTOComUltimoComentario)
                 .toList();
     }
 
     private MaterialDTO toDTOComUltimoComentario(Material m) {
         String ultimoComentario = null;
+
         if (m.getHistoricos() != null && !m.getHistoricos().isEmpty()) {
             HistoricoMaterial ultimo = m.getHistoricos()
                     .stream()
                     .max(Comparator.comparing(HistoricoMaterial::getDataAtualizacao))
                     .orElse(null);
+
             if (ultimo != null) {
                 ultimoComentario = ultimo.getComentario();
             }
@@ -77,6 +78,7 @@ public class MaterialService {
 
     public MaterialDTO cadastrarMaterial(MaterialDTO dto, String usuario) {
         Material material = new Material();
+
         material.setNome(dto.nome());
         material.setTipo(dto.tipo());
         material.setFornecedor(dto.fornecedor());
@@ -86,10 +88,8 @@ public class MaterialService {
         material.setDataDeCriacao(LocalDateTime.now());
         material.setDataAtualizacao(LocalDateTime.now());
 
-        // cálculo automático do total de peças
-        if (dto.rendimento() != null && dto.quantidade() != null) {
-            material.setTotalDePecas(dto.rendimento() * dto.quantidade());
-        }
+        // cálculo automático
+        calcularTotal(material);
 
         Material salvo = materialRepository.save(material);
 
@@ -108,10 +108,7 @@ public class MaterialService {
         material.setQuantidade(dto.quantidade());
         material.setRendimento(dto.rendimento());
 
-        // Recalcular total de peças
-        if (dto.rendimento() != null && dto.quantidade() != null) {
-            material.setTotalDePecas(dto.rendimento() * dto.quantidade());
-        }
+        calcularTotal(material);
 
         material.setAcao(TipoAcao.ATUALIZADO);
         material.setUsuarioUltimaAlteracao(usuario);
@@ -122,7 +119,7 @@ public class MaterialService {
         String comentario = dto.ultimoComentario() != null ? dto.ultimoComentario() : "Atualização manual";
         registrarHistorico(salvo, TipoAcao.ATUALIZADO, dto.quantidade(), usuario, comentario);
 
-        return MaterialDTO.fromEntity(salvo);
+        return toDTOComUltimoComentario(salvo);
     }
 
     public void deletarMaterial(Long id, String usuario) {
@@ -131,18 +128,11 @@ public class MaterialService {
 
         material.setQuantidade(0.0);
         material.setTotalDePecas(0.0);
-        materialRepository.save(material);
-
-        HistoricoMaterial historico = new HistoricoMaterial();
-        historico.setMaterial(material);
-        historico.setAcao(TipoAcao.DELETADO);
-        historico.setQuantidadeAlterada(0.0);
-        historico.setUsuarioUltimaAtualizacao(usuario);
-        historico.setComentario("Material deletado");
-        historicoRepository.save(historico);
-
         material.setAtivo(false);
+
         materialRepository.save(material);
+
+        registrarHistorico(material, TipoAcao.DELETADO, 0.0, usuario, "Material deletado");
     }
 
     public MaterialDTO atualizarQuantidade(Long id, Double quantidade, TipoAcao acao, String usuario, String comentario) {
@@ -154,10 +144,12 @@ public class MaterialService {
         } else if (acao == TipoAcao.RETIRADO) {
             material.setQuantidade(material.getQuantidade() - quantidade);
         }
-        if (material.getRendimento() != null && material.getQuantidade() != null) {
-            material.setTotalDePecas(material.getRendimento() * material.getQuantidade());
-        }
-        if (material.getLimiteMinimo() != null && material.getTotalDePecas() >= material.getLimiteMinimo()) {
+
+        calcularTotal(material);
+
+        // reset se ultrapassar limite
+        if (material.getLimiteMinimo() != null &&
+                material.getTotalDePecas() >= material.getLimiteMinimo()) {
             material.setDataProgramadaCompra(null);
         }
 
@@ -170,6 +162,12 @@ public class MaterialService {
         registrarHistorico(salvo, acao, quantidade, usuario, comentario);
 
         return toDTOComUltimoComentario(salvo);
+    }
+
+    private void calcularTotal(Material material) {
+        if (material.getRendimento() != null && material.getQuantidade() != null) {
+            material.setTotalDePecas(material.getRendimento() * material.getQuantidade());
+        }
     }
 
     private void registrarHistorico(Material material, TipoAcao acao, Double quantidade, String usuario, String comentario) {
@@ -191,7 +189,7 @@ public class MaterialService {
 
         Material atualizado = materialRepository.save(material);
 
-        return MaterialDTO.fromEntity(atualizado);
+        return toDTOComUltimoComentario(atualizado);
     }
 
     public MaterialDTO reativarMaterial(Long id, String usuario) {
@@ -209,26 +207,34 @@ public class MaterialService {
 
         Material salvo = materialRepository.save(material);
 
-        registrarHistorico(salvo, TipoAcao.ATUALIZADO, 0.0, usuario, "Material Voltando ao Estoque");
+        registrarHistorico(salvo, TipoAcao.ATUALIZADO, 0.0, usuario, "Material voltando ao estoque");
 
-        return MaterialDTO.fromEntity(salvo);
+        return toDTOComUltimoComentario(salvo);
     }
 
-    public Material programarCompra(Long id, String data, String usuario) {
+    public MaterialDTO programarCompra(Long id, String data, String usuario) {
         Material material = materialRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Material não encontrado"));
+
         material.setDataProgramadaCompra(LocalDate.parse(data));
         material.setDataAtualizacao(LocalDateTime.now());
         material.setUsuarioUltimaAlteracao(usuario);
-        return materialRepository.save(material);
+
+        Material salvo = materialRepository.save(material);
+
+        return toDTOComUltimoComentario(salvo);
     }
+
 
     public MaterialDTO alternarFavorito(Long id) {
         Material material = materialRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Material não encontrado"));
+
         material.setFavorito(!material.isFavorito());
         material.setDataAtualizacao(LocalDateTime.now());
+
         Material salvo = materialRepository.save(material);
-        return MaterialDTO.fromEntity(salvo);
+
+        return toDTOComUltimoComentario(salvo);
     }
 }

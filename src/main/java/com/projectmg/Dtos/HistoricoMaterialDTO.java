@@ -23,7 +23,8 @@ public record HistoricoMaterialDTO(
                 h.getMaterial() != null ? h.getMaterial().getNome() : "Material removido",
                 h.getAcao(),
                 h.getQuantidadeAlterada(),
-                h.getUsuarioUltimaAtualizacao(),                h.getComentario(),
+                h.getUsuarioUltimaAtualizacao(),
+                h.getComentario(),
                 h.getDataCriacao(),
                 h.getDataAtualizacao()
         );

@@ -2,7 +2,6 @@ package com.projectmg.Resources;
 
 import com.projectmg.Dtos.MaterialDTO;
 import com.projectmg.Enum.TipoAcao;
-import com.projectmg.Models.Material;
 import com.projectmg.Services.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-
 
 @RestController
 @RequestMapping("/mg/estoque")
@@ -21,85 +19,104 @@ public class MaterialResource {
 
     @GetMapping("/")
     public ResponseEntity<List<MaterialDTO>> listarAtivos() {
-        List<MaterialDTO> materiais = materialService.listarAtivos();
-        return ResponseEntity.ok(materiais);
+        return ResponseEntity.ok(materialService.listarAtivos());
     }
 
     @GetMapping("/todos")
     public ResponseEntity<List<MaterialDTO>> listarTodos() {
-        List<MaterialDTO> materiais = materialService.listarTodos();
-        return ResponseEntity.ok(materiais);
+        return ResponseEntity.ok(materialService.listarTodos());
     }
 
     @GetMapping("/ultimos")
-    public List<MaterialDTO> listarUltimos() {
-        return materialService.listarUltimos();
+    public ResponseEntity<List<MaterialDTO>> listarUltimos() {
+        return ResponseEntity.ok(materialService.listarUltimos());
     }
 
     @PostMapping("/cadastrar")
-    public MaterialDTO cadastrarMaterial(@RequestBody MaterialDTO dto) {
-        return materialService.cadastrarMaterial(dto, "UsuarioAtual"); // aqui você pode puxar do usuário logado
+    public ResponseEntity<MaterialDTO> cadastrarMaterial(
+            @RequestBody MaterialDTO dto,
+            @RequestHeader("usuario") String usuario) {
+
+        MaterialDTO criado = materialService.cadastrarMaterial(dto, usuario);
+        return ResponseEntity.ok(criado);
     }
 
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<MaterialDTO> atualizarMaterial(
             @PathVariable Long id,
             @RequestBody MaterialDTO dto,
-            @RequestHeader("UsuarioAtual") String usuario) {
-        MaterialDTO atualizado = materialService.atualizarMaterial(id, dto, usuario);
-        return ResponseEntity.ok(atualizado);
-    }
+            @RequestHeader("usuario") String usuario) {
 
+        return ResponseEntity.ok(materialService.atualizarMaterial(id, dto, usuario));
+    }
 
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> deletarMaterial(
             @PathVariable Long id,
-            @RequestHeader("UsuarioAtual") String usuario) { // recebe o header
+            @RequestHeader("usuario") String usuario) {
+
         materialService.deletarMaterial(id, usuario);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/adicionar-quantidade/{id}/{qtd}")
-    public MaterialDTO adicionar(@PathVariable Long id, @PathVariable Double qtd, @RequestBody Map<String, String> body) {
-        return materialService.atualizarQuantidade(id, qtd, TipoAcao.ADICIONADO, "UsuarioAtual", body.get("comentario"));
+    public ResponseEntity<MaterialDTO> adicionar(
+            @PathVariable Long id,
+            @PathVariable Double qtd,
+            @RequestBody Map<String, String> body,
+            @RequestHeader("usuario") String usuario) {
+
+        String comentario = body.getOrDefault("comentario", "Entrada de estoque");
+        MaterialDTO atualizado = materialService.atualizarQuantidade(id, qtd, TipoAcao.ADICIONADO, usuario, comentario);
+
+        return ResponseEntity.ok(atualizado);
     }
 
     @PutMapping("/retirar-quantidade/{id}/{qtd}")
-    public MaterialDTO retirar(@PathVariable Long id, @PathVariable Double qtd, @RequestBody Map<String, String> body) {
-        return materialService.atualizarQuantidade(id, qtd, TipoAcao.RETIRADO, "UsuarioAtual", body.get("comentario"));
+    public ResponseEntity<MaterialDTO> retirar(
+            @PathVariable Long id,
+            @PathVariable Double qtd,
+            @RequestBody Map<String, String> body,
+            @RequestHeader("usuario") String usuario) {
+
+        String comentario = body.getOrDefault("comentario", "Saída de estoque");
+        MaterialDTO atualizado = materialService.atualizarQuantidade(id, qtd, TipoAcao.RETIRADO, usuario, comentario);
+
+        return ResponseEntity.ok(atualizado);
     }
 
     @PutMapping("/definir-limite/{id}/{limiteMinimo}")
     public ResponseEntity<MaterialDTO> definirLimite(
             @PathVariable Long id,
             @PathVariable Double limiteMinimo) {
-        MaterialDTO atualizado = materialService.definirLimite(id, limiteMinimo);
-        return ResponseEntity.ok(atualizado);
+
+        return ResponseEntity.ok(materialService.definirLimite(id, limiteMinimo));
     }
 
     @PutMapping("/reativar/{id}")
     public ResponseEntity<MaterialDTO> reativarMaterial(
             @PathVariable Long id,
-            @RequestHeader("UsuarioAtual") String usuario) {
-        MaterialDTO atualizado = materialService.reativarMaterial(id, usuario);
-        return ResponseEntity.ok(atualizado);
+            @RequestHeader("usuario") String usuario) {
+
+        return ResponseEntity.ok(materialService.reativarMaterial(id, usuario));
     }
 
     @PutMapping("/programar-compra/{id}")
-    public ResponseEntity<Material> programarCompra(
+    public ResponseEntity<MaterialDTO> programarCompra(
             @PathVariable Long id,
             @RequestBody Map<String, String> body,
-            @RequestHeader("UsuarioAtual") String usuario) {
+            @RequestHeader("usuario") String usuario) {
 
         String data = body.get("dataProgramadaCompra");
-        Material atualizado = materialService.programarCompra(id, data, usuario);
+
+        MaterialDTO atualizado = materialService.programarCompra(id, data, usuario);
+
         return ResponseEntity.ok(atualizado);
     }
 
     @PutMapping("/favorito/{id}")
     public ResponseEntity<MaterialDTO> alternarFavorito(@PathVariable Long id) {
-        MaterialDTO atualizado = materialService.alternarFavorito(id);
-        return ResponseEntity.ok(atualizado);
+        return ResponseEntity.ok(materialService.alternarFavorito(id));
     }
 
 }
