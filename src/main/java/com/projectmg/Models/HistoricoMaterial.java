@@ -42,6 +42,10 @@ public class HistoricoMaterial {
 
     private LocalDateTime dataAtualizacao;
 
+    private Long referenciaId;
+
+    private Integer quantidadePecasVendidas;
+
     @PrePersist
     public void prePersist() {
         dataCriacao = LocalDateTime.now();
@@ -57,11 +61,11 @@ public class HistoricoMaterial {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         HistoricoMaterial that = (HistoricoMaterial) o;
-        return Objects.equals(id, that.id) && acao == that.acao && Objects.equals(quantidadeAlterada, that.quantidadeAlterada) && Objects.equals(usuarioUltimaAtualizacao, that.usuarioUltimaAtualizacao) && Objects.equals(comentario, that.comentario) && Objects.equals(material, that.material) && Objects.equals(dataCriacao, that.dataCriacao) && Objects.equals(dataAtualizacao, that.dataAtualizacao);
+        return Objects.equals(id, that.id) && acao == that.acao && Objects.equals(quantidadeAlterada, that.quantidadeAlterada) && Objects.equals(usuarioUltimaAtualizacao, that.usuarioUltimaAtualizacao) && Objects.equals(comentario, that.comentario) && Objects.equals(material, that.material) && Objects.equals(dataCriacao, that.dataCriacao) && Objects.equals(dataAtualizacao, that.dataAtualizacao) && Objects.equals(referenciaId, that.referenciaId) && Objects.equals(quantidadePecasVendidas, that.quantidadePecasVendidas);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, acao, quantidadeAlterada, usuarioUltimaAtualizacao, comentario, material, dataCriacao, dataAtualizacao);
+        return Objects.hash(id, acao, quantidadeAlterada, usuarioUltimaAtualizacao, comentario, material, dataCriacao, dataAtualizacao, referenciaId, quantidadePecasVendidas);
     }
 }

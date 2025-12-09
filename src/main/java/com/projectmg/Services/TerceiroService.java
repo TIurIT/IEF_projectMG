@@ -27,7 +27,7 @@ public class TerceiroService {
         terceiro.setNome(TerceiroDTO.getNome());
         terceiro.setBairro(TerceiroDTO.getBairro());
         terceiro.setTelefone(TerceiroDTO.getTelefone());
-        terceiro.setServico(TerceiroDTO.getServico());
+        terceiro.setTipoServico(TerceiroDTO.getTipoServico());
         return terceiro;
     }
 
@@ -37,7 +37,7 @@ public class TerceiroService {
         terceiroDTO.setNome(terceiro.getNome());
         terceiroDTO.setBairro(terceiro.getBairro());
         terceiroDTO.setTelefone(terceiro.getTelefone());
-        terceiroDTO.setServico(terceiro.getServico());
+        terceiroDTO.setTipoServico(terceiro.getTipoServico());
         return terceiroDTO;
     }
 
@@ -98,17 +98,6 @@ public class TerceiroService {
         return dtos;
     }
 
-    public List<TerceiroDTO> buscarTerceiroPorServico(String servico){
-        List<Terceiro> terceiros = terceiroRepository.findByServico(servico);
-        terceiroSpec.verifyTerceiro(terceiros);
-        List<TerceiroDTO> dtos = new ArrayList<>();
-        terceiros.forEach(terceiro -> {
-            dtos.add(converterTerceiroParaTerceiroDTO(terceiro));
-        });
-
-        return dtos;
-
-    }
 
     public List<TerceiroDTO> buscarTerceiros(){
         List<Terceiro> terceiros = terceiroRepository.findAll();

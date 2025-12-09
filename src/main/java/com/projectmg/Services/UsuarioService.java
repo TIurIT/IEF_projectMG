@@ -29,7 +29,7 @@ public class UsuarioService {
         usuarioDTO.setNome(usuario.getNome());
         usuarioDTO.setEmail(usuario.getEmail());
         usuarioDTO.setSenha(null);
-        usuarioDTO.setTipo(usuario.getTipoAcesso());
+        usuarioDTO.setTipoAcesso(usuario.getTipoAcesso());
         return usuarioDTO;
     }
 

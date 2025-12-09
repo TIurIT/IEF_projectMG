@@ -1,6 +1,7 @@
 package com.projectmg.Resources;
 
 import com.projectmg.Dtos.MaterialDTO;
+import com.projectmg.Dtos.VendaReferenciaDTO;
 import com.projectmg.Enum.TipoAcao;
 import com.projectmg.Services.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,6 +118,14 @@ public class MaterialResource {
     @PutMapping("/favorito/{id}")
     public ResponseEntity<MaterialDTO> alternarFavorito(@PathVariable Long id) {
         return ResponseEntity.ok(materialService.alternarFavorito(id));
+    }
+
+    @PostMapping("/retirar-por-referencia")
+    public ResponseEntity<MaterialDTO> retirarPorReferencia(
+            @RequestBody VendaReferenciaDTO dto,
+            @RequestHeader("usuario") String usuario) {
+
+        return ResponseEntity.ok(materialService.retirarPorReferencia(dto, usuario));
     }
 
 }

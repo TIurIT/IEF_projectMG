@@ -16,57 +16,57 @@ public class ReferenciaSpec {
     @Autowired
     private ReferenciaRepository referenciaRepository;
 
-    private static final String MSG_PRODUTO = "Produto não encontrado.";
-    private static final String MSG_PRODUTO_REF = "Referência ja cadastrada.";
-    private static final String MSG_PRODUTO_NOME = "Nome já cadastrado.";
-    private static final String MSG_PRODUTO_NullREF = "Referência não pode ser vazia.";
-    private static final String MSG_PRODUTO_NullNOME = "Nome não pode ser vazio.";
+    private static final String MSG_REFERENCIA = "Referencia não encontrado.";
+    private static final String MSG_REFERENCIA_REF = "Referência ja cadastrada.";
+    private static final String MSG_REFERENCIA_NOME = "Nome já cadastrado.";
+    private static final String MSG_REFERENCIA_NullREF = "Referência não pode ser vazia.";
+    private static final String MSG_REFERENCIA_NullNOME = "Nome não pode ser vazio.";
 
-    public void verifyProdutoNomeExists(List<Referencia> referencias) {
+    public void verifyReferenciaNomeExists(List<Referencia> referencias) {
         if (referencias.size() > 0) {
-            throw new BusinessException(MSG_PRODUTO_NOME);
+            throw new BusinessException(MSG_REFERENCIA_NOME);
         }
     }
 
-    public void verifyProduto(List<Referencia> referencias) {
+    public void verifyReferencia(List<Referencia> referencias) {
         if (referencias.size() == 0) {
-            throw new BusinessException(MSG_PRODUTO);
+            throw new BusinessException(MSG_REFERENCIA);
         }
     }
 
-    public void verifyProdutoRefExists(List<Referencia> referencias) {
+    public void verifyReferenciaRefExists(List<Referencia> referencias) {
         if (referencias.size() > 0) {
-            throw new BusinessException(MSG_PRODUTO_REF);
+            throw new BusinessException(MSG_REFERENCIA_REF);
         }
     }
 
-    public void verifyProdutoRef(String referencia) {
+    public void verifyReferenciaRef(String referencia) {
         if (referencia.isEmpty()) {
-            throw new BusinessException(MSG_PRODUTO_NullREF);
+            throw new BusinessException(MSG_REFERENCIA_NullREF);
         }
     }
 
-    public void verifyProdutoNome(String nome) {
+    public void verifyReferenciaNome(String nome) {
         if (nome.isEmpty()) {
-            throw new BusinessException(MSG_PRODUTO_NullNOME);
+            throw new BusinessException(MSG_REFERENCIA_NullNOME);
         }
     }
 
-    public void verifyProdutoId(Long id) {
+    public void verifyReferenciaId(Long id) {
         if (isNull(id)) {
-            throw new BusinessException(MSG_PRODUTO);
+            throw new BusinessException(MSG_REFERENCIA);
         }
     }
 
-    public void verifyProdutoNomeDup(String nome, Long id) {
+    public void verifyReferenciaNomeDup(String nome, Long id) {
         if (referenciaRepository.existsByNomeAndIdNot(nome, id)){
-            throw new BusinessException(MSG_PRODUTO_NOME);
+            throw new BusinessException(MSG_REFERENCIA_NOME);
         }
     }
 
-    public void verifyProdutoRefDup(String ref, Long id) {
+    public void verifyReferenciaRefDup(String ref, Long id) {
         if (referenciaRepository.existsByReferenciaAndIdNot(ref, id)){
-            throw new BusinessException(MSG_PRODUTO_NOME);
+            throw new BusinessException(MSG_REFERENCIA_NOME);
         }
     }
 }

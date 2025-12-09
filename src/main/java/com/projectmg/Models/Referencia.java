@@ -28,6 +28,9 @@ public class Referencia {
     @Column(name = "referencia")
     private String referencia;
 
+    @Column(name = "rendimento")
+    private Double rendimento;
+
     @Column(name = "data_atualizacao")
     private LocalDate dataAtualizacao;
 
@@ -38,16 +41,15 @@ public class Referencia {
     @Column(nullable = false)
     private TipoAcao acao;
 
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Referencia referencia = (Referencia) o;
-        return Objects.equals(id, referencia.id) && Objects.equals(nome, referencia.nome) && Objects.equals(this.referencia, referencia.referencia) && Objects.equals(dataAtualizacao, referencia.dataAtualizacao) && Objects.equals(usuarioUltimaAlteracao, referencia.usuarioUltimaAlteracao) && acao == referencia.acao;
+        Referencia that = (Referencia) o;
+        return Objects.equals(id, that.id) && Objects.equals(nome, that.nome) && Objects.equals(referencia, that.referencia) && Objects.equals(rendimento, that.rendimento) && Objects.equals(dataAtualizacao, that.dataAtualizacao) && Objects.equals(usuarioUltimaAlteracao, that.usuarioUltimaAlteracao) && acao == that.acao;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, referencia, dataAtualizacao, usuarioUltimaAlteracao, acao);
+        return Objects.hash(id, nome, referencia, rendimento, dataAtualizacao, usuarioUltimaAlteracao, acao);
     }
 }

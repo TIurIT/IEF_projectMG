@@ -15,18 +15,18 @@ public class TerceiroResource {
     @Autowired
     private TerceiroService terceiroService;
 
-    @GetMapping({"/",""})
+    @GetMapping({"/", ""})
     public ResponseEntity<List<TerceiroDTO>> getAllTerceiros() {
         return ResponseEntity.ok(terceiroService.buscarTerceiros());
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<TerceiroDTO> buscarTerceiroPorId(@PathVariable Long id){
+    public ResponseEntity<TerceiroDTO> buscarTerceiroPorId(@PathVariable Long id) {
         return ResponseEntity.ok(terceiroService.buscarTerceiroPorId(id));
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<TerceiroDTO> cadastrarTerceiro(@RequestBody TerceiroDTO terceiroDTO){
+    public ResponseEntity<TerceiroDTO> cadastrarTerceiro(@RequestBody TerceiroDTO terceiroDTO) {
         terceiroDTO = terceiroService.cadastrarTerceiro(terceiroDTO);
         return ResponseEntity.ok(terceiroDTO);
     }
@@ -38,22 +38,18 @@ public class TerceiroResource {
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<TerceiroDTO> atualizarTerceiro(@PathVariable Long id, @RequestBody TerceiroDTO terceiroDTO){
+    public ResponseEntity<TerceiroDTO> atualizarTerceiro(@PathVariable Long id, @RequestBody TerceiroDTO terceiroDTO) {
         return ResponseEntity.ok(terceiroService.atualizarTerceiro(terceiroDTO));
     }
 
     @GetMapping("/b/nome/{nome}")
-    public ResponseEntity<List<TerceiroDTO>> buscarTerceiroPorNome(@PathVariable String nome){
+    public ResponseEntity<List<TerceiroDTO>> buscarTerceiroPorNome(@PathVariable String nome) {
         return ResponseEntity.ok(terceiroService.buscarTerceiroPorNome(nome));
     }
 
     @GetMapping("/b/bairro/{bairro}")
-    public ResponseEntity<List<TerceiroDTO>> buscarTerceiroPorBairro(@PathVariable String bairro){
+    public ResponseEntity<List<TerceiroDTO>> buscarTerceiroPorBairro(@PathVariable String bairro) {
         return ResponseEntity.ok(terceiroService.buscarTerceiroPorBairro(bairro));
     }
 
-    @GetMapping("/b/servico/{servico}")
-    public ResponseEntity<List<TerceiroDTO>> buscarTerceiroPorServico(@PathVariable String servico){
-        return ResponseEntity.ok(terceiroService.buscarTerceiroPorServico(servico));
-    }
 }

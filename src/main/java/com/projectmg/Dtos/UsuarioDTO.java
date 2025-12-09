@@ -41,7 +41,7 @@ public class UsuarioDTO {
     public TipoAcesso getTipoAcesso() {
         return tipoAcesso;
     }
-    public void setTipo(TipoAcesso tipoAcesso) {
+    public void setTipoAcesso(TipoAcesso tipoAcesso) {
         this.tipoAcesso = tipoAcesso;
     }
 

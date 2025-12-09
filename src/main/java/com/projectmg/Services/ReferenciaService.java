@@ -10,14 +10,13 @@ import com.projectmg.Exceptions.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReferenciaService {
-
-    private static final String MSG_PRODUTO = "Produto não encontrado";
+    private static final String MSG_REFERENCIA = "Referencia não encontrado";
 
     @Autowired
     private ReferenciaRepository referenciaRepository;
@@ -25,63 +24,69 @@ public class ReferenciaService {
     @Autowired
     private ReferenciaSpec referenciaSpec;
 
-    public ReferenciaDTO converterProdutoParaProdutoDTO(Referencia referencia){
-        ReferenciaDTO referenciaDTO = new ReferenciaDTO();
-        referenciaDTO.setId(referencia.getId());
-        referenciaDTO.setNome(referencia.getNome());
-        referenciaDTO.setReferencia(referencia.getReferencia());
-        referenciaDTO.setDataAtualizacao(referencia.getDataAtualizacao());
-        referenciaDTO.setUsuarioUltimaAlteracao(referencia.getUsuarioUltimaAlteracao());
-        referenciaDTO.setAcao(referencia.getAcao());
-
-        return referenciaDTO;
+    public ReferenciaDTO converterReferenciaParaReferenciaDTO(Referencia referencia) {
+        return new ReferenciaDTO(
+                referencia.getId(),
+                referencia.getNome(),
+                referencia.getReferencia(),
+                referencia.getRendimento(),
+                referencia.getDataAtualizacao(),
+                referencia.getUsuarioUltimaAlteracao(),
+                referencia.getAcao()
+        );
     }
 
-    public Referencia converterProdutoDTOParaProduto(ReferenciaDTO referenciaDTO){
+    public Referencia converterReferenciaDTOParaReferencia(ReferenciaDTO referenciaDTO) {
         Referencia referencia = new Referencia();
-        referencia.setId(referenciaDTO.getId());
-        referencia.setNome(referenciaDTO.getNome());
-        referencia.setReferencia(referenciaDTO.getReferencia());
-        referencia.setDataAtualizacao(referenciaDTO.getDataAtualizacao());
-        referencia.setUsuarioUltimaAlteracao(referenciaDTO.getUsuarioUltimaAlteracao());
-        referencia.setAcao(referenciaDTO.getAcao());
-
+        referencia.setId(referenciaDTO.id());
+        referencia.setNome(referenciaDTO.nome());
+        referencia.setReferencia(referenciaDTO.referencia());
+        referencia.setRendimento(referenciaDTO.rendimento());
+        referencia.setDataAtualizacao(referenciaDTO.dataAtualizacao());
+        referencia.setUsuarioUltimaAlteracao(referenciaDTO.usuarioUltimaAlteracao());
+        referencia.setAcao(referenciaDTO.acao());
         return referencia;
     }
 
-    public ReferenciaDTO cadastrarProduto(ReferenciaDTO referenciaDTO){
-        referenciaSpec.verifyProdutoNome(referenciaDTO.getNome());
-        referenciaSpec.verifyProdutoRef(referenciaDTO.getReferencia());
-        List<Referencia> referenciaNome = referenciaRepository.findByNome(referenciaDTO.getNome());
-        List<Referencia> referenciaRef = referenciaRepository.findByReferencia(referenciaDTO.getReferencia());
-        referenciaSpec.verifyProdutoNomeExists(referenciaNome);
-        referenciaSpec.verifyProdutoRefExists(referenciaRef);
-        Referencia referencia = converterProdutoDTOParaProduto(referenciaDTO);
+    public ReferenciaDTO cadastrarReferencia(ReferenciaDTO referenciaDTO) {
+        referenciaSpec.verifyReferenciaNome(referenciaDTO.nome());
+        referenciaSpec.verifyReferenciaRef(referenciaDTO.referencia());
+
+        List<Referencia> referenciaNome = referenciaRepository.findByNome(referenciaDTO.nome());
+        List<Referencia> referenciaRef = referenciaRepository.findByReferencia(referenciaDTO.referencia());
+
+        referenciaSpec.verifyReferenciaNomeExists(referenciaNome);
+        referenciaSpec.verifyReferenciaRefExists(referenciaRef);
+
+        Referencia referencia = converterReferenciaDTOParaReferencia(referenciaDTO);
         referencia.setAcao(referencia.getId() == null ? TipoAcao.CRIADO : TipoAcao.ATUALIZADO);
         referencia = referenciaRepository.save(referencia);
 
-        return converterProdutoParaProdutoDTO(referencia);
+        return converterReferenciaParaReferenciaDTO(referencia);
     }
 
-    public ReferenciaDTO atualizarProduto(ReferenciaDTO referenciaDTO){
-        referenciaSpec.verifyProdutoId(referenciaDTO.getId());
-        Referencia referenciaExistente = referenciaRepository.findById(referenciaDTO.getId())
-                .orElseThrow(() -> new BusinessException(MSG_PRODUTO));
-        referenciaSpec.verifyProdutoNome(referenciaDTO.getNome());
-        referenciaSpec.verifyProdutoRef(referenciaDTO.getReferencia());
-        referenciaSpec.verifyProdutoNomeDup(referenciaDTO.getNome(), referenciaDTO.getId());
-        referenciaSpec.verifyProdutoRefDup(referenciaDTO.getReferencia(), referenciaDTO.getId());
-        referenciaExistente.setNome(referenciaDTO.getNome());
-        referenciaExistente.setReferencia(referenciaDTO.getReferencia());
+    public ReferenciaDTO atualizarReferencia(ReferenciaDTO referenciaDTO) {
+        referenciaSpec.verifyReferenciaId(referenciaDTO.id());
+
+        Referencia referenciaExistente = referenciaRepository.findById(referenciaDTO.id())
+                .orElseThrow(() -> new BusinessException(MSG_REFERENCIA));
+
+        referenciaSpec.verifyReferenciaNome(referenciaDTO.nome());
+        referenciaSpec.verifyReferenciaRef(referenciaDTO.referencia());
+        referenciaSpec.verifyReferenciaNomeDup(referenciaDTO.nome(), referenciaDTO.id());
+        referenciaSpec.verifyReferenciaRefDup(referenciaDTO.referencia(), referenciaDTO.id());
+
+        referenciaExistente.setNome(referenciaDTO.nome());
+        referenciaExistente.setReferencia(referenciaDTO.referencia());
         referenciaExistente.setDataAtualizacao(LocalDate.now());
         referenciaExistente.setUsuarioUltimaAlteracao(UsuarioAuditoria.getUsuarioLogado());
         referenciaExistente.setAcao(TipoAcao.ATUALIZADO);
-        referenciaRepository.save(referenciaExistente);
 
-        return converterProdutoParaProdutoDTO(referenciaExistente);
+        referenciaRepository.save(referenciaExistente);
+        return converterReferenciaParaReferenciaDTO(referenciaExistente);
     }
 
-    public void deletarProduto(Long id){
+    public void deletarReferencia(Long id) {
         Referencia referencia = referenciaRepository.findById(id).orElseThrow();
         referencia.setAcao(TipoAcao.DELETADO);
         referencia.setDataAtualizacao(LocalDate.now());
@@ -90,42 +95,41 @@ public class ReferenciaService {
         referenciaRepository.deleteById(id);
     }
 
-    public ReferenciaDTO buscarProdutoPorId(Long id){
+    public ReferenciaDTO buscarReferenciaPorId(Long id) {
         Referencia referencia = referenciaRepository.findById(id)
-                .orElseThrow(() -> new BusinessException(MSG_PRODUTO));
-        return converterProdutoParaProdutoDTO(referencia);
+                .orElseThrow(() -> new BusinessException(MSG_REFERENCIA));
+        return converterReferenciaParaReferenciaDTO(referencia);
     }
 
-    public List<ReferenciaDTO> buscarProdutoPorNome(String nome){
+    public List<ReferenciaDTO> buscarReferenciaPorNome(String nome) {
         List<Referencia> referencias = referenciaRepository.findByNome(nome);
-        referenciaSpec.verifyProduto(referencias);
-        List<ReferenciaDTO> dtos = new java.util.ArrayList<>();
-        referencias.forEach(produto -> {
-            dtos.add(converterProdutoParaProdutoDTO(produto));
-        });
-
-        return dtos;
+        referenciaSpec.verifyReferencia(referencias);
+        return referencias.stream()
+                .map(this::converterReferenciaParaReferenciaDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<ReferenciaDTO> buscarProdutoPorReferencia(String referencia){
+    public List<ReferenciaDTO> buscarReferenciaPorReferencia(String referencia) {
         List<Referencia> referencias = referenciaRepository.findByReferencia(referencia);
-        referenciaSpec.verifyProduto(referencias);
-        List<ReferenciaDTO> dtos = new java.util.ArrayList<>();
-        referencias.forEach(produto -> {
-            dtos.add(converterProdutoParaProdutoDTO(produto));
-        });
-
-        return dtos;
+        referenciaSpec.verifyReferencia(referencias);
+        return referencias.stream()
+                .map(this::converterReferenciaParaReferenciaDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<ReferenciaDTO> buscarProdutoTodos(){
+    public List<ReferenciaDTO> buscarReferenciaTodos() {
         List<Referencia> referencias = referenciaRepository.findAllAtivos();
-        referenciaSpec.verifyProduto(referencias);
-        List<ReferenciaDTO> dtos = new java.util.ArrayList<>();
-        referencias.forEach(produto -> {
-            dtos.add(converterProdutoParaProdutoDTO(produto));
-        });
-
-        return dtos;
+        referenciaSpec.verifyReferencia(referencias);
+        return referencias.stream()
+                .map(this::converterReferenciaParaReferenciaDTO)
+                .collect(Collectors.toList());
     }
+
+    public List<ReferenciaDTO> buscarUltimosAtualizados() {
+        List<Referencia> referencias = referenciaRepository.findTop5ByOrderByDataAtualizacaoDesc();
+        return referencias.stream()
+                .map(this::converterReferenciaParaReferenciaDTO)
+                .collect(Collectors.toList());
+    }
+
 }

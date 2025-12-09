@@ -1,5 +1,6 @@
 package com.projectmg.Models;
 
+import com.projectmg.Enum.TipoServico;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,22 +29,20 @@ public class Terceiro {
     
     @Column(name = "telefone", nullable = false)
     private String telefone;
-    
-    @Column
-    private String servico;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_Servico", nullable = false)
+    private TipoServico tipoServico;
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Terceiro terceiro = (Terceiro) o;
-        return Objects.equals(id, terceiro.id) && Objects.equals(nome, terceiro.nome)
-                && Objects.equals(bairro, terceiro.bairro)
-                && Objects.equals(telefone, terceiro.telefone)
-                && Objects.equals(servico, terceiro.servico);
+        return Objects.equals(id, terceiro.id) && Objects.equals(nome, terceiro.nome) && Objects.equals(bairro, terceiro.bairro) && Objects.equals(telefone, terceiro.telefone) && tipoServico == terceiro.tipoServico;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, bairro, telefone, servico);
+        return Objects.hash(id, nome, bairro, telefone, tipoServico);
     }
 }

@@ -33,13 +33,10 @@ public class Material {
 
     private String fornecedor;
 
-    // Agora é Double, representando KG
     private Double quantidade;
 
-    // Novo campo: rendimento (quantas peças por kg, por exemplo)
     private Double rendimento;
 
-    // Campo calculado: total de peças (rendimento * quantidade)
     @Column(name = "total_de_pecas")
     private Double totalDePecas;
 

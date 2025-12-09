@@ -1,15 +1,18 @@
 package com.projectmg.Services;
 
 import com.projectmg.Dtos.MaterialDTO;
+import com.projectmg.Dtos.VendaReferenciaDTO;
 import com.projectmg.Enum.TipoAcao;
+import com.projectmg.Exceptions.BusinessException;
 import com.projectmg.Models.Material;
+import com.projectmg.Models.Referencia;
 import com.projectmg.Models.HistoricoMaterial;
 import com.projectmg.Repositories.HistoricoMaterialRepository;
 import com.projectmg.Repositories.MaterialRepository;
+import com.projectmg.Repositories.ReferenciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -22,6 +25,9 @@ public class MaterialService {
 
     @Autowired
     private HistoricoMaterialRepository historicoRepository;
+
+    @Autowired
+    private ReferenciaRepository referenciaRepository;
 
     public List<MaterialDTO> listarTodos() {
         return materialRepository.findAll().stream()
@@ -164,6 +170,55 @@ public class MaterialService {
         return toDTOComUltimoComentario(salvo);
     }
 
+    public MaterialDTO retirarPorReferencia(VendaReferenciaDTO dto, String usuario) {
+
+        Material material = materialRepository.findById(dto.materialId())
+                .orElseThrow(() -> new BusinessException("Material não encontrado"));
+
+        if (dto.rendimentoReferencia() == null || dto.rendimentoReferencia() <= 0) {
+            throw new BusinessException("O rendimento da referência é inválido.");
+        }
+
+        if (dto.quantidadePecas() == null || dto.quantidadePecas() <= 0) {
+            throw new BusinessException("A quantidade de peças deve ser maior que zero.");
+        }
+
+        // cálculo baseado na referência
+        Double kgASerRetirado = dto.quantidadePecas() / dto.rendimentoReferencia();
+
+        if (kgASerRetirado > material.getQuantidade()) {
+            throw new BusinessException("Estoque insuficiente para realizar a venda.");
+        }
+
+        // Remove em KG
+        material.setQuantidade(material.getQuantidade() - kgASerRetirado);
+
+        // Recalcula total
+        calcularTotal(material);
+
+        material.setAcao(TipoAcao.RETIRADO);
+        material.setUsuarioUltimaAlteracao(usuario);
+        material.setDataAtualizacao(LocalDateTime.now());
+
+        Material salvo = materialRepository.save(material);
+
+        // Registrar histórico com referência
+        HistoricoMaterial historico = new HistoricoMaterial();
+        historico.setMaterial(salvo);
+        historico.setAcao(TipoAcao.RETIRADO);
+        historico.setQuantidadeAlterada(kgASerRetirado);
+        historico.setUsuarioUltimaAtualizacao(usuario);
+        historico.setComentario(dto.comentario() != null ? dto.comentario() : "Retirada por referência");
+
+        historico.setReferenciaId(dto.referenciaId());
+        historico.setQuantidadePecasVendidas(dto.quantidadePecas());
+
+        historicoRepository.save(historico);
+
+        return toDTOComUltimoComentario(salvo);
+    }
+
+
     private void calcularTotal(Material material) {
         if (material.getRendimento() != null && material.getQuantidade() != null) {
             material.setTotalDePecas(material.getRendimento() * material.getQuantidade());
@@ -216,7 +271,7 @@ public class MaterialService {
         Material material = materialRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Material não encontrado"));
 
-        material.setDataProgramadaCompra(LocalDate.parse(data));
+        material.setDataProgramadaCompra(java.time.LocalDate.parse(data));
         material.setDataAtualizacao(LocalDateTime.now());
         material.setUsuarioUltimaAlteracao(usuario);
 
@@ -224,7 +279,6 @@ public class MaterialService {
 
         return toDTOComUltimoComentario(salvo);
     }
-
 
     public MaterialDTO alternarFavorito(Long id) {
         Material material = materialRepository.findById(id)

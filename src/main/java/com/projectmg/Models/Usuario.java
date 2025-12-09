@@ -31,7 +31,7 @@ public class Usuario {
     private String senha;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipoAcesso",nullable = false)
+    @Column(name = "tipo_acesso",nullable = false)
     private TipoAcesso tipoAcesso;
 
     @Override

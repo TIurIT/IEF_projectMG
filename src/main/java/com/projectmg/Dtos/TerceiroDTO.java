@@ -1,5 +1,6 @@
 package com.projectmg.Dtos;
 
+import com.projectmg.Enum.TipoServico;
 import lombok.Data;
 
 @Data
@@ -8,7 +9,7 @@ public class TerceiroDTO {
     private String nome;
     private String bairro;
     private String telefone;
-    private String servico;
+    private TipoServico tipoServico;
 
     public TerceiroDTO(){}
 
@@ -36,10 +37,10 @@ public class TerceiroDTO {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-    public String getServico() {
-        return servico;
+    public TipoServico getTipoServico() {
+        return tipoServico;
     }
-    public void setServico(String servico) {
-        this.servico = servico;
+    public void setTipoServico(TipoServico tipoServico) {
+        this.tipoServico = tipoServico;
     }
 }

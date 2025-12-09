@@ -15,7 +15,10 @@ public record HistoricoMaterialDTO(
         String usuarioUltimaAtualizacao,
         String comentario,
         LocalDateTime dataCriacao,
-        LocalDateTime dataAtualizacao
+        LocalDateTime dataAtualizacao,
+        Long referenciaId,
+        Integer quantidadePecasVendidas
+
 ) {
     public static HistoricoMaterialDTO fromEntity(HistoricoMaterial h) {
         return new HistoricoMaterialDTO(
@@ -26,7 +29,9 @@ public record HistoricoMaterialDTO(
                 h.getUsuarioUltimaAtualizacao(),
                 h.getComentario(),
                 h.getDataCriacao(),
-                h.getDataAtualizacao()
+                h.getDataAtualizacao(),
+                h.getReferenciaId(),
+                h.getQuantidadePecasVendidas()
         );
     }
 }

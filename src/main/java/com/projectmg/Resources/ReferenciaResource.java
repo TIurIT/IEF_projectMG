@@ -1,8 +1,6 @@
 package com.projectmg.Resources;
 
 import com.projectmg.Dtos.ReferenciaDTO;
-import com.projectmg.Models.Referencia;
-import com.projectmg.Repositories.ReferenciaRepository;
 import com.projectmg.Services.ReferenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,56 +9,70 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/mg/produto")
+@RequestMapping("/mg/referencias")
 public class ReferenciaResource {
 
     @Autowired
     private ReferenciaService referenciaService;
 
-    @Autowired
-    private ReferenciaRepository referenciaRepository;
-
-    @GetMapping({"/", ""})
-    public ResponseEntity<List<ReferenciaDTO>> buscarTodosProdutos() {
-        return ResponseEntity.ok(referenciaService.buscarProdutoTodos());
+    // GET - Listar todos
+    @GetMapping
+    public ResponseEntity<List<ReferenciaDTO>> buscarTodos() {
+        return ResponseEntity.ok(referenciaService.buscarReferenciaTodos());
     }
 
-    @GetMapping("/buscar/{id}")
-    public ResponseEntity<ReferenciaDTO> buscarProdutoPorId(@PathVariable Long id){
-        return ResponseEntity.ok(referenciaService.buscarProdutoPorId(id));
+    // GET - Buscar por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<ReferenciaDTO> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(referenciaService.buscarReferenciaPorId(id));
     }
 
-    @PostMapping("/cadastrar")
-    public ResponseEntity<ReferenciaDTO> cadastrarProduto(@RequestBody ReferenciaDTO referenciaDTO){
-        referenciaDTO = referenciaService.cadastrarProduto(referenciaDTO);
-        return ResponseEntity.ok(referenciaDTO);
+    // POST - Cadastrar
+    @PostMapping
+    public ResponseEntity<ReferenciaDTO> cadastrar(@RequestBody ReferenciaDTO dto) {
+        return ResponseEntity.ok(referenciaService.cadastrarReferencia(dto));
     }
 
-    @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Void> deletarProduto(@PathVariable Long id){
-        referenciaService.deletarProduto(id);
+    // PUT - Atualizar
+    @PutMapping("/{id}")
+    public ResponseEntity<ReferenciaDTO> atualizar(@PathVariable Long id,
+                                                   @RequestBody ReferenciaDTO dto) {
+
+        ReferenciaDTO dtoComId = new ReferenciaDTO(
+                id,
+                dto.nome(),
+                dto.referencia(),
+                dto.rendimento(),
+                dto.dataAtualizacao(),
+                dto.usuarioUltimaAlteracao(),
+                dto.acao()
+        );
+
+        return ResponseEntity.ok(referenciaService.atualizarReferencia(dtoComId));
+    }
+
+    // DELETE - Remover
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        referenciaService.deletarReferencia(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/atualizar/{id}")
-    public ResponseEntity<ReferenciaDTO> atualizarProduto(@PathVariable Long id, @RequestBody ReferenciaDTO referenciaDTO){
-        referenciaDTO.setId(id);
-        referenciaDTO = referenciaService.atualizarProduto(referenciaDTO);
-        return ResponseEntity.ok(referenciaDTO);
+    // GET - Buscar por nome (ex: /mg/referencias?nome=Camisa)
+    @GetMapping("/buscar/nome")
+    public ResponseEntity<List<ReferenciaDTO>> buscarPorNome(@RequestParam String nome) {
+        return ResponseEntity.ok(referenciaService.buscarReferenciaPorNome(nome));
     }
 
-    @GetMapping("/b/nome/{nome}")
-    public ResponseEntity<List<ReferenciaDTO>> buscarProdutoPorNome(@PathVariable String nome){
-        return ResponseEntity.ok(referenciaService.buscarProdutoPorNome(nome));
+    // GET - Buscar por referencia (ex: /mg/referencias?ref=123-ABC)
+    @GetMapping("/buscar/ref")
+    public ResponseEntity<List<ReferenciaDTO>> buscarPorReferencia(@RequestParam String ref) {
+        return ResponseEntity.ok(referenciaService.buscarReferenciaPorReferencia(ref));
     }
 
-    @GetMapping("/b/ref/{referencia}")
-    public ResponseEntity<List<ReferenciaDTO>> buscarProdutoPorReferencia(@PathVariable String referencia){
-        return ResponseEntity.ok(referenciaService.buscarProdutoPorReferencia(referencia));
-    }
-
+    // GET - Últimos atualizados
     @GetMapping("/ultimos")
-    public List<Referencia> listarUltimosProdutos() {
-        return referenciaRepository.findTop5ByOrderByDataAtualizacaoDesc();
+    public ResponseEntity<List<ReferenciaDTO>> listarUltimos() {
+        return ResponseEntity.ok(referenciaService.buscarUltimosAtualizados());
     }
 }
