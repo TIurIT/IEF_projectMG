@@ -175,16 +175,18 @@ public class MaterialService {
         Material material = materialRepository.findById(dto.materialId())
                 .orElseThrow(() -> new BusinessException("Material não encontrado"));
 
-        if (dto.rendimentoReferencia() == null || dto.rendimentoReferencia() <= 0) {
-            throw new BusinessException("O rendimento da referência é inválido.");
-        }
+        Referencia referencia = referenciaRepository.findById(dto.referenciaId())
+                .orElseThrow(() -> new BusinessException("Referência não encontrada"));
 
         if (dto.quantidadePecas() == null || dto.quantidadePecas() <= 0) {
             throw new BusinessException("A quantidade de peças deve ser maior que zero.");
         }
+        if (referencia.getRendimento() == null || referencia.getRendimento() <= 0) {
+            throw new BusinessException("O rendimento da referência é inválido.");
+        }
 
-        // cálculo baseado na referência
-        Double kgASerRetirado = dto.quantidadePecas() / dto.rendimentoReferencia();
+        Double kgASerRetirado = dto.quantidadePecas() / referencia.getRendimento();
+
 
         if (kgASerRetirado > material.getQuantidade()) {
             throw new BusinessException("Estoque insuficiente para realizar a venda.");

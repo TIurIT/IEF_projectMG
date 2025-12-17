@@ -38,8 +38,11 @@ public class Referencia {
     private String usuarioUltimaAlteracao;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name= "acao", nullable = false)
     private TipoAcao acao;
+
+    @Column(nullable = false)
+    private Boolean ativo = true;
 
     @Override
     public boolean equals(Object o) {

@@ -9,34 +9,46 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/mg/referencias")
+@RequestMapping("/mg/referencia")
 public class ReferenciaResource {
 
     @Autowired
     private ReferenciaService referenciaService;
 
-    // GET - Listar todos
+    /**
+     * 🔍 Buscar referências
+     * @param somenteAtivos true = apenas ativos | false = ativos + inativos
+     */
     @GetMapping
-    public ResponseEntity<List<ReferenciaDTO>> buscarTodos() {
-        return ResponseEntity.ok(referenciaService.buscarReferenciaTodos());
+    public ResponseEntity<List<ReferenciaDTO>> buscarTodos(
+            @RequestParam(defaultValue = "true") boolean somenteAtivos
+    ) {
+        return ResponseEntity.ok(
+                referenciaService.buscarReferencias(somenteAtivos)
+        );
     }
 
-    // GET - Buscar por ID
     @GetMapping("/{id}")
     public ResponseEntity<ReferenciaDTO> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(referenciaService.buscarReferenciaPorId(id));
+        return ResponseEntity.ok(
+                referenciaService.buscarReferenciaPorId(id)
+        );
     }
 
-    // POST - Cadastrar
     @PostMapping
-    public ResponseEntity<ReferenciaDTO> cadastrar(@RequestBody ReferenciaDTO dto) {
-        return ResponseEntity.ok(referenciaService.cadastrarReferencia(dto));
+    public ResponseEntity<ReferenciaDTO> cadastrar(
+            @RequestBody ReferenciaDTO dto
+    ) {
+        return ResponseEntity.ok(
+                referenciaService.cadastrarReferencia(dto)
+        );
     }
 
-    // PUT - Atualizar
     @PutMapping("/{id}")
-    public ResponseEntity<ReferenciaDTO> atualizar(@PathVariable Long id,
-                                                   @RequestBody ReferenciaDTO dto) {
+    public ResponseEntity<ReferenciaDTO> atualizar(
+            @PathVariable Long id,
+            @RequestBody ReferenciaDTO dto
+    ) {
 
         ReferenciaDTO dtoComId = new ReferenciaDTO(
                 id,
@@ -45,34 +57,58 @@ public class ReferenciaResource {
                 dto.rendimento(),
                 dto.dataAtualizacao(),
                 dto.usuarioUltimaAlteracao(),
-                dto.acao()
+                dto.acao(),
+                dto.ativo()
         );
 
-        return ResponseEntity.ok(referenciaService.atualizarReferencia(dtoComId));
+        return ResponseEntity.ok(
+                referenciaService.atualizarReferencia(dtoComId)
+        );
     }
 
-    // DELETE - Remover
+    /**
+     * ❌ Exclusão lógica (inativar)
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         referenciaService.deletarReferencia(id);
         return ResponseEntity.noContent().build();
     }
 
-    // GET - Buscar por nome (ex: /mg/referencias?nome=Camisa)
+    /**
+     * ♻ Reativar referência
+     */
+    @PutMapping("/{id}/reativar")
+    public ResponseEntity<Void> reativar(@PathVariable Long id) {
+        referenciaService.reativarReferencia(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/buscar/nome")
-    public ResponseEntity<List<ReferenciaDTO>> buscarPorNome(@RequestParam String nome) {
-        return ResponseEntity.ok(referenciaService.buscarReferenciaPorNome(nome));
+    public ResponseEntity<List<ReferenciaDTO>> buscarPorNome(
+            @RequestParam String nome
+    ) {
+        return ResponseEntity.ok(
+                referenciaService.buscarReferenciaPorNome(nome)
+        );
     }
 
-    // GET - Buscar por referencia (ex: /mg/referencias?ref=123-ABC)
     @GetMapping("/buscar/ref")
-    public ResponseEntity<List<ReferenciaDTO>> buscarPorReferencia(@RequestParam String ref) {
-        return ResponseEntity.ok(referenciaService.buscarReferenciaPorReferencia(ref));
+    public ResponseEntity<List<ReferenciaDTO>> buscarPorReferencia(
+            @RequestParam String ref
+    ) {
+        return ResponseEntity.ok(
+                referenciaService.buscarReferenciaPorReferencia(ref)
+        );
     }
 
-    // GET - Últimos atualizados
+    /**
+     * 🕒 Últimas alterações (ativos + inativos)
+     */
     @GetMapping("/ultimos")
     public ResponseEntity<List<ReferenciaDTO>> listarUltimos() {
-        return ResponseEntity.ok(referenciaService.buscarUltimosAtualizados());
+        return ResponseEntity.ok(
+                referenciaService.buscarUltimosAtualizados()
+        );
     }
 }

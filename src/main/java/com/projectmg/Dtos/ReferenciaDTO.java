@@ -13,7 +13,8 @@ public record ReferenciaDTO(
         Double rendimento,
         LocalDate dataAtualizacao,
         String usuarioUltimaAlteracao,
-        TipoAcao acao
+        TipoAcao acao,
+        boolean ativo
 ) {
     @PrePersist
     @PreUpdate
@@ -25,7 +26,8 @@ public record ReferenciaDTO(
                 this.rendimento,
                 LocalDate.now(),
                 UsuarioAuditoria.getUsuarioLogado(),
-                this.acao
+                this.acao,
+                this.ativo()
         );
     }
 }

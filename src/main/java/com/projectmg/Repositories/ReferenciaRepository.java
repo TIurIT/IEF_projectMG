@@ -23,5 +23,7 @@ public interface ReferenciaRepository extends JpaRepository<Referencia, Long> {
 
     boolean existsByNomeAndIdNot(String nome, Long id);
     boolean existsByReferenciaAndIdNot(String referencia, Long id);
+    List<Referencia> findByAtivoTrue();
+
 
 }
