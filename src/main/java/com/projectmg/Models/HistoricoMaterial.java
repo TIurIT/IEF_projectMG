@@ -1,6 +1,5 @@
 package com.projectmg.Models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.projectmg.Enum.TipoAcao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 

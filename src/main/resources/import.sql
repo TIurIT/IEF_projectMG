@@ -18,9 +18,9 @@ INSERT INTO tb_cliente ( nome, email, telefone, cpf_cnpj) VALUES ( 'Pedro da Sil
 INSERT INTO tb_cliente ( nome, email, telefone, cpf_cnpj) VALUES ( 'Ana da Silva', 'ana@gmail.com', '(11) 99999-9999', '123.456.787-00');
 
 -- TERCEIROS
-INSERT INTO tb_terceiro ( nome, bairro, telefone, tipo_servico) VALUES ( 'João da Silva', 'SANTO AMARO', '(11) 99999-9999', 'ESTAMPARIA');
-INSERT INTO tb_terceiro ( nome, bairro, telefone, tipo_servico) VALUES ( 'Maria da Silva', 'CENTRO', '(11) 99999-9999', 'COSTURA');
-INSERT INTO tb_terceiro ( nome, bairro, telefone, tipo_servico) VALUES ( 'Pedro da Silva', 'JARDIM DA SONIA', '(11) 99999-9999', 'CORTE');
+INSERT INTO tb_terceiro ( nome, bairro, telefone, cnpj, tipo_servico) VALUES ( 'João da Silva', 'SANTO AMARO', '(11) 99999-9999', '4654844848' ,'ESTAMPARIA');
+INSERT INTO tb_terceiro ( nome, bairro, telefone, cnpj,tipo_servico) VALUES ( 'Maria da Silva', 'CENTRO', '(11) 99999-9999', '58498489','COSTURA');
+INSERT INTO tb_terceiro ( nome, bairro, telefone, cnpj,tipo_servico) VALUES ( 'Pedro da Silva', 'JARDIM DA SONIA', '(11) 99999-9999', '6848465822723','CORTE');
 
 ---- USUÁRIOS
 --INSERT INTO tb_usuario ( nome, email, senha, tipo_acesso) VALUES ( 'Admin', 'admin@gmail.com', '$2a$10$U5FSP0sCpsNaqIpvYetITeHcgNsHspKbZypi.qQd0JeupxrQt.LXm', 'ADMINISTRADOR');

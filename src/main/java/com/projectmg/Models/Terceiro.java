@@ -30,6 +30,9 @@ public class Terceiro {
     @Column(name = "telefone", nullable = false)
     private String telefone;
 
+    @Column(name = "cnpj", nullable = false)
+    private String cnpj;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_Servico", nullable = false)
     private TipoServico tipoServico;
@@ -38,11 +41,11 @@ public class Terceiro {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Terceiro terceiro = (Terceiro) o;
-        return Objects.equals(id, terceiro.id) && Objects.equals(nome, terceiro.nome) && Objects.equals(bairro, terceiro.bairro) && Objects.equals(telefone, terceiro.telefone) && tipoServico == terceiro.tipoServico;
+        return Objects.equals(id, terceiro.id) && Objects.equals(nome, terceiro.nome) && Objects.equals(bairro, terceiro.bairro) && Objects.equals(telefone, terceiro.telefone) && Objects.equals(cnpj, terceiro.cnpj) && tipoServico == terceiro.tipoServico;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, bairro, telefone, tipoServico);
+        return Objects.hash(id, nome, bairro, telefone, cnpj, tipoServico);
     }
 }

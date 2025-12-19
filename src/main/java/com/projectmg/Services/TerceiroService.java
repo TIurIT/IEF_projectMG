@@ -23,29 +23,31 @@ public class TerceiroService {
 
     public Terceiro converterTerceiroDTOParaTerceiro(TerceiroDTO TerceiroDTO){
         Terceiro terceiro = new Terceiro();
-        terceiro.setId(TerceiroDTO.getId());
-        terceiro.setNome(TerceiroDTO.getNome());
-        terceiro.setBairro(TerceiroDTO.getBairro());
-        terceiro.setTelefone(TerceiroDTO.getTelefone());
-        terceiro.setTipoServico(TerceiroDTO.getTipoServico());
+        terceiro.setId(TerceiroDTO.id());
+        terceiro.setNome(TerceiroDTO.nome());
+        terceiro.setBairro(TerceiroDTO.bairro());
+        terceiro.setTelefone(TerceiroDTO.telefone());
+        terceiro.setCnpj(TerceiroDTO.cnpj());
+        terceiro.setTipoServico(TerceiroDTO.tipoServico());
         return terceiro;
     }
 
     public TerceiroDTO converterTerceiroParaTerceiroDTO(Terceiro terceiro){
-        TerceiroDTO terceiroDTO = new TerceiroDTO();
-        terceiroDTO.setId(terceiro.getId());
-        terceiroDTO.setNome(terceiro.getNome());
-        terceiroDTO.setBairro(terceiro.getBairro());
-        terceiroDTO.setTelefone(terceiro.getTelefone());
-        terceiroDTO.setTipoServico(terceiro.getTipoServico());
-        return terceiroDTO;
+        return new TerceiroDTO(
+        terceiro.getId(),
+        terceiro.getNome(),
+        terceiro.getBairro(),
+        terceiro.getTelefone(),
+        terceiro.getCnpj(),
+        terceiro.getTipoServico()
+        );
     }
 
     public TerceiroDTO cadastrarTerceiro(TerceiroDTO terceiroDTO){
-        terceiroSpec.verifyTerceiroNome(terceiroDTO.getNome());
-        terceiroSpec.verifyTerceiroBairro(terceiroDTO.getBairro());
-        terceiroSpec.verifyTerceiroTelefone(terceiroDTO.getTelefone());
-        List<Terceiro> terceiroNome = terceiroRepository.findByNome(terceiroDTO.getNome());
+        terceiroSpec.verifyTerceiroNome(terceiroDTO.nome());
+        terceiroSpec.verifyTerceiroBairro(terceiroDTO.bairro());
+        terceiroSpec.verifyTerceiroTelefone(terceiroDTO.telefone());
+        List<Terceiro> terceiroNome = terceiroRepository.findByNome(terceiroDTO.nome());
         terceiroSpec.verifyTerceiroNomeExists(terceiroNome);
         terceiroSpec.verifyTerceiroBairroExists(terceiroNome);
         Terceiro terceiro = converterTerceiroDTOParaTerceiro(terceiroDTO);
@@ -54,12 +56,12 @@ public class TerceiroService {
     }
 
     public TerceiroDTO atualizarTerceiro(TerceiroDTO terceiroDTO){
-        List<Terceiro> terceiroNome = terceiroRepository.findByNome(terceiroDTO.getNome());
+        List<Terceiro> terceiroNome = terceiroRepository.findByNome(terceiroDTO.nome());
         terceiroSpec.verifyTerceiroNomeExists(terceiroNome);
         terceiroSpec.verifyTerceiroBairroExists(terceiroNome);
-        terceiroSpec.verifyTerceiroId(terceiroDTO.getId());
+        terceiroSpec.verifyTerceiroId(terceiroDTO.id());
 
-        Terceiro terceiro = terceiroRepository.findById(terceiroDTO.getId())
+        Terceiro terceiro = terceiroRepository.findById(terceiroDTO.id())
                 .orElseThrow(() -> new BusinessException(MSG_TERCEIRO));
         terceiro = converterTerceiroDTOParaTerceiro(terceiroDTO);
         terceiroRepository.save(terceiro);
@@ -97,7 +99,6 @@ public class TerceiroService {
 
         return dtos;
     }
-
 
     public List<TerceiroDTO> buscarTerceiros(){
         List<Terceiro> terceiros = terceiroRepository.findAll();

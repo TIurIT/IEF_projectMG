@@ -1,12 +1,15 @@
 package com.projectmg.Resources;
 
+
+import com.projectmg.Dtos.LoginRequestDTO;
+import com.projectmg.Dtos.LoginResponseDTO;
 import com.projectmg.Dtos.UsuarioDTO;
 import com.projectmg.Models.Usuario;
 import com.projectmg.Repositories.UsuarioRepository;
+import com.projectmg.Services.AuthService;
 import com.projectmg.Services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -45,20 +48,28 @@ public class UsuarioResource {
         return ResponseEntity.ok(usuarioService.buscarUsuarioPorEmail(email));
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<UsuarioDTO> login(@RequestBody UsuarioDTO loginDTO) {
-        Usuario usuario = usuarioRepository.findByEmail(loginDTO.getEmail());
-        if (usuario == null) {
-            return ResponseEntity.status(401).build();
-        }
+    private final AuthService authService;
 
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        if (!encoder.matches(loginDTO.getSenha(), usuario.getSenha())) {
-            return ResponseEntity.status(401).build();
-        }
-
-        UsuarioDTO dto = usuarioService.converterUsuarioParaUsuarioDto(usuario);
-        return ResponseEntity.ok(dto);
+    public UsuarioResource(AuthService authService) {
+        this.authService = authService;
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDTO> login(
+            @RequestBody LoginRequestDTO dto
+    ) {
+
+        String token = authService.login(dto.getEmail(), dto.getSenha());
+
+        Usuario usuario = usuarioRepository.findByEmail(dto.getEmail());
+
+        return ResponseEntity.ok(
+                new LoginResponseDTO(
+                        token,
+                        usuario.getNome(),
+                        usuario.getEmail(),
+                        usuario.getTipoAcesso()
+                )
+        );
+    }
 }

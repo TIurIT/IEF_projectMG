@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Table(name = "tb_referencia")
@@ -32,7 +32,7 @@ public class Referencia {
     private Double rendimento;
 
     @Column(name = "data_atualizacao")
-    private LocalDate dataAtualizacao;
+    private LocalDateTime dataAtualizacao;
 
     @Column(name = "usuario_ultima_alteracao")
     private String usuarioUltimaAlteracao;

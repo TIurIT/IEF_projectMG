@@ -7,55 +7,53 @@ import com.projectmg.Exceptions.BusinessException;
 import com.projectmg.Models.Referencia;
 import com.projectmg.Repositories.ReferenciaRepository;
 import com.projectmg.Specs.ReferenciaSpec;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ReferenciaService {
 
     private static final String MSG_REFERENCIA = "Referência não encontrada";
 
-    @Autowired
-    private ReferenciaRepository referenciaRepository;
+    private final ReferenciaRepository referenciaRepository;
+    private final ReferenciaSpec referenciaSpec;
+    private final UsuarioAuditoria usuarioAuditoria;
 
-    @Autowired
-    private ReferenciaSpec referenciaSpec;
-
-    /* =========================
-       CONVERSORES
-       ========================= */
-
-    public ReferenciaDTO converterReferenciaParaReferenciaDTO(
-            Referencia referencia
+    public ReferenciaService(
+            ReferenciaRepository referenciaRepository,
+            ReferenciaSpec referenciaSpec,
+            UsuarioAuditoria usuarioAuditoria
     ) {
+        this.referenciaRepository = referenciaRepository;
+        this.referenciaSpec = referenciaSpec;
+        this.usuarioAuditoria = usuarioAuditoria;
+    }
+
+    public ReferenciaDTO converterReferenciaParaReferenciaDTO(Referencia referencia) {
         return new ReferenciaDTO(
                 referencia.getId(),
                 referencia.getNome(),
                 referencia.getReferencia(),
                 referencia.getRendimento(),
-                referencia.getDataAtualizacao(),
-                referencia.getUsuarioUltimaAlteracao(),
+                referencia.getAtivo(),
                 referencia.getAcao(),
-                referencia.getAtivo()
+                referencia.getUsuarioUltimaAlteracao(),
+                referencia.getDataAtualizacao()
         );
     }
 
-    public Referencia converterReferenciaDTOParaReferencia(
-            ReferenciaDTO dto
-    ) {
+    public Referencia converterReferenciaDTOParaReferencia(ReferenciaDTO dto) {
         Referencia referencia = new Referencia();
         referencia.setId(dto.id());
         referencia.setNome(dto.nome());
         referencia.setReferencia(dto.referencia());
         referencia.setRendimento(dto.rendimento());
-        referencia.setDataAtualizacao(dto.dataAtualizacao());
-        referencia.setUsuarioUltimaAlteracao(dto.usuarioUltimaAlteracao());
-        referencia.setAcao(dto.acao());
         referencia.setAtivo(dto.ativo());
+        referencia.setAcao(dto.acao());
+        referencia.setUsuarioUltimaAlteracao(dto.usuarioUltimaAlteracao());
+        referencia.setDataAtualizacao(dto.dataAtualizacao());
         return referencia;
     }
 
@@ -80,9 +78,9 @@ public class ReferenciaService {
 
         referencia.setAtivo(true);
         referencia.setAcao(TipoAcao.CRIADO);
-        referencia.setDataAtualizacao(LocalDate.now());
+        referencia.setDataAtualizacao(LocalDateTime.now());
         referencia.setUsuarioUltimaAlteracao(
-                UsuarioAuditoria.getUsuarioLogado()
+                usuarioAuditoria.getNomeUsuarioLogado()
         );
 
         referencia = referenciaRepository.save(referencia);
@@ -105,9 +103,9 @@ public class ReferenciaService {
         referencia.setNome(dto.nome());
         referencia.setReferencia(dto.referencia());
         referencia.setRendimento(dto.rendimento());
-        referencia.setDataAtualizacao(LocalDate.now());
+        referencia.setDataAtualizacao(LocalDateTime.now());
         referencia.setUsuarioUltimaAlteracao(
-                UsuarioAuditoria.getUsuarioLogado()
+                usuarioAuditoria.getNomeUsuarioLogado()
         );
         referencia.setAcao(TipoAcao.ATUALIZADO);
 
@@ -115,9 +113,6 @@ public class ReferenciaService {
         return converterReferenciaParaReferenciaDTO(referencia);
     }
 
-    /**
-     * ❌ Exclusão lógica
-     */
     public void deletarReferencia(Long id) {
         Referencia referencia = referenciaRepository
                 .findById(id)
@@ -125,17 +120,14 @@ public class ReferenciaService {
 
         referencia.setAtivo(false);
         referencia.setAcao(TipoAcao.DELETADO);
-        referencia.setDataAtualizacao(LocalDate.now());
+        referencia.setDataAtualizacao(LocalDateTime.now());
         referencia.setUsuarioUltimaAlteracao(
-                UsuarioAuditoria.getUsuarioLogado()
+                usuarioAuditoria.getNomeUsuarioLogado()
         );
 
         referenciaRepository.save(referencia);
     }
 
-    /**
-     * ♻ Reativação
-     */
     public void reativarReferencia(Long id) {
         Referencia referencia = referenciaRepository
                 .findById(id)
@@ -143,17 +135,13 @@ public class ReferenciaService {
 
         referencia.setAtivo(true);
         referencia.setAcao(TipoAcao.ATUALIZADO);
-        referencia.setDataAtualizacao(LocalDate.now());
+        referencia.setDataAtualizacao(LocalDateTime.now());
         referencia.setUsuarioUltimaAlteracao(
-                UsuarioAuditoria.getUsuarioLogado()
+                usuarioAuditoria.getNomeUsuarioLogado()
         );
 
         referenciaRepository.save(referencia);
     }
-
-    /* =========================
-       CONSULTAS
-       ========================= */
 
     public ReferenciaDTO buscarReferenciaPorId(Long id) {
         return referenciaRepository.findById(id)
@@ -162,27 +150,23 @@ public class ReferenciaService {
     }
 
     public List<ReferenciaDTO> buscarReferenciaPorNome(String nome) {
-        List<Referencia> refs = referenciaRepository.findByNome(nome);
+        var refs = referenciaRepository.findByNome(nome);
         referenciaSpec.verifyReferencia(refs);
         return refs.stream()
                 .map(this::converterReferenciaParaReferenciaDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<ReferenciaDTO> buscarReferenciaPorReferencia(String referencia) {
-        List<Referencia> refs =
-                referenciaRepository.findByReferencia(referencia);
+        var refs = referenciaRepository.findByReferencia(referencia);
         referenciaSpec.verifyReferencia(refs);
         return refs.stream()
                 .map(this::converterReferenciaParaReferenciaDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
-    /**
-     * 🔍 Ativos ou todos
-     */
     public List<ReferenciaDTO> buscarReferencias(boolean somenteAtivos) {
-        List<Referencia> referencias = somenteAtivos
+        var referencias = somenteAtivos
                 ? referenciaRepository.findByAtivoTrue()
                 : referenciaRepository.findAll();
 
@@ -191,9 +175,6 @@ public class ReferenciaService {
                 .toList();
     }
 
-    /**
-     * 🕒 Últimas alterações (ativos + inativos)
-     */
     public List<ReferenciaDTO> buscarUltimosAtualizados() {
         return referenciaRepository
                 .findTop5ByOrderByDataAtualizacaoDesc()

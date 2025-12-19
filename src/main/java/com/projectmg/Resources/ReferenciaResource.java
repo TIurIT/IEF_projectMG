@@ -2,7 +2,6 @@ package com.projectmg.Resources;
 
 import com.projectmg.Dtos.ReferenciaDTO;
 import com.projectmg.Services.ReferenciaService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +11,11 @@ import java.util.List;
 @RequestMapping("/mg/referencia")
 public class ReferenciaResource {
 
-    @Autowired
-    private ReferenciaService referenciaService;
+    private final ReferenciaService referenciaService;
+
+    public ReferenciaResource(ReferenciaService referenciaService) {
+        this.referenciaService = referenciaService;
+    }
 
     /**
      * 🔍 Buscar referências
@@ -35,7 +37,7 @@ public class ReferenciaResource {
         );
     }
 
-    @PostMapping
+    @PostMapping("/cadastrar")
     public ResponseEntity<ReferenciaDTO> cadastrar(
             @RequestBody ReferenciaDTO dto
     ) {
@@ -49,16 +51,15 @@ public class ReferenciaResource {
             @PathVariable Long id,
             @RequestBody ReferenciaDTO dto
     ) {
-
         ReferenciaDTO dtoComId = new ReferenciaDTO(
                 id,
                 dto.nome(),
                 dto.referencia(),
                 dto.rendimento(),
-                dto.dataAtualizacao(),
-                dto.usuarioUltimaAlteracao(),
+                dto.ativo(),
                 dto.acao(),
-                dto.ativo()
+                dto.usuarioUltimaAlteracao(),
+                dto.dataAtualizacao()
         );
 
         return ResponseEntity.ok(
@@ -66,18 +67,12 @@ public class ReferenciaResource {
         );
     }
 
-    /**
-     * ❌ Exclusão lógica (inativar)
-     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         referenciaService.deletarReferencia(id);
         return ResponseEntity.noContent().build();
     }
 
-    /**
-     * ♻ Reativar referência
-     */
     @PutMapping("/{id}/reativar")
     public ResponseEntity<Void> reativar(@PathVariable Long id) {
         referenciaService.reativarReferencia(id);
@@ -102,9 +97,6 @@ public class ReferenciaResource {
         );
     }
 
-    /**
-     * 🕒 Últimas alterações (ativos + inativos)
-     */
     @GetMapping("/ultimos")
     public ResponseEntity<List<ReferenciaDTO>> listarUltimos() {
         return ResponseEntity.ok(

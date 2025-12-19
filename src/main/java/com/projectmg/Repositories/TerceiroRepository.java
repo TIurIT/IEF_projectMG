@@ -18,4 +18,5 @@ public interface TerceiroRepository extends JpaRepository<Terceiro, Long> {
 
     @Query("select t from Terceiro t")
     List<Terceiro> findAll();
+
 }

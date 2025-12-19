@@ -1,13 +1,41 @@
 package com.projectmg.Configuration;
+
+import com.projectmg.Models.Usuario;
+import com.projectmg.Repositories.UsuarioRepository;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UsuarioAuditoria {
-    public static String getUsuarioLogado() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            return authentication.getName(); // geralmente retorna o username (email ou login)
+
+    private final UsuarioRepository usuarioRepository;
+
+    public UsuarioAuditoria(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
+
+    public String getEmailUsuarioLogado() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth == null ||
+                !auth.isAuthenticated() ||
+                auth instanceof AnonymousAuthenticationToken) {
+            return "Sistema";
         }
-        return "desconhecido";
+
+        return auth.getName();
+    }
+
+    public String getNomeUsuarioLogado() {
+        String email = getEmailUsuarioLogado();
+
+        if ("Sistema".equals(email)) {
+            return "Sistema";
+        }
+
+        Usuario usuario = usuarioRepository.findByEmail(email);
+        return usuario != null ? usuario.getNome() : email;
     }
 }
