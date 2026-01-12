@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:mysql://prod-db:3306/projectmg
+    username: projectmg
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+  sql:
+    init:
+      mode: never
