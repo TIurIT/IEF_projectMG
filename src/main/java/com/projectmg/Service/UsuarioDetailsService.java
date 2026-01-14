@@ -2,15 +2,17 @@ package com.projectmg.Service;
 
 import com.projectmg.Domain.Entity.Usuario;
 import com.projectmg.Repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UsuarioDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+
+    public UsuarioDetailsService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email)

@@ -2,7 +2,6 @@ package com.projectmg.Service;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -54,5 +53,4 @@ public class JwtService {
             return false;
         }
     }
-
 }

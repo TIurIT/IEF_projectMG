@@ -1,7 +1,7 @@
 package com.projectmg.Domain.Enum;
 
 public enum TipoAcesso {
-    ADMINISTRADOR("Administrador"),
+    ADMIN("Admin"),
     GERENTE("Gerente"),
     PRODUCAO("Produção"),
     VENDAS("Vendas");

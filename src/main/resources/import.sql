@@ -23,7 +23,7 @@ INSERT INTO tb_terceiro ( nome, bairro, telefone, cnpj,tipo_servico) VALUES ( 'M
 INSERT INTO tb_terceiro ( nome, bairro, telefone, cnpj,tipo_servico) VALUES ( 'Pedro da Silva', 'JARDIM DA SONIA', '(11) 99999-9999', '6848465822723','CORTE');
 
 ---- USUÁRIOS
---INSERT INTO tb_usuario ( nome, email, senha, tipo_acesso) VALUES ( 'Admin', 'admin@gmail.com', '$2a$10$U5FSP0sCpsNaqIpvYetITeHcgNsHspKbZypi.qQd0JeupxrQt.LXm', 'ADMINISTRADOR');
+INSERT INTO tb_usuario ( nome, email, senha, tipo_acesso) VALUES ( 'Admin', 'admin@gmail.com', '$2a$10$U5FSP0sCpsNaqIpvYetITeHcgNsHspKbZypi.qQd0JeupxrQt.LXm', 'ADMIN');
 --INSERT INTO tb_usuario ( nome, email, senha, tipo_acesso) VALUES ( 'Gerente João', 'gerente@gmail.com', '$2a$10$U5FSP0sCpsNaqIpvYetITeHcgNsHspKbZypi.qQd0JeupxrQt.LXm', 'GERENTE');
 --INSERT INTO tb_usuario ( nome, email, senha, tipo_acesso) VALUES ( 'Produção Maria', 'producao@gmail.com', '$2a$10$U5FSP0sCpsNaqIpvYetITeHcgNsHspKbZypi.qQd0JeupxrQt.LXm', 'PRODUCAO');
 --INSERT INTO tb_usuario ( nome, email, senha, tipo_acesso) VALUES ( 'Vendas Pedro', 'vendas@gmail.com', '$2a$10$U5FSP0sCpsNaqIpvYetITeHcgNsHspKbZypi.qQd0JeupxrQt.LXm', 'VENDAS');

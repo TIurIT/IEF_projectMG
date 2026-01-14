@@ -6,6 +6,7 @@ import com.projectmg.Domain.Enum.TipoAcao;
 import com.projectmg.Service.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,19 +26,30 @@ public class MaterialResource {
                 .getAuthentication()
                 .getName();
     }
-    
+
+    /* ===================== CONSULTAS ===================== */
+
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/")
     public ResponseEntity<List<MaterialDTO>> listarAtivos() {
         return ResponseEntity.ok(materialService.listarAtivos());
     }
+
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/todos")
     public ResponseEntity<List<MaterialDTO>> listarTodos() {
         return ResponseEntity.ok(materialService.listarTodos());
     }
+
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/ultimos")
     public ResponseEntity<List<MaterialDTO>> listarUltimos() {
         return ResponseEntity.ok(materialService.listarUltimos());
     }
+
+    /* ===================== CADASTRO / EDIÇÃO ===================== */
+
+    @PreAuthorize("@autorizacaoService.podeCriarMaterial()")
     @PostMapping("/cadastrar")
     public ResponseEntity<MaterialDTO> cadastrarMaterial(
             @RequestBody MaterialDTO dto) {
@@ -49,6 +61,8 @@ public class MaterialResource {
 
         return ResponseEntity.ok(criado);
     }
+
+    @PreAuthorize("@autorizacaoService.podeCriarMaterial()")
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<MaterialDTO> atualizarMaterial(
             @PathVariable Long id,
@@ -62,11 +76,17 @@ public class MaterialResource {
                 )
         );
     }
+
+    @PreAuthorize("@autorizacaoService.podeExcluirMaterial()")
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> deletarMaterial(@PathVariable Long id) {
         materialService.deletarMaterial(id, usuarioLogado());
         return ResponseEntity.noContent().build();
     }
+
+    /* ===================== MOVIMENTAÇÃO DE ESTOQUE ===================== */
+
+    @PreAuthorize("@autorizacaoService.podeAlterarEstoque()")
     @PutMapping("/adicionar-quantidade/{id}/{qtd}")
     public ResponseEntity<MaterialDTO> adicionar(
             @PathVariable Long id,
@@ -88,6 +108,8 @@ public class MaterialResource {
 
         return ResponseEntity.ok(atualizado);
     }
+
+    @PreAuthorize("@autorizacaoService.podeAlterarEstoque()")
     @PutMapping("/retirar-quantidade/{id}/{qtd}")
     public ResponseEntity<MaterialDTO> retirar(
             @PathVariable Long id,
@@ -109,6 +131,10 @@ public class MaterialResource {
 
         return ResponseEntity.ok(atualizado);
     }
+
+    /* ===================== CONFIGURAÇÕES ===================== */
+
+    @PreAuthorize("@autorizacaoService.podeCriarMaterial()")
     @PutMapping("/definir-limite/{id}/{limiteMinimo}")
     public ResponseEntity<MaterialDTO> definirLimite(
             @PathVariable Long id,
@@ -118,6 +144,8 @@ public class MaterialResource {
                 materialService.definirLimite(id, limiteMinimo)
         );
     }
+
+    @PreAuthorize("isAuthenticated()")
     @PutMapping("/favorito/{id}")
     public ResponseEntity<MaterialDTO> alternarFavorito(
             @PathVariable Long id) {
@@ -126,6 +154,8 @@ public class MaterialResource {
                 materialService.alternarFavorito(id)
         );
     }
+
+    @PreAuthorize("@autorizacaoService.podeCriarMaterial()")
     @PutMapping("/reativar/{id}")
     public ResponseEntity<MaterialDTO> reativarMaterial(
             @PathVariable Long id) {
@@ -137,6 +167,8 @@ public class MaterialResource {
                 )
         );
     }
+
+    @PreAuthorize("@autorizacaoService.podeCriarMaterial()")
     @PutMapping("/programar-compra/{id}")
     public ResponseEntity<MaterialDTO> programarCompra(
             @PathVariable Long id,
@@ -152,6 +184,10 @@ public class MaterialResource {
                 )
         );
     }
+
+    /* ===================== REFERÊNCIA / VENDA ===================== */
+
+    @PreAuthorize("@autorizacaoService.podeAlterarEstoque()")
     @PostMapping("/retirar-por-referencia")
     public ResponseEntity<MaterialDTO> retirarPorReferencia(
             @RequestBody VendaReferenciaDTO dto) {
