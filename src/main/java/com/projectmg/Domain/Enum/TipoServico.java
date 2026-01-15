@@ -3,7 +3,8 @@ package com.projectmg.Domain.Enum;
 public enum TipoServico {
     COSTURA("Costura"),
     CORTE("Corte"),
-    ESTAMPARIA("Estamparia");
+    ESTAMPARIA("Estamparia"),
+    SUBLIMACAO("Sublimação");
 
     private final String tipoServico;
 

@@ -1,6 +1,6 @@
 package com.projectmg.Configuration.Security;
 
-import com.projectmg.Service.UsuarioDetailsService;
+import com.projectmg.Service.Security.UsuarioDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

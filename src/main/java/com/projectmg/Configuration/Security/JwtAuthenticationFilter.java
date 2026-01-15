@@ -1,7 +1,7 @@
 package com.projectmg.Configuration.Security;
 
-import com.projectmg.Service.JwtService;
-import com.projectmg.Service.UsuarioDetailsService;
+import com.projectmg.Service.Security.JwtService;
+import com.projectmg.Service.Security.UsuarioDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

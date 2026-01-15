@@ -1,8 +1,8 @@
 package com.projectmg.Domain.Validation;
 
-import com.projectmg.Domain.Entity.Material;
+import com.projectmg.Domain.Entity.Material.Material;
 import com.projectmg.Exception.BusinessException;
-import com.projectmg.Repository.MaterialRepository;
+import com.projectmg.Repository.Material.MaterialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

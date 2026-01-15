@@ -6,7 +6,7 @@ import com.projectmg.Domain.Dto.LoginResponseDTO;
 import com.projectmg.Domain.Dto.UsuarioDTO;
 import com.projectmg.Domain.Entity.Usuario;
 import com.projectmg.Repository.UsuarioRepository;
-import com.projectmg.Service.AuthService;
+import com.projectmg.Service.Security.AuthService;
 import com.projectmg.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
