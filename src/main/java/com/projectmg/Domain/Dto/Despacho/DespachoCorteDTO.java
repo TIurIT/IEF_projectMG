@@ -5,5 +5,6 @@ public record DespachoCorteDTO(
         Long referenciaId,
         Long materialId,
         Integer quantidadePecasSolicitadas,
-        Double quantidadeMaterialEnviado
+        Double quantidadeMaterialEnviado,
+        String usuarioCriacao
 ) {}

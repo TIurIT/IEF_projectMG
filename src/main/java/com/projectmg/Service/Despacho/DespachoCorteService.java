@@ -5,6 +5,8 @@ import com.projectmg.Domain.Dto.Despacho.DespachoCorteRetornoDTO;
 import com.projectmg.Domain.Dto.Despacho.HistoricoDespachoDTO;
 import com.projectmg.Domain.Entity.Despacho.DespachoCorte;
 import com.projectmg.Domain.Entity.Despacho.DespachoCorteRetorno;
+import com.projectmg.Domain.Entity.Ordem.OrdemCorte;
+import com.projectmg.Domain.Entity.Ordem.OrdemCorteItem;
 import com.projectmg.Domain.Enum.TipoServico;
 import com.projectmg.Repository.Despacho.DespachoCorteRepository;
 import com.projectmg.Repository.Despacho.DespachoCorteRetornoRepository;
@@ -184,4 +186,27 @@ public class DespachoCorteService {
                 usuario
         );
     }
+
+    public void converterParaDespacho(
+            OrdemCorte ordem,
+            String usuario
+    ) {
+        for (OrdemCorteItem item : ordem.getItens()) {
+
+            DespachoCorte despacho = new DespachoCorte();
+            despacho.setReferencia(item.getReferencia());
+            despacho.setMaterial(item.getMaterial());
+            despacho.setQuantidadePecasSolicitadas(item.getTotalPecas());
+            despacho.setUsuarioCricao(usuario);
+
+            // ⚠️ NÃO define bruto
+            // ⚠️ NÃO define envio
+            // ⚠️ NÃO define retorno
+
+            despachoRepository.save(despacho);
+        }
+
+        ordem.setConvertidaParaDespacho(true);
+    }
+
 }

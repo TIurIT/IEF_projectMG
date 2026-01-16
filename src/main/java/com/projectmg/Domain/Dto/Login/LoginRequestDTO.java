@@ -1,4 +1,4 @@
-package com.projectmg.Domain.Dto;
+package com.projectmg.Domain.Dto.Login;
 
 import lombok.Data;
 

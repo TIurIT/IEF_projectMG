@@ -1,4 +1,4 @@
-package com.projectmg.Domain.Dto;
+package com.projectmg.Domain.Dto.Login;
 
 import com.projectmg.Domain.Enum.TipoAcesso;
 import lombok.AllArgsConstructor;

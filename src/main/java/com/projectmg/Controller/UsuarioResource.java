@@ -1,8 +1,8 @@
 package com.projectmg.Controller;
 
 
-import com.projectmg.Domain.Dto.LoginRequestDTO;
-import com.projectmg.Domain.Dto.LoginResponseDTO;
+import com.projectmg.Domain.Dto.Login.LoginRequestDTO;
+import com.projectmg.Domain.Dto.Login.LoginResponseDTO;
 import com.projectmg.Domain.Dto.UsuarioDTO;
 import com.projectmg.Domain.Entity.Usuario;
 import com.projectmg.Repository.UsuarioRepository;

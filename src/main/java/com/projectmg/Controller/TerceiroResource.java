@@ -127,4 +127,5 @@ public class TerceiroResource {
         despachoCorteService.resolverDivergencia(id, user.getUsername());
         return ResponseEntity.ok().build();
     }
+
 }

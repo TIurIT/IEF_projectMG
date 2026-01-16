@@ -32,17 +32,21 @@ public class DespachoCorte extends DespachoBase {
 
     private boolean divergenciaResolvida = false;
 
+    private String usuarioCricao;
+
     @OneToOne(mappedBy = "despacho", cascade = CascadeType.ALL)
     private DespachoCorteRetorno retorno;
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         DespachoCorte that = (DespachoCorte) o;
-        return Objects.equals(referencia, that.referencia) && Objects.equals(material, that.material) && Objects.equals(quantidadePecasSolicitadas, that.quantidadePecasSolicitadas) && Objects.equals(quantidadeMaterialEnviado, that.quantidadeMaterialEnviado);
+        return possuiDivergencia == that.possuiDivergencia && divergenciaResolvida == that.divergenciaResolvida && Objects.equals(referencia, that.referencia) && Objects.equals(material, that.material) && Objects.equals(quantidadePecasSolicitadas, that.quantidadePecasSolicitadas) && Objects.equals(quantidadeMaterialEnviado, that.quantidadeMaterialEnviado) && Objects.equals(usuarioCricao, that.usuarioCricao) && Objects.equals(retorno, that.retorno);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(referencia, material, quantidadePecasSolicitadas, quantidadeMaterialEnviado);
+        return Objects.hash(super.hashCode(), referencia, material, quantidadePecasSolicitadas, quantidadeMaterialEnviado, possuiDivergencia, divergenciaResolvida, usuarioCricao, retorno);
     }
 }
